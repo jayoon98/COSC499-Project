@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`completed surveys renders correctly 1`] = `
+<View>
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    onDismiss={[Function]}
+    transparent={true}
+    visible={true}
+  >
+    <View
+      style={
+        Object {
+          "display": "flex",
+          "justifyContent": "center",
+          "marginTop": "55%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "borderRadius": 20,
+            "display": "flex",
+            "elevation": 5,
+            "justifyContent": "space-between",
+            "margin": 20,
+            "maxHeight": 500,
+            "minHeight": 180,
+            "padding": 22,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.25,
+            "shadowRadius": 3.84,
+          }
+        }
+      >
+        <RCTScrollView
+          collapsable={false}
+          onGestureHandlerEvent={[Function]}
+          onGestureHandlerStateChange={[Function]}
+        >
+          <View>
+            <Text
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              }
+            >
+              bla bla
+            </Text>
+          </View>
+        </RCTScrollView>
+        <View
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "marginTop": 20,
+              "opacity": 1,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "borderColor": "#e2e4ef",
+                "borderRadius": 4,
+                "borderWidth": 1,
+                "display": "flex",
+                "justifyContent": "center",
+                "padding": 12,
+              }
+            }
+          >
+            <Text>
+              close
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </Modal>
+</View>
+`;

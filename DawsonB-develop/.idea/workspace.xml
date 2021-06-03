@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f784b13f-02f8-46d2-9d83-d54825d59280" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatar-feature/avatar-template.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/avatar-feature/avatar-template.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/createAccount.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/createAccount.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/deleteAccount.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/deleteAccount.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/getQuestions.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/getQuestions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/preferences.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/preferences.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Pamal Mangat &lt;mangatpamal@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1jf00fk7xFtjXvpkaUSEwHKFG0Z" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager" selected="Python.app">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DawsonB" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="createAccount" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DawsonB" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/createAccount.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="DawsonB" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/VHC" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/VHC/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.app" />
+        <item itemvalue="Python.createAccount" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f784b13f-02f8-46d2-9d83-d54825d59280" name="Default Changelist" comment="" />
+      <created>1604179616963</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604179616963</updated>
+    </task>
+    <task id="LOCAL-00001" summary="- authkey is working. &#10;- Implemented a check to see if authKey currently exists in auth table or not. &#10;- authenticationUser() is complete.">
+      <created>1604191287655</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604191287655</updated>
+    </task>
+    <task id="LOCAL-00002" summary="- authkey is working. &#10;- Implemented a check to see if authKey currently exists in auth table or not. &#10;- authenticationUser() is complete.">
+      <created>1604191420734</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604191420734</updated>
+    </task>
+    <task id="LOCAL-00003" summary="API/createAccount endpoint is complete. &#10;- Added implementation that inserts user into db if the email doesn't already exist within the db.&#10;- After creating an account, the user is inserted into the auth table with a generated authKey. &#10;- ** Also optimized my code for both current implemented endpoints. Was fetching all the user ids before and checking whether the users id was in the list took too much log time, so i optimized it and included it to just check the database to see if the userid is in the table or not (more efficient)&#10;TODO:&#10; Implement signout, and deleteAccount endpoints next.">
+      <created>1604202017373</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604202017373</updated>
+    </task>
+    <task id="LOCAL-00004" summary="- Signout backend is complete. &#10;Method will return login=false, indicating that user has been signed out, and deleted from auth table in db.">
+      <created>1604367065064</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604367065064</updated>
+    </task>
+    <task id="LOCAL-00005" summary="- Delete user endpoint has been implemented.&#10;- Implemented to support both the admin deleting a client acc. and a client deleting their own acc. &#10;- Signs user out of auth table also.">
+      <created>1604444465934</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604444465934</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- Delete user endpoint has been implemented.&#10;- Implemented to support both the admin deleting a client acc. and a client deleting their own acc. &#10;- Signs user out of auth table also.">
+      <created>1604864001156</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604864001156</updated>
+    </task>
+    <task id="LOCAL-00007" summary="- Made some progress working on the getQuestions endpoint&#10;- Able to retrieve all valid questions in the database and return them back to frontend.&#10;- Just need to format the json to look better and include the subQuestions and extra field tags. &#10;&#10;- 80% complete">
+      <created>1604883202868</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604883202868</updated>
+    </task>
+    <task id="LOCAL-00008" summary="- Endpoint returns each and every valid question in the database alongside with a list containing the subquestions pertaining to each individual question. &#10;- Need to still work on implementing the 'extra' field return back to frontend. &#10;- Need to setup it to work if extra_sa == 1 within the db, otherwise return empty list.">
+      <created>1604966965989</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604966965989</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="- authkey is working. &#10;- Implemented a check to see if authKey currently exists in auth table or not. &#10;- authenticationUser() is complete." />
+    <MESSAGE value="API/createAccount endpoint is complete. &#10;- Added implementation that inserts user into db if the email doesn't already exist within the db.&#10;- After creating an account, the user is inserted into the auth table with a generated authKey. &#10;- ** Also optimized my code for both current implemented endpoints. Was fetching all the user ids before and checking whether the users id was in the list took too much log time, so i optimized it and included it to just check the database to see if the userid is in the table or not (more efficient)&#10;TODO:&#10; Implement signout, and deleteAccount endpoints next." />
+    <MESSAGE value="- Signout backend is complete. &#10;Method will return login=false, indicating that user has been signed out, and deleted from auth table in db." />
+    <MESSAGE value="- Delete user endpoint has been implemented.&#10;- Implemented to support both the admin deleting a client acc. and a client deleting their own acc. &#10;- Signs user out of auth table also." />
+    <MESSAGE value="- Made some progress working on the getQuestions endpoint&#10;- Able to retrieve all valid questions in the database and return them back to frontend.&#10;- Just need to format the json to look better and include the subQuestions and extra field tags. &#10;&#10;- 80% complete" />
+    <MESSAGE value="- Endpoint returns each and every valid question in the database alongside with a list containing the subquestions pertaining to each individual question. &#10;- Need to still work on implementing the 'extra' field return back to frontend. &#10;- Need to setup it to work if extra_sa == 1 within the db, otherwise return empty list." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Endpoint returns each and every valid question in the database alongside with a list containing the subquestions pertaining to each individual question. &#10;- Need to still work on implementing the 'extra' field return back to frontend. &#10;- Need to setup it to work if extra_sa == 1 within the db, otherwise return empty list." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604180500780">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1604180500780" />
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604881494082">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1604881494082" />
+    <state x="0" y="15" key="CommitChangelistDialog2" timestamp="1604966965770">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="0" y="15" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1604966965770" />
+    <state width="1419" height="272" key="GridCell.Tab.0.bottom" timestamp="1610565724610">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1419" height="273" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.32.1920.1080@0.0.1440.900" timestamp="1605071951630" />
+    <state width="1419" height="272" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1610565724610" />
+    <state width="1419" height="272" key="GridCell.Tab.0.center" timestamp="1610565724608">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1419" height="273" key="GridCell.Tab.0.center/0.0.1440.900/1440.32.1920.1080@0.0.1440.900" timestamp="1605071951628" />
+    <state width="1419" height="272" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1610565724608" />
+    <state width="1419" height="272" key="GridCell.Tab.0.left" timestamp="1610565724607">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1419" height="273" key="GridCell.Tab.0.left/0.0.1440.900/1440.32.1920.1080@0.0.1440.900" timestamp="1605071951626" />
+    <state width="1419" height="272" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1610565724607" />
+    <state width="1419" height="272" key="GridCell.Tab.0.right" timestamp="1610565724608">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1419" height="273" key="GridCell.Tab.0.right/0.0.1440.900/1440.32.1920.1080@0.0.1440.900" timestamp="1605071951629" />
+    <state width="1419" height="272" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1610565724608" />
+    <state x="221" y="89" key="SettingsEditor" timestamp="1604180480670">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1604180480670" />
+    <state x="320" y="241" key="Vcs.Push.Dialog.v2" timestamp="1604966975270">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="241" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1604966975270" />
+    <state x="397" y="267" key="com.intellij.ide.util.TipDialog" timestamp="1610564908054">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="397" y="267" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1610564908054" />
+    <state x="503" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605826366906">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="503" y="374" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1605826366906" />
+    <state x="466" y="170" key="git4idea.branch.GitSmartOperationDialog" timestamp="1604366621929">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="466" y="170" key="git4idea.branch.GitSmartOperationDialog/0.0.1440.900@0.0.1440.900" timestamp="1604366621929" />
+    <state x="414" y="248" key="git4idea.merge.GitPullDialog" timestamp="1605826348057">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="414" y="248" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1605826348057" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend/VHC/main.py</url>
+          <line>210</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,0 +1,632 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+    >
+      <View
+        accessible={true}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "borderRadius": 14,
+              "elevation": 5,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 12,
+              "marginTop": 0,
+              "padding": 18,
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 5.6,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginRight": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 16,
+                  "width": 16,
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              Object {
+                "width": 96,
+              }
+            }
+          >
+            Theme 1
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fa7f72",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#389393",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#5350ef",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#f5a25d",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#a8dda8",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RNGestureHandlerButton>
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+    >
+      <View
+        accessible={true}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "borderRadius": 14,
+              "elevation": 5,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 12,
+              "marginTop": 0,
+              "padding": 18,
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 5.6,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginRight": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 16,
+                  "width": 16,
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              Object {
+                "width": 96,
+              }
+            }
+          >
+            Theme 2
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#9cb380",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#522a27",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#7785ac",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#c73e1d",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#c59849",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RNGestureHandlerButton>
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+    >
+      <View
+        accessible={true}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "borderRadius": 14,
+              "elevation": 5,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 12,
+              "marginTop": 0,
+              "padding": 18,
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 5.6,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginRight": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 16,
+                  "width": 16,
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              Object {
+                "width": 96,
+              }
+            }
+          >
+            Theme 3
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#04395e",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#70a288",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#031d44",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#dab785",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#d5896f",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RNGestureHandlerButton>
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+    >
+      <View
+        accessible={true}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "borderRadius": 14,
+              "elevation": 5,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 12,
+              "marginTop": 0,
+              "padding": 18,
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 5.6,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginRight": 12,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 16,
+                  "width": 16,
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              Object {
+                "width": 96,
+              }
+            }
+          >
+            Theme 4
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#f5efa6",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#BDEFD0",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#ff99c8",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#a9def9",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#e4c1f9",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RNGestureHandlerButton>
+    <RNGestureHandlerButton
+      collapsable={false}
+      onGestureEvent={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      onHandlerStateChange={[Function]}
+      rippleColor={0}
+    >
+      <View
+        accessible={true}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#fff",
+              "borderRadius": 14,
+              "elevation": 5,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "margin": 12,
+              "marginTop": 0,
+              "padding": 18,
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 5.6,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginRight": 12,
+              }
+            }
+          >
+            <
+              icon={
+                Object {
+                  "icon": Array [
+                    512,
+                    512,
+                    Array [],
+                    "f00c",
+                    "M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z",
+                  ],
+                  "iconName": "check",
+                  "prefix": "fas",
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              Object {
+                "width": 96,
+              }
+            }
+          >
+            Theme 5
+          </Text>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#00897b",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#ffa000",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#303f9f",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#c6282b",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "backgroundColor": "#673ab7",
+                "borderRadius": 16,
+                "height": 32,
+                "marginRight": 10,
+                "width": 32,
+              }
+            }
+          />
+        </View>
+      </View>
+    </RNGestureHandlerButton>
+  </View>
+</View>
+`;

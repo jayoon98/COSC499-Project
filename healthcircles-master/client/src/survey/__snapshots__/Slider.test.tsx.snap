@@ -1,0 +1,272 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`completed surveys renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "height": 32,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      animateTransitions={true}
+      animationType="spring"
+      onLayout={[Function]}
+      onSlidingComplete={[Function]}
+      step={0}
+      style={
+        Array [
+          Object {
+            "height": 40,
+            "justifyContent": "center",
+          },
+          Object {
+            "borderRadius": 24,
+          },
+        ]
+      }
+      thumbTouchSize={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      }
+      value={1}
+    >
+      <View
+        onLayout={[Function]}
+        renderToHardwareTextureAndroid={true}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#e2e4e8",
+            },
+            Object {
+              "borderRadius": 2,
+              "height": 4,
+            },
+            Object {
+              "borderRadius": 16,
+              "height": 32,
+            },
+          ]
+        }
+      />
+      <View
+        renderToHardwareTextureAndroid={true}
+        style={
+          Object {
+            "backgroundColor": "#ef5350",
+            "borderRadius": 16,
+            "height": 32,
+            "opacity": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      />
+      <View
+        onLayout={[Function]}
+        renderToHardwareTextureAndroid={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#f1f2f6",
+            "borderRadius": 22,
+            "borderWidth": 1,
+            "elevation": 5,
+            "height": 44,
+            "opacity": 0,
+            "position": "absolute",
+            "shadowOffset": Object {
+              "height": 2,
+              "width": 0,
+            },
+            "shadowOpacity": 0.25,
+            "shadowRadius": 3.6,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+              Object {
+                "translateY": 0,
+              },
+            ],
+            "width": 44,
+          }
+        }
+      />
+      <View
+        onMoveShouldSetResponder={[Function]}
+        onMoveShouldSetResponderCapture={[Function]}
+        onResponderEnd={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderReject={[Function]}
+        onResponderRelease={[Function]}
+        onResponderStart={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        onStartShouldSetResponderCapture={[Function]}
+        renderToHardwareTextureAndroid={true}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            Object {},
+          ]
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginTop": 4,
+        "padding": 8,
+      }
+    }
+  >
+    <
+      color="#e2e4e8"
+      icon={
+        Object {
+          "icon": Array [
+            496,
+            512,
+            Array [],
+            "f119",
+            "M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm80 168c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm-160 0c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm170.2 218.2C315.8 367.4 282.9 352 248 352s-67.8 15.4-90.2 42.2c-13.5 16.3-38.1-4.2-24.6-20.5C161.7 339.6 203.6 320 248 320s86.3 19.6 114.7 53.8c13.6 16.2-11 36.7-24.5 20.4z",
+          ],
+          "iconName": "frown",
+          "prefix": "fas",
+        }
+      }
+      size={32}
+    />
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <
+      color="#e2e4ef"
+      icon={
+        Object {
+          "icon": Array [
+            496,
+            512,
+            Array [],
+            "f11a",
+            "M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm-80 168c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm176 192H152c-21.2 0-21.2-32 0-32h192c21.2 0 21.2 32 0 32zm-16-128c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z",
+          ],
+          "iconName": "meh",
+          "prefix": "fas",
+        }
+      }
+      size={32}
+    />
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#e2e4ef",
+          "fontSize": 32,
+        }
+      }
+    >
+      •
+    </Text>
+    <
+      color="#e2e4ef"
+      icon={
+        Object {
+          "icon": Array [
+            496,
+            512,
+            Array [],
+            "f118",
+            "M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm80 168c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm-160 0c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zm194.8 170.2C334.3 380.4 292.5 400 248 400s-86.3-19.6-114.8-53.8c-13.6-16.3 11-36.7 24.6-20.5 22.4 26.9 55.2 42.2 90.2 42.2s67.8-15.4 90.2-42.2c13.4-16.2 38.1 4.2 24.6 20.5z",
+          ],
+          "iconName": "smile",
+          "prefix": "fas",
+        }
+      }
+      size={32}
+    />
+  </View>
+</View>
+`;

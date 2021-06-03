@@ -1,0 +1,114 @@
+# Feedback on Requirements Report Video
+
+## Strengths
+- clearly explained key concepts 
+- Presentation was very clear and the DFD diagram is very detailed and easy to follow. 
+- Clear and concise description and visualization 
+- presentation was thorough 
+- Great DFD! 
+- Great explanation and features. 
+- Awesome explanation of the tech stack, I understand why you came to the conclusion that you did. 
+- Testing Strategy is very concise and explanation speaker does it really good 
+- Very clear presentation. Tech stack and test plan are prudent and viable. 
+- Clear and concise presentation 
+- Really nice DFD 1. Good list of environmental constraints/Non-functional requirements. Concise 
+- Very fleshed out requirements. 
+- easy to understand simple presentation 
+- I like how client security by anonymizing the data was considered. I think that's really important. 
+- The DFDs looked like they went into great detail and the use of color really helped with differentiaiting your milestones. 
+- Detailed data flow diagram Include the UI testing in the testing strategy 
+- Good use of colours in the DFD to differentiate milestones 
+- The way that information flowed clearly had a lot of time thought into it as it did a great job ensuring that I was able to understand all the aspects of the process. Smart idea to create a web app to get around cross-platform difficulties. 
+- Speakers were clear and concise. Functional requirements were well-written and descriptive. Good split of work between team members. 
+- DFDs are clear indicated, and overview for the project is well-spoken. By the way, the transcript underneath is a great one in the presentation. 
+- very detailed DFD. The introduction is presented very clearly. 
+- The pros and cons given for choosing your tech stack was a really nice addition (makes sense to use React Native). 
+- Really strong and well organized requirements. Stack choices were very clear. 
+- DFD explanation was done well. 
+- Break down of user groups is clear and well thought out. 
+- Everything looks good. 
+- Great job with the DFDs! 
+- Good DFD's 
+- The presentation clearly explains all main issues. The DFD was clearly laid out and easy to follow. 
+- DFD was well done, level 0 gave me a good overview, and DFD level 2 gave a good in-depth view of how the app will function 
+- The milestone features highlighted in the DFDs is awesome! 
+- detailed dfd 
+- Easy to understand requirements (short and concise slides) 
+- 1. The project was well introduced and the user groups were explained thoroughly 2. The DFD colors were clear and easy to understand 3. Your testing strategy sounds solid 
+- Providing a well-explained Tech Stack. 
+
+## Areas of Improvement
+- tech stack wasn't comprehensive 
+- The slides do not convey all the information that was said during the presentation. 
+- Slides are very bare. 
+- I would add images because the “overlapping circles” idea is a bit abstract for the viewer to understand. Your slides only have text 
+- 100 simultaneous users should be functional requirement. 
+- Short Term milestones aside from the ones assigned by teacher(PT1 Pt2 etc.) 
+- Clear goals of what needs to be done Clear justification of tech stack Everyone spoke clearly 
+- None needed - maybe having a bit more colour in the slides? 
+- Would like to see TypeScript on the tech stack, as I don't know why that was chosen with React Native. 
+- Not a very engaging video 
+- The calendar functionality wasn't too clear. Is that primarily for admins to add events so that users can view their upcoming activities, or does it serve a different purpose? 
+- The presentation is a bit bland using a colour or two or having pictures would of been nice for engagement. The pictures used for the DFDs were pretty blurry making it hard to read. Perhaps using a better quality image. 
+- Can have a simple Demo to show the Questionnaire and sample output from the software, it will help us to have a better understanding of the software. 
+- The presentation was not very engaging 
+- Adding a few visuals on what the app may potentially look like would help create a picture for how the app will look and function for the users. 
+- More visuals and graphics could improve the presentation. More details for the tech stack with regards to the backend, or why the app does not require a backend, would be useful. 
+- Suggesting providing timeline for each milestone. Maybe introducing the speaker before speaking the topic is a good idea. 
+- There are too many text fields rather than illustrating with pictures. Make flowcharts for DFD may be better to understand. 
+-  Description of software and user groups was a little lackluster. 
+- Level 1 DFD looks fairly complicated with lots of overlapping lines. 
+- Should use more images in presentation. Example outputs, screens you've implemented, etc. (Not just text on screen.) 
+- All of your listed non-functional requirements are actually functional requirements. 
+- If you can, maybe provide a picture of what your system's output is. 
+- Next time you may want to introduce everyone 
+- Very simple testing strategy. Unit-tests enough do not cover all the system working inter-connected. No plan to ensure CI. 
+- The items required for each milestone don't appear to be distributed evenly, very little appears to be expected for the final milestone. 
+- tech stack could have more pros/cons for each stack 
+- Inconsistent capitalization pulls attention away from content 
+- more indepth explanation to the requirements 
+- Developers are not a user group (they are developing the app, not using it). They would definitely fall under stakeholders though! The features for the final milestone should be included in your DFDs. Your testing strategy seems like it needs to be a bit more thought out. Do you have any plans to test your the application on different types of iPhones and Androids devices? (Ie. how an app behaves on a Samsung S4 could be different than the latest iPhone) Will your application only be available on certain versions of iOS and Android? Do you have a testing strategy to account for this if you decide to support multiple versions? 
+- 1. Functional requirements require more detail i.e Milestone 1, #3 what pages are you talking about? 2. There were very little visuals throughout the presentation 3. The tech stack explanation was a little confusing, i'm not sure what application you are building (refer to #2 on questions) 
+-  It would be better to have a timeline for each milestone. 
+
+## Questions
+- how are recommendations generated? 
+- What is your backend tech stack? 
+- What are the age ranges / restrictions on user groups? 
+- have you determined what exactly will be your tech stack yet? 
+- If you anonymize the data, is it possible that Dr. Dawson can find out who these are? Or is it that if people don't want to share their data, then they become anonymous? 
+- What does “overlapping circles” mean? 
+- Is 100 simultaneous users too little? 
+- Are you interfacing with SurveyMonkey or reimplementing it
+- Can the client change survey questions? Are you developing and admin interface for him?
+- What happens when a question is deleted? Will the client be prompted to answer new questions?
+- Is there not any need for a database for stored data, or will the data stores be built within the app? 
+- What kind of activities are added to the in-app calendar? 
+- What criteria will be used to develop the questionnaire(how are questions formulated to ensure their proper functionality and purpose)? 
+- Will users be able to fill out the questionnaire multiple times depending on if their needs change so that the activities will be updated? 
+-  You mention the use of push notifications considering this is a health based app how will the push notifications been shown considering some users may want something more discrete? 
+- Why did you choose mocha over Jest? 
+- What is the input difference between General users and Clients? 
+- Are the actions that are recommended based on survey results decided automatically or manually? 
+- What is being done regarding data security? Will it just be developers having limited access as mentioned in Non-Functional Requirements? Or is there additional measures being taken? 
+- Does your application require any backend systems or database connections? What frameworks and technologies are you using for this area? 
+- Do the code for both Android and IOS stay the same? Is there version requirements for the Android and IOS phones? 
+- What kind of devices will the app be used on? 
+- what kind of backend data storage will be used? 
+- In your tech stack what backend will you be using to handle the data? 
+- What is the higher level of access that patients would receive over general users? 
+- Saving the data locally is a great idea, but how will you ensure that the data is backed up or not lost/deleted from the user's device? If the user deleted the cached files, will your application still be setup to run locally? 
+- Will the app allow for users to edit their data that has been gathered on them through their use of the app. 
+- Is the data shared between client and doctor be anonymous? 
+- How will the team ensure there is no data-leaks, seeing the app will be handling private data? 
+- How are the privacy concerns being handled? How will privacy be maintained after the project is finished? 
+- was flutter ever brought up for a tech stack? 
+-  Is there an specific age demographic for the user groups? 
+- How do these "circles" function? 
+- how is the algorithm for interpreting survey results being developed? 
+- Will the psychiatrist provide you the metric to judge and suggest actions to take? 
+- What kind of encryption is being used to secure user data? 
+- How are you going to test 100+ simultaneous users using your app? When you say modern iOS and Android, which devices and versions will be considered as modern? 
+- 1. How is the data being stored and encrypted? 2. i'm unclear if you are building a mobile or web app?? 3. How do you plan on debugging the application if the developers don't have access to the raw user data? (referring to non-func requirement slide second last bullet) 
+- How does your app UI fit in different screen sizes? 
+

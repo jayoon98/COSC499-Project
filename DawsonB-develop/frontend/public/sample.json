@@ -1,0 +1,57 @@
+{
+	"questions": [
+		{
+			"qid": 1,
+			"type": 0,
+			"title": "What is your name?",
+			"subquestions": [
+				"First name", "Last name"
+			]
+		},
+		{
+			"qid": 2,
+			"type": 1,
+			"title": "How busy is your lifestyle?",
+			"subquestions": [
+				"Hardly busy at all", "Not busy enough", "Just right", "Too busy", "Chaotic"
+			],
+			"extra":"Other"
+		},
+		{
+			"qid": 3,
+			"type": 2,
+			"title": "What is your understanding of the counselling process?",
+			"subquestions": [
+				"Counselling is a process without a clearly defined timeframe",
+				"What I get from counselling depends mostly on me",
+				"My psychologist will provide some tools I can use in my daily life",
+				"My psychologist will try to understand what I'm going through",
+				"My psychologist will listen to me",
+				"To get the most out of counselling, it's important that I be as open and honest as I can"
+			],
+			"extra": "Other"
+		},
+		{
+			"qid": 4,
+			"type": 4,
+			"title": "Rank the intensity of the following problems in your life right now, where 1 is the highest intensity.",
+			"subquestions": [
+				"I need to get my emotions under control",
+				"I need to think more clearly and focus better",
+				"I need to improve my relationship with my spouse/partner",
+				"I need to act more in line with my values",
+				"I need to solve a problem in my family",
+				"I need to sleep better and exercise more",
+				"I need more friends or better quality friendships"
+			]
+		},
+		{
+			"qid": 5,
+			"type": 3,
+			"title": "Use the slider below to describe how emotionally healthy you feel.",
+			"subquestions": [
+				{"scale": 10, "note": "0 is extremely unhealthy, 10 is extremely healthy"}
+			]
+		}
+	]
+}
