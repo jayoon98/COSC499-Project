@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignContent": "flex-start",
+      "justifyContent": "center",
+      "position": "relative",
+    }
+  }
+>
+  <RNSVGSvgView
+    bbHeight="70"
+    bbWidth="555"
+    focusable={false}
+    height="70"
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        Object {},
+        Object {
+          "flex": 0,
+          "height": 70,
+          "width": 555,
+        },
+      ]
+    }
+    width="555"
+  >
+    <RNSVGGroup>
+      <RNSVGCircle
+        cx="120"
+        cy="30"
+        fill={4283650287}
+        name="circle1"
+        propList={
+          Array [
+            "fill",
+            "stroke",
+          ]
+        }
+        r="25"
+        stroke={4283650287}
+      />
+      <RNSVGCircle
+        cx="200"
+        cy="30"
+        fill={4294606706}
+        name="circle2"
+        propList={
+          Array [
+            "fill",
+            "stroke",
+          ]
+        }
+        r="25"
+        stroke={4294606706}
+      />
+      <RNSVGCircle
+        cx="280"
+        cy="30"
+        fill={4281897875}
+        name="circle3"
+        propList={
+          Array [
+            "fill",
+            "stroke",
+          ]
+        }
+        r="25"
+        stroke={4281897875}
+      />
+      <RNSVGCircle
+        cx="360"
+        cy="30"
+        fill={4294287965}
+        name="circle4"
+        propList={
+          Array [
+            "fill",
+            "stroke",
+          ]
+        }
+        r="25"
+        stroke={4294287965}
+      />
+      <RNSVGCircle
+        cx="440"
+        cy="30"
+        fill={4289256872}
+        name="circle5"
+        propList={
+          Array [
+            "fill",
+            "stroke",
+          ]
+        }
+        r="25"
+        stroke={4289256872}
+      />
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</View>
+`;

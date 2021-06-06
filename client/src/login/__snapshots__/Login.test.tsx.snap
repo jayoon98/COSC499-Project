@@ -1,0 +1,877 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#fff",
+      "display": "flex",
+      "height": "100%",
+      "marginTop": 100,
+      "padding": 48,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignContent": "flex-start",
+        "justifyContent": "center",
+        "position": "relative",
+      }
+    }
+  >
+    <RNSVGSvgView
+      bbHeight="70"
+      bbWidth="555"
+      focusable={false}
+      height="70"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {},
+          Object {
+            "flex": 0,
+            "height": 70,
+            "width": 555,
+          },
+        ]
+      }
+      width="555"
+    >
+      <RNSVGGroup>
+        <RNSVGCircle
+          cx="120"
+          cy="30"
+          fill={4283650287}
+          name="circle1"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4283650287}
+        />
+        <RNSVGCircle
+          cx="200"
+          cy="30"
+          fill={4294606706}
+          name="circle2"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4294606706}
+        />
+        <RNSVGCircle
+          cx="280"
+          cy="30"
+          fill={4281897875}
+          name="circle3"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4281897875}
+        />
+        <RNSVGCircle
+          cx="360"
+          cy="30"
+          fill={4294287965}
+          name="circle4"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4294287965}
+        />
+        <RNSVGCircle
+          cx="440"
+          cy="30"
+          fill={4289256872}
+          name="circle5"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4289256872}
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "borderBottomColor": "#f2f6fa",
+        "borderBottomWidth": 1,
+        "display": "flex",
+        "flexDirection": "row",
+        "height": 160.07999999999998,
+        "justifyContent": "flex-start",
+        "paddingBottom": 2,
+        "paddingLeft": 12,
+        "paddingRight": 12,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "black",
+          "fontSize": 60.03,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      health circles
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+    />
+  </View>
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    autoCompleteType="email"
+    collapsable={false}
+    keyboardType="email-address"
+    onChangeText={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="email"
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "borderColor": "#f2f6fa",
+        "borderWidth": 1,
+        "marginTop": 32,
+        "padding": 12,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    autoCompleteType="password"
+    collapsable={false}
+    onChangeText={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="password"
+    rejectResponderTermination={true}
+    secureTextEntry={true}
+    style={
+      Object {
+        "borderColor": "#f2f6fa",
+        "borderWidth": 1,
+        "marginTop": 12,
+        "padding": 12,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginTop": 12,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "display": "flex",
+          "flexBasis": "auto",
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3483eb",
+            "borderRadius": 4,
+            "color": "white",
+            "display": "flex",
+            "justifyContent": "center",
+            "padding": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "white",
+            }
+          }
+        >
+          Sign In
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "marginTop": 24,
+      }
+    }
+  >
+    <Text>
+      First time here?
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "center",
+            "padding": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "cornflowerblue",
+            }
+          }
+        >
+          Sign Up
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "marginTop": 8,
+      }
+    }
+  >
+    <Text>
+      Forgot your password?
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "center",
+            "padding": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "cornflowerblue",
+            }
+          }
+        >
+          Reset Password
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Signup renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#fff",
+      "display": "flex",
+      "height": "100%",
+      "marginTop": 100,
+      "padding": 48,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignContent": "flex-start",
+        "justifyContent": "center",
+        "position": "relative",
+      }
+    }
+  >
+    <RNSVGSvgView
+      bbHeight="70"
+      bbWidth="555"
+      focusable={false}
+      height="70"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          Object {},
+          Object {
+            "flex": 0,
+            "height": 70,
+            "width": 555,
+          },
+        ]
+      }
+      width="555"
+    >
+      <RNSVGGroup>
+        <RNSVGCircle
+          cx="120"
+          cy="30"
+          fill={4283650287}
+          name="circle1"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4283650287}
+        />
+        <RNSVGCircle
+          cx="200"
+          cy="30"
+          fill={4294606706}
+          name="circle2"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4294606706}
+        />
+        <RNSVGCircle
+          cx="280"
+          cy="30"
+          fill={4281897875}
+          name="circle3"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4281897875}
+        />
+        <RNSVGCircle
+          cx="360"
+          cy="30"
+          fill={4294287965}
+          name="circle4"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4294287965}
+        />
+        <RNSVGCircle
+          cx="440"
+          cy="30"
+          fill={4289256872}
+          name="circle5"
+          propList={
+            Array [
+              "fill",
+              "stroke",
+            ]
+          }
+          r="25"
+          stroke={4289256872}
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "borderBottomColor": "#f2f6fa",
+        "borderBottomWidth": 1,
+        "display": "flex",
+        "flexDirection": "row",
+        "height": 160.07999999999998,
+        "justifyContent": "flex-start",
+        "paddingBottom": 2,
+        "paddingLeft": 12,
+        "paddingRight": 12,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "black",
+          "fontSize": 60.03,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      health circles
+    </Text>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+    />
+  </View>
+  <TextInput
+    allowFontScaling={true}
+    collapsable={false}
+    onChangeText={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="name"
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "borderColor": "#f2f6fa",
+        "borderWidth": 1,
+        "marginTop": 32,
+        "padding": 12,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    autoCompleteType="email"
+    collapsable={false}
+    keyboardType="email-address"
+    onChangeText={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="email"
+    rejectResponderTermination={true}
+    style={
+      Object {
+        "borderColor": "#f2f6fa",
+        "borderWidth": 1,
+        "marginTop": 12,
+        "padding": 12,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value="a@b.com"
+  />
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    autoCompleteType="password"
+    collapsable={false}
+    onChangeText={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="password"
+    rejectResponderTermination={true}
+    secureTextEntry={true}
+    style={
+      Object {
+        "borderColor": "#f2f6fa",
+        "borderWidth": 1,
+        "marginTop": 12,
+        "padding": 12,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    style={
+      Object {
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginTop": 12,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "display": "flex",
+          "flexBasis": "auto",
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#3483eb",
+            "borderRadius": 4,
+            "color": "white",
+            "display": "flex",
+            "justifyContent": "center",
+            "padding": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "white",
+            }
+          }
+        >
+          Create Account
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "marginTop": 24,
+      }
+    }
+  >
+    <Text>
+      Already have an account?
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "justifyContent": "center",
+            "padding": 12,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "cornflowerblue",
+            }
+          }
+        >
+          Sign In
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Signup renders correctly 2`] = `
+<View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#fff",
+        "display": "flex",
+        "height": "100%",
+        "marginTop": 100,
+        "padding": 48,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "borderBottomColor": "#f2f6fa",
+          "borderBottomWidth": 1,
+          "display": "flex",
+          "flexDirection": "row",
+          "height": 160.07999999999998,
+          "justifyContent": "flex-start",
+          "paddingBottom": 2,
+          "paddingLeft": 12,
+          "paddingRight": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "black",
+            "fontSize": 60.03,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        health circles
+      </Text>
+      <View
+        style={
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+          }
+        }
+      />
+    </View>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      autoCompleteType="email"
+      collapsable={false}
+      keyboardType="email-address"
+      onChangeText={[Function]}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+      placeholder="email"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "borderColor": "#f2f6fa",
+          "borderWidth": 1,
+          "marginTop": 12,
+          "padding": 12,
+          "width": "100%",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value="a@b.com"
+    />
+    <View
+      style={
+        Object {
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginTop": 12,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "display": "flex",
+            "flexBasis": "auto",
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#3483eb",
+              "borderRadius": 4,
+              "color": "white",
+              "display": "flex",
+              "justifyContent": "center",
+              "padding": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Send a password reset email
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "flexDirection": "row",
+          "marginTop": 24,
+        }
+      }
+    >
+      <Text>
+        Remembered your password?
+      </Text>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "display": "flex",
+              "justifyContent": "center",
+              "padding": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "cornflowerblue",
+              }
+            }
+          >
+            Sign In
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

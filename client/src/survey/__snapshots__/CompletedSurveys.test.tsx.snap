@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`completed surveys renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "display": "flex",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "borderTopColor": "#f2f6fa",
+        "borderTopWidth": 1,
+        "display": "flex",
+        "margin": 12,
+        "paddingTop": 12,
+      }
+    }
+  >
+    <Text>
+      Completed Surveys
+    </Text>
+  </View>
+</View>
+`;

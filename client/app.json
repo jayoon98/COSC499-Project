@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Health Circles",
+    "slug": "healthcircles",
+    "android": {
+      "useNextNotificationsApi": true
+    },
+    "orientation": "portrait"
+  }
+}
