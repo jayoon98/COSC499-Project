@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Alert, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Alert, StatusBar,Linking } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { Colors } from '../colors';
@@ -279,6 +279,19 @@ export function Login() {
           <Text style={{ color: 'cornflowerblue' }}>Reset Password</Text>
         </Button>
       </View>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: 10,
+        }}
+      >
+        <Button type="none" onPress={ ()=>{ Linking.openURL('https://www.psychologicalhealth.life')}} >
+          <Text style={{ color: 'cornflowerblue' }}>Rewards and Directions Along Your Road to Wellness</Text>
+        </Button>
+      </View>
+
     </View>
   );
 }
