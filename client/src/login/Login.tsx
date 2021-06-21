@@ -284,7 +284,7 @@ export function Login() {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: 10,
+          marginTop: 2,
         }}
       >
         <Button type="none" onPress={ ()=>{ Linking.openURL('https://www.psychologicalhealth.life')}} >
