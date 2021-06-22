@@ -81,7 +81,7 @@ export function TutorialSurvey() {
               <CompletedSurveys />
             </TourGuideZone>
           </ScrollView>
-        </View>
+        
         <TourGuideZone
           zone={2}
           text={
@@ -89,6 +89,7 @@ export function TutorialSurvey() {
           }
           style={{ alignItems: 'flex-end', height: 200, bottom: 200 }}
         />
+        </View>
       </Navigation>
     </View>
   );
