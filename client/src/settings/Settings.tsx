@@ -397,7 +397,7 @@ export function Settings() {
                     },
                     {
                       text: 'Yes',
-                      onPress: () => Linking.openURL('tel: (855) 782-6583'),
+                      onPress: () => Linking.openURL('tel: 1-800-784-2433'),
                     },
                   ],
                 );
