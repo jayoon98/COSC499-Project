@@ -149,6 +149,7 @@ export function TutorialCalendar() {
       <View style={styles.container}>
         <TourGuideZone
           zone={9}
+          keepTooltipPosition
           isTourGuide
           text={
             'This is the Calendar page. The "+" button on the right will let you add an activity to the calendar.'
@@ -171,6 +172,7 @@ export function TutorialCalendar() {
         </TourGuideZone>
         <TourGuideZone
           zone={10}
+          keepTooltipPosition
           text={
             'This is the calendar. You can press on a date to bring down the full calendar. As you add activities, the list below will populate with the items you add. Thanks for completing the tutorial.'
           }
