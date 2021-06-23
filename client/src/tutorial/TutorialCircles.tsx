@@ -48,6 +48,7 @@ export function TutorialCircles() {
       <View style={styles.container}>
         <TourGuideZone
           zone={5}
+          keepTooltipPosition
           isTourGuide
           text={
             'This is the Health Circles page, where you can see the results of the health questionnaires you have answered.'
@@ -57,6 +58,7 @@ export function TutorialCircles() {
         </TourGuideZone>
         <TourGuideZone
           zone={7}
+          keepTooltipPosition
           text={
             'Once you complete a survey, a circle of size relative to your score in the domain will appear here.'
           }
@@ -69,17 +71,12 @@ export function TutorialCircles() {
           </TouchableWithoutFeedback>
         </TourGuideZone>
       </View>
-      {/* <TourGuideZone
-          zone={7}
-          text={
-            'Once you complete a survey, a circle of size relative to your score in the domain will appear here.'
-          }
-          style={{ flex: 0, height: '100%' }}
-        > */}
       <TourGuideZone
         zone={6}
+        //keepTooltipPosition
+        tooltipBottomOffset={100}
         text={
-          'This is where you can access information, strategies and suggested activities for each domain.'
+          'This is where you can access information, strategies and suggested activities for each domain!'
         }
         style={{ alignItems: 'flex-end', height: 300, bottom: 600 }}
       />
