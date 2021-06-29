@@ -405,6 +405,29 @@ export function Settings() {
             >
               <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
             </Button>
+
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Would you like to visit the BC Crisis Centre website?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('https://crisiscentre.bc.ca'),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
+            </Button>
             <Button
               style={styles.card}
               type="none"
