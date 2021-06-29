@@ -288,7 +288,7 @@ export function Login() {
         }}
       >
         <Button type="none" onPress={ ()=>{ Linking.openURL('https://www.psychologicalhealth.life')}} >
-          <Text style={{ color: 'cornflowerblue' }}>Rewards and Directions Along Your Road to Wellness</Text>
+          <Text style={{ color: 'crimson' }}>Rewards and Directions Along Your Road to Wellness</Text>
         </Button>
       </View>
 
