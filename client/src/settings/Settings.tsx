@@ -426,7 +426,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
+              <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
             </Button>
             <Button
               style={styles.card}
