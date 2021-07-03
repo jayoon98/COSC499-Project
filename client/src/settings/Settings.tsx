@@ -387,6 +387,16 @@ export function Settings() {
               style={styles.card}
               type="none"
               onPress={() => {
+                Actions.replace('tutorialsurvey');
+              }}
+            >
+              <Text>Tutorial</Text>
+            </Button>
+            <Text style={styles.subHeader}>Contact </Text>
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
                 Alert.alert(
                   'Contact crisis lines',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
@@ -397,7 +407,7 @@ export function Settings() {
                     },
                     {
                       text: 'Yes',
-                      onPress: () => Linking.openURL('tel: 555-5555'),
+                      onPress: () => Linking.openURL('tel: 1-800-784-2433'),
                     },
                   ],
                 );
@@ -405,15 +415,30 @@ export function Settings() {
             >
               <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
             </Button>
+
             <Button
               style={styles.card}
               type="none"
               onPress={() => {
-                Actions.replace('tutorialsurvey');
+                Alert.alert(
+                  'Would you like to visit the BC Crisis Centre website?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('https://crisiscentre.bc.ca'),
+                    },
+                  ],
+                );
               }}
             >
-              <Text>Tutorial</Text>
+              <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
             </Button>
+
             <Text style={styles.subHeader}>Theme</Text>
             <Themes />
           </View>
