@@ -177,6 +177,8 @@ export function AddEditActivity(props: AddEditActivityProps) {
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                   <Text style={styles.modalText}>Activity added </Text>
+                  <Text style={styles.modalText}>Reminder set at {activity.date}  {activity.timestamp.getHours()-1}:{activity.timestamp.getMinutes()}</Text>
+                  
 
                   <TouchableHighlight
                     style={{ ...styles.openButton, backgroundColor: '#2196F3' }}

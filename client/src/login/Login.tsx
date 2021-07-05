@@ -32,6 +32,7 @@ export function ResetPassword(props: { email: string }) {
   };
   return (
     <View>
+      
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View style={styles.container}>
         <Header title="health circles" />
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    marginTop: 100,
+    marginTop: 50,
     padding: 48,
   },
 
