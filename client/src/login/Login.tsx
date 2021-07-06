@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Alert, StatusBar,Linking } from 'react-native';
+import { StyleSheet, Text, View, Alert, StatusBar,Linking,KeyboardAvoidingView, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Actions } from 'react-native-router-flux';
 import { Colors } from '../colors';
@@ -31,6 +31,9 @@ export function ResetPassword(props: { email: string }) {
     });
   };
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'position'}
+      style={{ flex: 1 }}>
     <View>
       
       <StatusBar backgroundColor="white" barStyle="dark-content" />
@@ -71,6 +74,7 @@ export function ResetPassword(props: { email: string }) {
         </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -115,6 +119,9 @@ export function Signup(props: { email: string }) {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'position'}
+      style={{ flex: 1 }}>
     <View style={styles.container}>
       <Logo />
       <Header title="health circles" />
@@ -169,6 +176,7 @@ export function Signup(props: { email: string }) {
         </Button>
       </View>
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -219,6 +227,9 @@ export function Login() {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'position'}
+      style={{ flex: 1 }}>
     <View style={styles.container}>
       <Logo />
       <Header title="health circles"></Header>
@@ -294,6 +305,7 @@ export function Login() {
       </View>
 
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
