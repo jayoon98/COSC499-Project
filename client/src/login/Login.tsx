@@ -220,8 +220,8 @@ export function Login() {
   return (
     <View style={styles.container}>
       <Logo />
-      <Header title="health circles"></Header>
-      {/* <Header title="health circles" /> */}
+      <Header title="Health Circles"></Header>
+      {/* <Header title="Health Circles" /> */}
 
       <TextInput
         style={{ ...styles.input, marginTop: 32 }}
