@@ -97,6 +97,7 @@ export default function App() {
               hideNavBar
             />
             <Scene key="resetpassword" component={ResetPassword} hideNavBar />
+
           </Stack>
         </Router>
       </ThemeContext.Provider>

@@ -64,6 +64,7 @@ export function TutorialSurvey() {
           <ScrollView>
             <TourGuideZone
               zone={3}
+              keepTooltipPosition
               text={
                 'This is where you can select which health domains you would like to answer questions for. You press each button to highlight the domain, then hit the begin button to start.'
               }
@@ -73,6 +74,7 @@ export function TutorialSurvey() {
             </TourGuideZone>
             <TourGuideZone
               zone={4}
+              keepTooltipPosition
               text={
                 'After you complete a survey, a list will start here showing you when you completed surveys, and in which health domain they were completed. '
               }
@@ -84,11 +86,13 @@ export function TutorialSurvey() {
         </View>
         <TourGuideZone
           zone={2}
+          keepTooltipPosition
           text={
-            'This is the navigation bar, where you can move around different areas of the app.'
+            'This is the navigation bar, where you can move around different areas of the app!'
           }
           style={{ alignItems: 'flex-end', height: 200, bottom: 200 }}
-        />
+          >
+        </TourGuideZone>
       </Navigation>
     </View>
   );
