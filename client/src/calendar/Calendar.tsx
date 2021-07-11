@@ -123,13 +123,16 @@ export function ActivitiesCalendar(props: ActivitiesCalendarProps) {
 
       let items = result[activity.date];
       items = items.filter((a) => a._id !== activity._id);
-
+      
       items.push(activity);
+      updateActivities(activity.date, items);
+      items = items.filter((a) => a.deleted !== true);
+
       items.sort((a, b) => a.timestamp.getUTCDate() - b.timestamp.getUTCDate());
       console.log(items);
 
       result[activity.date] = items;
-      updateActivities(activity.date, items);
+    
 
       // There are better ways to do this, but we need to set activities to an empty
       // object in order for the agenda to refresh. sigh.

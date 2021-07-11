@@ -10,7 +10,8 @@ import {
   Platform,
   Modal,
   Alert,
-  TouchableHighlight
+  TouchableHighlight,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -106,7 +107,11 @@ export function AddEditActivity(props: AddEditActivityProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
   return (
+   <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'position'}
+      style={{ flex: 1 }}>
     <View>
+    
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Header title={props.activity ? 'Edit Activity' : 'New Activity'} />
 
@@ -177,6 +182,8 @@ export function AddEditActivity(props: AddEditActivityProps) {
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                   <Text style={styles.modalText}>Activity added </Text>
+                  <Text style={styles.modalText}>Reminder set at {activity.date}  {activity.timestamp.getHours()-1}:{activity.timestamp.getMinutes()}</Text>
+                  
 
                   <TouchableHighlight
                     style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
@@ -219,6 +226,7 @@ export function AddEditActivity(props: AddEditActivityProps) {
         </Button>
       </View>
     </View>
+  </KeyboardAvoidingView>
   );
 }
 
