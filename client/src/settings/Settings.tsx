@@ -228,6 +228,36 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   const [priorityDomain, setPriorityDomain] = useState(
     props.domain ? props.domain : 'not set',
   );
+
+  async function getPriorityDomain(){
+    const user = firebase.auth().currentUser.uid;
+    const prioDomain = await await (
+      await firebase.database().ref(`users/${user}/priorityDomain`).get()
+    ).val();
+    return prioDomain;
+  }
+  async function updatePriorityDomain(domain){
+    const user = firebase.auth().currentUser.uid;
+    await firebase.database().ref(`users/${user}`).update({'priorityDomain': domain});
+  }
+
+  async function setDefaultPriorityDomain(){
+    const user = firebase.auth().currentUser.uid;
+    await firebase.database().ref(`users/${user}`).update({'priorityDomain': "not set"});
+  }
+  
+  useEffect(() => {
+    (async () => {
+      const priorityDomain = await getPriorityDomain();
+      if (priorityDomain) {
+        setPriorityDomain(priorityDomain);
+      }
+      else {
+        setDefaultPriorityDomain();
+      }
+    })();
+  });
+  
   const [modalVisible, setModalVisible] = useState(false);
   let domaintemp; // in case user chooses cancel button
   return (
@@ -289,6 +319,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
+                  updatePriorityDomain(domaintemp);
                   setModalVisible(false);
                 }}
               >

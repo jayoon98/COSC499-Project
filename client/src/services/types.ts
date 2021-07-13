@@ -4,4 +4,5 @@ export type ErrorCallback = (error?: Error) => void;
 export type UserAccount = {
   name: string;
   email: string;
+  priorityDomain: string;
 };
