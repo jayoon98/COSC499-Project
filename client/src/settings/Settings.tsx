@@ -221,6 +221,7 @@ const screen = Dimensions.get('screen');
 export type PriorityDomainProps = {
   onChange?: (domain: string) => void;
   domain?: string;
+  readOnly?: boolean;
 };
 
 export function _PriorityDomain(props?: PriorityDomainProps) {
@@ -228,6 +229,39 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   const [priorityDomain, setPriorityDomain] = useState(
     props.domain ? props.domain : 'not set',
   );
+
+  async function getPriorityDomain(){
+    const user = firebase.auth().currentUser.uid;
+    const prioDomain = await await (
+      await firebase.database().ref(`users/${user}/priorityDomain`).get()
+    ).val();
+    return prioDomain;
+  }
+  async function updatePriorityDomain(domain){
+    console.log("Updated user domain to: ", domain);
+    const user = firebase.auth().currentUser.uid;
+    await firebase.database().ref(`users/${user}`).update({'priorityDomain': domain});
+  }
+
+  async function setDefaultPriorityDomain(){
+    const user = firebase.auth().currentUser.uid;
+    await firebase.database().ref(`users/${user}`).update({'priorityDomain': "not set"});
+  }
+  
+  useEffect(() => {
+    (async () => {
+      if(!props.readOnly){
+        const priorityDomain = await getPriorityDomain();
+        if (priorityDomain) {
+          setPriorityDomain(priorityDomain);
+        }
+        else {
+          setDefaultPriorityDomain();
+        }
+      }
+    })();
+  });
+  
   const [modalVisible, setModalVisible] = useState(false);
   let domaintemp; // in case user chooses cancel button
   return (
@@ -289,6 +323,9 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
+                  console.log(domaintemp);
+                  if(!props.readOnly)
+                    updatePriorityDomain(domaintemp);
                   setModalVisible(false);
                 }}
               >
@@ -444,7 +481,9 @@ export function Settings() {
         <ScrollView>
           <View style={styles.settings}>
             <Text style={styles.subHeader}>Set your priority domain</Text>
-            <_PriorityDomain />
+            <_PriorityDomain 
+              readOnly = {false}
+            />
 
 
 

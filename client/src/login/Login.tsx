@@ -93,7 +93,7 @@ export function Signup(props: { email: string }) {
     }
     setLoading(true);
 
-    createUser({ email, name: userName }, password, (err) => {
+    createUser({ email, name: userName, priorityDomain: "not set"}, password, (err) => {
       if (err) {
         // Possible error codes:
         //  auth/email-already-in-use
