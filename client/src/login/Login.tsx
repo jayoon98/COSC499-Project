@@ -38,7 +38,7 @@ export function ResetPassword(props: { email: string }) {
       
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <View style={styles.container}>
-        <Header title="health circles" />
+        <Header title="Health Circles" />
         <TextInput
           style={styles.input}
           placeholder="email"
@@ -93,7 +93,7 @@ export function Signup(props: { email: string }) {
     }
     setLoading(true);
 
-    createUser({ email, name: userName }, password, (err) => {
+    createUser({ email, name: userName, priorityDomain: "not set"}, password, (err) => {
       if (err) {
         // Possible error codes:
         //  auth/email-already-in-use
@@ -124,7 +124,7 @@ export function Signup(props: { email: string }) {
       style={{ flex: 1 }}>
     <View style={styles.container}>
       <Logo />
-      <Header title="health circles" />
+      <Header title="Health Circles" />
 
       <TextInput
         style={{ ...styles.input, marginTop: 32 }}
@@ -232,8 +232,8 @@ export function Login() {
       style={{ flex: 1 }}>
     <View style={styles.container}>
       <Logo />
-      <Header title="health circles"></Header>
-      {/* <Header title="health circles" /> */}
+      <Header title="Health Circles"></Header>
+      {/* <Header title="Health Circles" /> */}
 
       <TextInput
         style={{ ...styles.input, marginTop: 32 }}
@@ -300,7 +300,7 @@ export function Login() {
         }}
       >
         <Button type="none" onPress={ ()=>{ Linking.openURL('https://www.psychologicalhealth.life')}} >
-          <Text style={{ color: 'crimson' }}>Rewards and Directions Along Your Road to Wellness</Text>
+          <Text style={{ color: 'cornflowerblue' }}>Rewards and Directions Along Your Road to Wellness</Text>
         </Button>
       </View>
 
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    marginTop: 60,
+    //marginTop: 100,
     padding: 48,
   },
 

@@ -5,7 +5,9 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
+  Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 import { Title, ProgressBar, Button } from '../common/Core';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Slider } from './Slider';
@@ -35,7 +37,6 @@ export type SurveyProps = {
   questions: QuestionModel[];
   survey: SurveyModel;
 };
-
 /**
  * The questionaire page. All survey questions should be passed in as
  * a prop, the parent is responsible for downloading the required questions
@@ -114,7 +115,7 @@ export function Survey({ questions, survey }: SurveyProps) {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              marginBottom: 12,
+              marginBottom: 0,
             }}
           >
             <FontAwesomeIcon icon={faChevronLeft} color="white" />
@@ -163,7 +164,7 @@ export function Survey({ questions, survey }: SurveyProps) {
     })();
 
     return (
-      <View style={{ display: 'flex', alignItems: 'center' }}>
+      <View style={{ display: 'flex', alignItems: 'center'}}>
         <TouchableOpacity onPress={() => setInfoVisible(true)}>
           <View style={styles.iconContainer}>
             <FontAwesomeIcon icon={icon} size={96} color="#091038" />
@@ -187,7 +188,6 @@ export function Survey({ questions, survey }: SurveyProps) {
 
   return (
     <View>
-      <StatusBar backgroundColor="white" barStyle="light-content" />
       <ThemeContext.Consumer>
         {(theme) => (
           <View
@@ -196,6 +196,7 @@ export function Survey({ questions, survey }: SurveyProps) {
               backgroundColor: theme.theme[question.domains[0]],
             }}
           >
+            <StatusBar backgroundColor= {theme.theme[question.domains[0]]} barStyle="light-content" />
             <Header />
             <View style={styles.content}>
               <InfoModal
@@ -204,7 +205,7 @@ export function Survey({ questions, survey }: SurveyProps) {
                 onClose={() => setInfoVisible(false)}
               />
               <ImageIcon />
-              <Text style={{ fontSize: 28, padding: 24 }}>
+              <Text style={{ fontSize: 28, padding: 5, height: '15%'}}>
                 {question.title}
               </Text>
               <View style={styles.sliderContainer}>
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     display: 'flex',
     paddingTop: 32,
-    paddingBottom: 32,
+    paddingBottom: 16,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -281,9 +282,10 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 16,
+    paddingTop: 0,
     width: '100%',
     justifyContent: 'flex-end',
-    height: '25%',
+    height: '20%',
   },
   progress: {
     marginTop: 18,

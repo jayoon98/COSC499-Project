@@ -9,7 +9,7 @@ export function CirclesHome() {
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <Navigation selected="circles">
         <View style={styles.container}>
-          <Header title="My HealthCircles" />
+          <Header title="My Health Circles" />
           <CirclesVisual />
         </View>
       </Navigation>
@@ -20,7 +20,7 @@ export function CirclesHome() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '90%',
+    height: '100%',
     display: 'flex',
     backgroundColor: 'white',
   },
