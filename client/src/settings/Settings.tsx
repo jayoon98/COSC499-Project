@@ -17,6 +17,7 @@ import * as Notifications from 'expo-notifications';
 import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
 import { _Picker, DomainPicker } from '../common/Picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { deleteSurveyData, getAllSurveyResults } from '../services/survey';
 import { Themes } from './Themes';
 import firebase from 'firebase';
@@ -51,7 +52,11 @@ function _Notifications() {
   const notificationListener = useRef<Object>();
   const responseListener = useRef<Object>();
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [t, setTime] = useState(new Date())
+  const [show, setShow] = useState(false);
+  const showTimepicker = () => {
+    setShow(true);
+  };
   const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
     hour: 0,
     minute: 0,
@@ -62,7 +67,7 @@ function _Notifications() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token),
     );
-
+  
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
@@ -81,7 +86,12 @@ function _Notifications() {
       Notifications.removeNotificationSubscription(responseListener as any);
     };
   }, []);
+  const onChange = (_, timestamp: Date) => {
 
+      setShow(Platform.OS === 'ios');
+      setTime(timestamp);
+      setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
+    };
   return (
     <View>
       <Modal
@@ -118,11 +128,33 @@ function _Notifications() {
             }}
           >
             <Text>Schedule Daily Reminders</Text>
-            <_Picker
-              onChange={(hour, minute) => {
-                setDailyTrigger({ ...dailyTrigger, hour, minute });
-              }}
-            />
+            <View style={{
+              display: 'flex',
+
+
+            }}>
+              <Button style={{
+                display: 'flex',
+
+              }} onPress={showTimepicker}  >
+                <Text style={{
+
+                  justifyContent: 'center'
+                }}>
+                  {t.getHours()} : {t.getMinutes()}</Text>
+
+              </Button>
+            </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={t}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
             <View
               style={{
                 display: 'flex',
