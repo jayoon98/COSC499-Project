@@ -8,6 +8,7 @@ import {
   Modal,
   Linking,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { Navigation, Button, Title, Header } from '../common/Core';
 import { Actions } from 'react-native-router-flux';
@@ -351,6 +352,83 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   );
 }
 
+export function _DomainProgressModal(){
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState('social');
+  const theme = useContext(ThemeContext);
+
+  function changeSelectedDomain(props: String){
+    
+  }
+  return  (
+    <View>
+      <Button 
+        onPress={() => setModalVisible(true)}
+        style={{ flexGrow: 1, marginRight: 2, backgroundColor: 'white'}}>
+        <Text>Check Progress</Text>
+      </Button>
+      <Modal
+        transparent = {true}
+        visible = {modalVisible}
+        > 
+          <View
+           style = {{
+             height: '11%',
+             width: '90%',
+             backgroundColor: 'white',
+             marginTop: 0,
+             marginLeft: 15,
+             marginRight: 15,
+             borderTopLeftRadius: 15,
+             borderTopRightRadius: 15,
+             padding: 12,
+             paddingBottom: 0,
+             flexDirection: "row",
+           }}
+          >
+            <TouchableOpacity style = {{
+              marginRight: 5, backgroundColor: theme.theme['social'], borderRadius: 50, height: 50, width: 50}}
+              onPress={() => setSelectedDomain('social')}/>
+            <TouchableOpacity style = {{
+              marginRight: 5, backgroundColor: theme.theme['emotional'], borderRadius: 50, height: 50, width: 50}}
+              onPress={() => setSelectedDomain('emotional')}/>
+            <TouchableOpacity style = {{
+              marginRight: 5, backgroundColor: theme.theme['physical'], borderRadius: 50, height: 50, width: 50}}
+              onPress={() => setSelectedDomain('physical')}/>
+            <TouchableOpacity style = {{
+              marginRight: 5, backgroundColor: theme.theme['mental'], borderRadius: 50, height: 50, width: 50}}
+              onPress={() => setSelectedDomain('mental')}/>
+            <TouchableOpacity style = {{
+              marginRight: 5, backgroundColor: theme.theme['spiritual'], borderRadius: 50, height: 50, width: 50}}
+              onPress={() => setSelectedDomain('spiritual')}/>
+          </View>
+          <View
+            style={{ 
+            height: '85%',
+            width: '90%',
+            marginLeft: 15,
+            marginRight: 15,
+            padding: 12,
+            backgroundColor: theme.theme[selectedDomain],
+            borderBottomEndRadius: 15,
+            borderBottomLeftRadius: 15,
+            flexDirection: "column",
+            }}>
+              <View style = {{backgroundColor: 'white', margin: 0, padding: 10, width: '100%', height: '90%', borderRadius: 10}}>
+
+              </View>
+              <Button 
+                onPress={() => setModalVisible(false)}
+                style={{ marginRight: 2, backgroundColor: "white", borderRadius: 5, width: '30%', alignSelf:'baseline'}}
+              >
+                <Text >Leave</Text>
+              </Button>
+            </View>
+
+      </Modal>
+    </View>
+  )
+}
 
 export function _DimensionLastUpdate(props?: PriorityDomainProps) {
   const theme = useContext(ThemeContext);
@@ -488,7 +566,7 @@ export function Settings() {
 
 
             <Text style={styles.subHeader}>Domain Last Updated</Text>
-            <_DimensionLastUpdate/>
+            <_DomainProgressModal />
             
 
             <Text style={styles.subHeader}>Daily reminders</Text>
