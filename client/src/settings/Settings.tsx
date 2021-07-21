@@ -18,7 +18,7 @@ import * as Notifications from 'expo-notifications';
 import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
 import { _Picker, DomainPicker } from '../common/Picker';
-import { deleteSurveyData, getAllSurveyResults } from '../services/survey';
+import { deleteSurveyData, getAllSurveyResults, SurveyModel } from '../services/survey';
 import { Themes } from './Themes';
 import firebase from 'firebase';
 import { ThemeContext } from '../common/ThemeContext';
@@ -353,13 +353,56 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
 }
 
 export function _DomainProgressModal(){
-  const [modalVisible, setModalVisible] = useState(false);
   const [selectedDomain, setSelectedDomain] = useState('social');
+  const [modalVisible, setModalVisible] = useState(false);
   const theme = useContext(ThemeContext);
-
-  function changeSelectedDomain(props: String){
-    
+  function getButtonStyle(propDomain) {
+    if(propDomain === selectedDomain) {
+     return {
+      height: 45, 
+      marginTop: 15,
+      //width: 150,
+      borderTopLeftRadius: 40,
+      borderTopRightRadius: 40,
+      marginRight: 5,
+      flex: 3,
+      backgroundColor: theme.theme[propDomain],
+     }
+    } else {
+      return {
+        flex: 1,
+        borderRadius: 45, 
+        height: 45, 
+        //width: 40,
+        marginRight: 5,
+        backgroundColor: theme.theme[propDomain]
+      }
+    }
   }
+
+  function _touchableDomainButton(props) {
+    var text = ""
+    var isTrue = props.thisDomain === selectedDomain;
+    if(isTrue)
+      text = props.thisDomain;
+    return (
+      <TouchableOpacity style = {getButtonStyle(props.thisDomain)}
+        onPress={() => setSelectedDomain(props.thisDomain)}>
+          <Text style = {[isTrue ? styles.buttonText : {}]}>{text}</Text>
+      </TouchableOpacity>
+    )
+  }
+  
+  function _progressBar(props) {
+    function loadDomainProgress(){
+      return <View></View>
+    }
+    return (
+      <View/>
+    )
+
+  }
+
   return  (
     <View>
       <Button 
@@ -373,34 +416,24 @@ export function _DomainProgressModal(){
         > 
           <View
            style = {{
-             height: '11%',
+             height: 50,
              width: '90%',
              backgroundColor: 'white',
              marginTop: 0,
              marginLeft: 15,
-             marginRight: 15,
+             marginRight: 5,
+             marginBottom: 0,
              borderTopLeftRadius: 15,
              borderTopRightRadius: 15,
-             padding: 12,
-             paddingBottom: 0,
+             padding: 0,
              flexDirection: "row",
            }}
           >
-            <TouchableOpacity style = {{
-              marginRight: 5, backgroundColor: theme.theme['social'], borderRadius: 50, height: 50, width: 50}}
-              onPress={() => setSelectedDomain('social')}/>
-            <TouchableOpacity style = {{
-              marginRight: 5, backgroundColor: theme.theme['emotional'], borderRadius: 50, height: 50, width: 50}}
-              onPress={() => setSelectedDomain('emotional')}/>
-            <TouchableOpacity style = {{
-              marginRight: 5, backgroundColor: theme.theme['physical'], borderRadius: 50, height: 50, width: 50}}
-              onPress={() => setSelectedDomain('physical')}/>
-            <TouchableOpacity style = {{
-              marginRight: 5, backgroundColor: theme.theme['mental'], borderRadius: 50, height: 50, width: 50}}
-              onPress={() => setSelectedDomain('mental')}/>
-            <TouchableOpacity style = {{
-              marginRight: 5, backgroundColor: theme.theme['spiritual'], borderRadius: 50, height: 50, width: 50}}
-              onPress={() => setSelectedDomain('spiritual')}/>
+            <_touchableDomainButton thisDomain = "social"/>
+            <_touchableDomainButton thisDomain = "emotional"/>
+            <_touchableDomainButton thisDomain = "physical"/>
+            <_touchableDomainButton thisDomain = "mental"/>
+            <_touchableDomainButton thisDomain = "spiritual"/>
           </View>
           <View
             style={{ 
@@ -408,28 +441,31 @@ export function _DomainProgressModal(){
             width: '90%',
             marginLeft: 15,
             marginRight: 15,
+            marginTop: 0,
             padding: 12,
             backgroundColor: theme.theme[selectedDomain],
             borderBottomEndRadius: 15,
             borderBottomLeftRadius: 15,
             flexDirection: "column",
+            alignItems: 'flex-end'
             }}>
-              <View style = {{backgroundColor: 'white', margin: 0, padding: 10, width: '100%', height: '90%', borderRadius: 10}}>
-
-              </View>
-              <Button 
+              <ScrollView style = {{backgroundColor: 'white', margin: 0, padding: 10, width: '100%', height: '90%', borderRadius: 10}}>
+                <_progressBar/>
+              </ScrollView>
+              
+              <TouchableOpacity 
                 onPress={() => setModalVisible(false)}
-                style={{ marginRight: 2, backgroundColor: "white", borderRadius: 5, width: '30%', alignSelf:'baseline'}}
+                style={{ marginTop: 15, marginRight: 2, borderRadius: 15, width: '30%', flex: 1, alignItems: 'center'}}
               >
-                <Text >Leave</Text>
-              </Button>
+                <Text style = {{fontSize: 20, color: '#000000', fontWeight: 'bold'}}>Leave</Text>
+              </TouchableOpacity>
             </View>
 
       </Modal>
     </View>
   )
 }
-
+/* ##Unused code and it can be deleted later on
 export function _DimensionLastUpdate(props?: PriorityDomainProps) {
   const theme = useContext(ThemeContext);
   const [dimensionUpdate, DimensionUpdate] = useState(
@@ -519,8 +555,8 @@ export function _DimensionLastUpdate(props?: PriorityDomainProps) {
       </Button>
     </View>
   );
-}
-
+}*/
+var fetched = false;
 export function Settings() {
   const [username, setUsername] = useState<string>('');
   // TODO: Move this to login.ts or some other service. Trying to
@@ -532,6 +568,33 @@ export function Settings() {
     ).val();
     return username;
   }
+  async function getSurveyResult(){
+    const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+
+    // For now we sort when the component is initialized
+    // TODO: This list doesn't update until the app is restarted
+    // Copy surveys so that we don't modify the state in place when sorting
+    let s = [...surveys];
+    async function fetchResults() {
+      const res = await getAllSurveyResults();
+      if (res) {
+        // Merge with surveys from local storage
+        // Remove duplicates to fix hot reloading (surveys get added twice)
+        s = [...s, ...res].filter(
+          (a, i, self) => i === self.findIndex((b) => a._id === b._id),
+        );
+      }
+      // Dates are any to make TypeScript happy about subtracting date objects.
+      s.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
+
+      // Dates are reversed so that newer surveys show up on top
+      setSurveys(s.reverse());
+    } 
+    console.log("This ran");
+    fetchResults();
+    surveys.map((s, i) => (console.log(s," ", i)));
+    
+  }
 
   useEffect(() => {
     (async () => {
@@ -539,7 +602,7 @@ export function Settings() {
       if (username) {
         setUsername(username);
       }
-    })();
+    });
   });
 
   return (
@@ -706,4 +769,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  defaultButton: {
+    borderRadius: 50, 
+    height: 50, 
+    width: 50,
+    marginRight: 5,
+  },
+  selectedButton: {
+    height: 50, 
+    width: 150,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+
+  buttonText:{
+    color: 'white',
+    fontSize: 24,
+    textAlign: 'center'
+  }
 });
