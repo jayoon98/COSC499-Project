@@ -197,7 +197,7 @@ export function TutorialSurvey() {
             >
           
               <CompletedSurveys />
-              
+{/*               
             <View style={{borderWidth: 5}}>
               {/* <Modal
                   transparent={true}
@@ -205,8 +205,8 @@ export function TutorialSurvey() {
                   onDismiss={() => setModalVisible(true)}
                 >   */}
                   <FontAwesomeIcon style={{marginLeft:150, margin:20}} icon={faArrowAltCircleDown} color="cornflowerblue" size={28}/>     
-              {/* </Modal> */}
-            </View>
+              {/* </Modal>
+            </View> */}
 
             </TourGuideZone>
           </ScrollView>
