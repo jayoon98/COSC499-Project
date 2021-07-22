@@ -265,7 +265,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
               elevation: 5,
             }}
           >
-            <Text>Set Priority Domain</Text>
+            <Text>Set Priority Dimension</Text>
 
             <DomainPicker onChange={(domain) => (domaintemp = domain)} />
 
@@ -443,12 +443,12 @@ export function Settings() {
 
         <ScrollView>
           <View style={styles.settings}>
-            <Text style={styles.subHeader}>Set your priority domain</Text>
+            <Text style={styles.subHeader}>Set your priority Dimension</Text>
             <_PriorityDomain />
 
 
 
-            <Text style={styles.subHeader}>Domain Last Updated</Text>
+            <Text style={styles.subHeader}>Dimension Last Updated</Text>
             <_DimensionLastUpdate/>
             
 

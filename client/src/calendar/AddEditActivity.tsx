@@ -41,7 +41,7 @@ export function AddEditActivity(props: AddEditActivityProps) {
   return (
     <View>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <Header title={props.activity ? 'Edit Activity' : 'New Activity'} />
+      <Header title={props.activity ? 'Edit Activity' : 'Select a Health Circle and Enter a Health Activity in Your Calendar'} />
 
       <View style={{ paddingLeft: 16, paddingRight: 16, paddingTop: 24 }}>
         <_PriorityDomain
