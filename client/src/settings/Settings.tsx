@@ -315,96 +315,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
 }
 
 
-export function _DimensionLastUpdate(props?: PriorityDomainProps) {
-  const theme = useContext(ThemeContext);
-  const [dimensionUpdate, DimensionUpdate] = useState(
-    props.domain ? props.domain : 'not set',
-  );
-  const [modalVisible, setModalVisible] = useState(false);
-  let domaintemp; // in case user chooses cancel button
-  return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onDismiss={() => setModalVisible(false)}
-      >
-        <View
-          style={{
-            display: 'flex',
-            marginTop: '55%',
-            justifyContent: 'center',
-          }}
-        >
-          <View
-            style={{
-              display: 'flex',
-
-              margin: 'auto',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              padding: 22,
-              minHeight: 180,
-              alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-            }}
-          >
-            <Text>Choose a Dimension...</Text>
-
-            <DomainPicker onChange={(domain) => (domaintemp = domain)} />
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-              }}
-            >
-              <Button
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                style={{ flexGrow: 1, marginRight: 2 }}
-              >
-                <Text>Cancel</Text>
-              </Button>
-              <Button
-                style={{ flexGrow: 1, marginLeft: 2 }}
-                onPress={() => {
-                  Alert.alert("")//this is where the sql query comes in
-                  
-                  setModalVisible(false);
-                }}
-              >
-                <Text>Check</Text>
-              </Button>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <Button
-        type="none"
-        style={{ ...styles.card, backgroundColor: theme.theme[dimensionUpdate] }}
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'bold' }}>
-          {dimensionUpdate}
-        </Text>
-      </Button>
-    </View>
-  );
-}
+  
 
 export function Settings() {
   const [username, setUsername] = useState<string>('');
@@ -448,8 +359,7 @@ export function Settings() {
 
 
 
-            <Text style={styles.subHeader}>Dimension Last Updated</Text>
-            <_DimensionLastUpdate/>
+           
             
 
             <Text style={styles.subHeader}>Daily reminders</Text>
