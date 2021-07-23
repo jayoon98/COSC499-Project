@@ -606,7 +606,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
+              <Text>BC Crisis Centre </Text>
             </Button>
 
             <Button
@@ -629,7 +629,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>Email Dr. Dawson </Text>
+              <Text>Email Dr. Dawson </Text>
             </Button>
 
             <Text style={styles.subHeader}>Theme</Text>
