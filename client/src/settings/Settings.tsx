@@ -568,7 +568,7 @@ export function Settings() {
               type="none"
               onPress={() => {
                 Alert.alert(
-                  'Contact crisis lines',
+                  'Contact Crisis Line',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
                   [
                     {
@@ -583,7 +583,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
+              <Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
             </Button>
 
             <Button
@@ -607,6 +607,29 @@ export function Settings() {
               }}
             >
               <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
+            </Button>
+
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Would you like to send an email to Dr. Dawson ?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= '),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text style={{ fontWeight: 'bold' }}>Email Dr. Dawson </Text>
             </Button>
 
             <Text style={styles.subHeader}>Theme</Text>
