@@ -119,6 +119,7 @@ export function AddEditActivity(props: AddEditActivityProps) {
         <_PriorityDomain
           domain={activity.domain}
           onChange={(domain) => setActivity({ ...activity, domain })}
+          readOnly = {true}
         />
       </View>
 

@@ -61,7 +61,7 @@ export function _Picker({ onChange }: PickerProps) {
 
 export function DomainPicker({ onChange }: DomainPickerProps) {
   const [domain, setDomain] = useState('social');
-
+  onChange(domain);
   return (
     <View
       style={{
