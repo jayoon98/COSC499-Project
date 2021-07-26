@@ -427,8 +427,9 @@ export function _DomainProgressModal(props) {
   return (
     <View>
       <Button
+        type = "none"
         onPress={() => setModalVisible(true)}
-        style={{ flexGrow: 1, marginRight: 2, backgroundColor: 'white' }}>
+        style={{ ...styles.card }}>
         <Text>Check Progress</Text>
       </Button>
       <Modal
