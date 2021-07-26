@@ -19,6 +19,7 @@ import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
 import { _Picker, DomainPicker } from '../common/Picker';
 import { deleteSurveyData, getAllSurveyResults, SurveyModel } from '../services/survey';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Themes } from './Themes';
 import firebase from 'firebase';
 import { ThemeContext } from '../common/ThemeContext';
@@ -54,7 +55,11 @@ function _Notifications() {
   const notificationListener = useRef<Object>();
   const responseListener = useRef<Object>();
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [t, setTime] = useState(new Date())
+  const [show, setShow] = useState(false);
+  const showTimepicker = () => {
+    setShow(true);
+  };
   const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
     hour: 0,
     minute: 0,
@@ -65,7 +70,7 @@ function _Notifications() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token),
     );
-
+  
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
@@ -84,7 +89,12 @@ function _Notifications() {
       Notifications.removeNotificationSubscription(responseListener as any);
     };
   }, []);
+  const onChange = (_, timestamp: Date) => {
 
+      setShow(Platform.OS === 'ios');
+      setTime(timestamp);
+      setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
+    };
   return (
     <View>
       <Modal
@@ -121,11 +131,33 @@ function _Notifications() {
             }}
           >
             <Text>Schedule Daily Reminders</Text>
-            <_Picker
-              onChange={(hour, minute) => {
-                setDailyTrigger({ ...dailyTrigger, hour, minute });
-              }}
-            />
+            <View style={{
+              display: 'flex',
+
+
+            }}>
+              <Button style={{
+                display: 'flex',
+
+              }} onPress={showTimepicker}  >
+                <Text style={{
+
+                  justifyContent: 'center'
+                }}>
+                  {t.getHours()} : {t.getMinutes()}</Text>
+
+              </Button>
+            </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={t}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
             <View
               style={{
                 display: 'flex',
@@ -648,7 +680,7 @@ export function Settings() {
               type="none"
               onPress={() => {
                 Alert.alert(
-                  'Contact crisis lines',
+                  'Contact Crisis Line',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
                   [
                     {
@@ -663,7 +695,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
+              <Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
             </Button>
 
             <Button
@@ -686,7 +718,30 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
+              <Text>BC Crisis Centre </Text>
+            </Button>
+
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Would you like to send an email to Dr. Dawson ?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= '),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text>Email Dr. Dawson </Text>
             </Button>
 
             <Text style={styles.subHeader}>Theme</Text>
