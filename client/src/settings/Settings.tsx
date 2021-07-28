@@ -624,7 +624,7 @@ export function Settings() {
         <ScrollView>
           <View style={styles.settings}>
 
-            <Text style={styles.subHeader}>Set your priority domain</Text>
+            <Text style={styles.subHeader}>Set your priority dimension</Text>
             <_PriorityDomain
               readOnly={false}
             />
