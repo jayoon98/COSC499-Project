@@ -16,12 +16,18 @@ import { clearCredentialsCache } from '../services/login';
 import * as Notifications from 'expo-notifications';
 import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
+
 import { _Picker, DomainPicker } from '../common/Picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+
 import { deleteSurveyData, getAllSurveyResults } from '../services/survey';
 import { Themes } from './Themes';
 import firebase from 'firebase';
+import { customLocalDate, customLocalTime } from '../services/customLocalDate';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 import { ThemeContext } from '../common/ThemeContext';
+import { decodedTextSpanIntersectsWith, getParsedCommandLineOfConfigFile } from 'typescript';
 
 // redeclaring this interface here becauses it isn't imported from expo-notifications for some reason
 interface Notification {
@@ -46,6 +52,7 @@ Notifications.setNotificationHandler({
 });
 
 function _Notifications() {
+
   const [expoPushToken, setExpoPushToken] = useState('');
   // was 'useState(false)' before, I think that was messing with my types
   const [notification, setNotification] = useState<Notification>();
@@ -54,9 +61,20 @@ function _Notifications() {
   const [modalVisible, setModalVisible] = useState(false);
   const [t, setTime] = useState(new Date())
   const [show, setShow] = useState(false);
+
+
   const showTimepicker = () => {
     setShow(true);
   };
+
+
+  const onChange = (_, timestamp: Date) => {
+
+    setShow(Platform.OS === 'ios');
+    setTime(timestamp);
+    setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
+  };
+
   const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
     hour: 0,
     minute: 0,
@@ -67,7 +85,7 @@ function _Notifications() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token),
     );
-  
+
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
@@ -86,14 +104,11 @@ function _Notifications() {
       Notifications.removeNotificationSubscription(responseListener as any);
     };
   }, []);
-  const onChange = (_, timestamp: Date) => {
 
-      setShow(Platform.OS === 'ios');
-      setTime(timestamp);
-      setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
-    };
   return (
     <View>
+
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -128,6 +143,7 @@ function _Notifications() {
             }}
           >
             <Text>Schedule Daily Reminders</Text>
+
             <View style={{
               display: 'flex',
 
@@ -155,6 +171,7 @@ function _Notifications() {
                 onChange={onChange}
               />
             )}
+
             <View
               style={{
                 display: 'flex',
@@ -260,36 +277,6 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   const [priorityDomain, setPriorityDomain] = useState(
     props.domain ? props.domain : 'not set',
   );
-
-  async function getPriorityDomain(){
-    const user = firebase.auth().currentUser.uid;
-    const prioDomain = await await (
-      await firebase.database().ref(`users/${user}/priorityDomain`).get()
-    ).val();
-    return prioDomain;
-  }
-  async function updatePriorityDomain(domain){
-    const user = firebase.auth().currentUser.uid;
-    await firebase.database().ref(`users/${user}`).update({'priorityDomain': domain});
-  }
-
-  async function setDefaultPriorityDomain(){
-    const user = firebase.auth().currentUser.uid;
-    await firebase.database().ref(`users/${user}`).update({'priorityDomain': "not set"});
-  }
-  
-  useEffect(() => {
-    (async () => {
-      const priorityDomain = await getPriorityDomain();
-      if (priorityDomain) {
-        setPriorityDomain(priorityDomain);
-      }
-      else {
-        setDefaultPriorityDomain();
-      }
-    })();
-  });
-  
   const [modalVisible, setModalVisible] = useState(false);
   let domaintemp; // in case user chooses cancel button
   return (
@@ -351,7 +338,6 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
-                  updatePriorityDomain(domaintemp);
                   setModalVisible(false);
                 }}
               >
@@ -377,102 +363,13 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   );
 }
 
-
-export function _DimensionLastUpdate(props?: PriorityDomainProps) {
-  const theme = useContext(ThemeContext);
-  const [dimensionUpdate, DimensionUpdate] = useState(
-    props.domain ? props.domain : 'not set',
-  );
-  const [modalVisible, setModalVisible] = useState(false);
-  let domaintemp; // in case user chooses cancel button
-  return (
-    <View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onDismiss={() => setModalVisible(false)}
-      >
-        <View
-          style={{
-            display: 'flex',
-            marginTop: '55%',
-            justifyContent: 'center',
-          }}
-        >
-          <View
-            style={{
-              display: 'flex',
-
-              margin: 'auto',
-              backgroundColor: 'white',
-              borderRadius: 20,
-              padding: 22,
-              minHeight: 180,
-              alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-            }}
-          >
-            <Text>Choose a Dimension...</Text>
-
-            <DomainPicker onChange={(domain) => (domaintemp = domain)} />
-
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-              }}
-            >
-              <Button
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                style={{ flexGrow: 1, marginRight: 2 }}
-              >
-                <Text>Cancel</Text>
-              </Button>
-              <Button
-                style={{ flexGrow: 1, marginLeft: 2 }}
-                onPress={() => {
-                  Alert.alert("")//this is where the sql query comes in
-                  
-                  setModalVisible(false);
-                }}
-              >
-                <Text>Check</Text>
-              </Button>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <Button
-        type="none"
-        style={{ ...styles.card, backgroundColor: theme.theme[dimensionUpdate] }}
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'bold' }}>
-          {dimensionUpdate}
-        </Text>
-      </Button>
-    </View>
-  );
-}
-
 export function Settings() {
   const [username, setUsername] = useState<string>('');
   // TODO: Move this to login.ts or some other service. Trying to
   // avoid API calls in components so it's to debug the server stuff.
+  const [showReports, setShowReports] = useState(false);
+
+
   async function getUsername() {
     const user = firebase.auth().currentUser.uid;
     const username = await await (
@@ -481,14 +378,53 @@ export function Settings() {
     return username;
   }
 
+  async function getemail() {
+    const user = firebase.auth().currentUser.uid;
+    const email = await await (
+      await firebase.database().ref(`users/${user}/email`).get()
+    ).val();
+    return email;
+  }
+
   useEffect(() => {
     (async () => {
       const username = await getUsername();
       if (username) {
         setUsername(username);
       }
+
+      const email = await getemail();
+
+
+
+      if (email == "admin001@health.com") {
+        setShowReports(true)
+      }
     })();
   });
+
+
+  async function isUserAdmin() {
+    const user = firebase.auth().currentUser.uid;
+    const isadmin = await await (
+      await firebase.database().ref(`users/${user}/admin`).get()
+    ).val();
+    return isadmin;
+  }
+
+  useEffect(() => {
+    (async () => {
+      const isadmin = await isUserAdmin();
+      if (isadmin) {
+        //setUsername(username);
+
+      }
+    })();
+  });
+
+
+
+
 
   return (
     <Navigation selected="settings">
@@ -503,23 +439,31 @@ export function Settings() {
             />
           </View>
         </Header>
-
         <ScrollView>
           <View style={styles.settings}>
-            <Text style={styles.subHeader}>Set your priority domain</Text>
+            <Text style={styles.subHeader}>Set your priotiry health circle now</Text>
             <_PriorityDomain />
-
-
-
-            <Text style={styles.subHeader}>Domain Last Updated</Text>
-            <_DimensionLastUpdate/>
-            
 
             <Text style={styles.subHeader}>Daily reminders</Text>
 
             <_Notifications />
 
             <Text style={styles.subHeader}>Account</Text>
+
+
+            {showReports && <Button style={styles.card}
+              type="none"
+              onPress={() => {
+
+                Actions.replace('report');
+              }}
+            >
+              <Text>Reports</Text>
+            </Button>}
+
+
+
+
             <Button
               style={styles.card}
               type="none"
@@ -549,16 +493,6 @@ export function Settings() {
               style={styles.card}
               type="none"
               onPress={() => {
-                Actions.replace('tutorialsurvey');
-              }}
-            >
-              <Text>Tutorial</Text>
-            </Button>
-            <Text style={styles.subHeader}>Contact </Text>
-            <Button
-              style={styles.card}
-              type="none"
-              onPress={() => {
                 Alert.alert(
                   'Contact crisis lines',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
@@ -569,7 +503,7 @@ export function Settings() {
                     },
                     {
                       text: 'Yes',
-                      onPress: () => Linking.openURL('tel: 1-800-784-2433'),
+                      onPress: () => Linking.openURL('tel: 555-5555'),
                     },
                   ],
                 );
@@ -577,30 +511,15 @@ export function Settings() {
             >
               <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
             </Button>
-
             <Button
               style={styles.card}
               type="none"
               onPress={() => {
-                Alert.alert(
-                  'Would you like to visit the BC Crisis Centre website?',
-                  '',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Yes',
-                      onPress: () => Linking.openURL('https://crisiscentre.bc.ca'),
-                    },
-                  ],
-                );
+                Actions.replace('tutorialsurvey');
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>BC Crisis Centre </Text>
+              <Text>Tutorial</Text>
             </Button>
-
             <Text style={styles.subHeader}>Theme</Text>
             <Themes />
           </View>
@@ -609,6 +528,9 @@ export function Settings() {
     </Navigation>
   );
 }
+
+
+
 
 const styles = StyleSheet.create({
   settings: {
