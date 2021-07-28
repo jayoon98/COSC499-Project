@@ -334,7 +334,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
               elevation: 5,
             }}
           >
-            <Text>Set Priority Domain</Text>
+            <Text>Set Priority Dimension</Text>
 
             <DomainPicker onChange={(domain) => (domaintemp = domain)} />
 
@@ -384,7 +384,6 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
     </View>
   );
 }
-
 
 
 function _ProgressView(props){
@@ -624,6 +623,7 @@ export function Settings() {
 
         <ScrollView>
           <View style={styles.settings}>
+
             <Text style={styles.subHeader}>Set your priority domain</Text>
             <_PriorityDomain
               readOnly={false}

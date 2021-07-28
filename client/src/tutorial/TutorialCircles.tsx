@@ -51,7 +51,7 @@ export function TutorialCircles() {
           keepTooltipPosition
           isTourGuide
           text={
-            'This is the Health Circles page, where you can see the results of the health questionnaires you have answered.'
+            'See your health questionnaire results.'
           }
         >
           <Header title="My HealthCircles" />
@@ -60,7 +60,7 @@ export function TutorialCircles() {
           zone={7}
           keepTooltipPosition
           text={
-            'Once you complete a survey, a circle of size relative to your score in the domain will appear here.'
+            'The app will convert your responses to circles with sizes proportional to your scores.'
           }
           style={{ top: 0, height: '50%' }}
         >
@@ -76,7 +76,7 @@ export function TutorialCircles() {
         //keepTooltipPosition
         tooltipBottomOffset={100}
         text={
-          'This is where you can access information, strategies and suggested activities for each domain!'
+          'Access ways to improve your health.'
         }
         style={{ alignItems: 'flex-end', height: 300, bottom: 600 }}
       />
