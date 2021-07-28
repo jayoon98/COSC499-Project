@@ -631,7 +631,7 @@ export function Settings() {
 
 
 
-            <Text style={styles.subHeader}>Domain Last Updated</Text>
+            <Text style={styles.subHeader}>Activities and surveys</Text>
             <_DomainProgressModal progressViewProps = {progressViewProps}/>
 
 
