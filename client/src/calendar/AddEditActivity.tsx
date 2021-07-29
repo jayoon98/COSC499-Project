@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header, Button } from '../common/Core';
+import { Header, Button} from '../common/Core';
 import {
   View,
   StyleSheet,
@@ -113,7 +113,11 @@ export function AddEditActivity(props: AddEditActivityProps) {
     <View>
     
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <Header title={props.activity ? 'Edit Activity' : 'Select a Health Circle and Enter a Health Activity in Your Calendar'} />
+      
+
+      <Text style={styles.header}>Select a Health Circle and Enter a Health Activity in Your Calendar</Text>
+
+
 
       <View style={{ paddingLeft: 16, paddingRight: 16, paddingTop: 24 }}>
         <_PriorityDomain
@@ -122,7 +126,7 @@ export function AddEditActivity(props: AddEditActivityProps) {
           readOnly = {true}
         />
       </View>
-
+    
       <TouchableWithoutFeedback
         style={{ zIndex: -1 }}
         onPress={() => Keyboard.dismiss()}
@@ -239,6 +243,12 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  header: {
+    marginTop: 50,
+    fontSize: 30,
+    textAlign: "center",
+  },
+
 
   subHeader: {
     marginTop: 20,
