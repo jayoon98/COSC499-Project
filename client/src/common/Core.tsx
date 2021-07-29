@@ -5,4 +5,4 @@ import { Button } from './Button';
 import { Navigation } from './Navigation';
 import { Header } from './Header';
 
-export { Title, ProgressBar, Button, Navigation, Header };
+export { Title, ProgressBar, Button, Navigation, Header};
