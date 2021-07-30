@@ -12,7 +12,7 @@ export type HeaderProps = {
 export function Header({ title, children }: HeaderProps) {
   return (
     <View style={styles.header}>
-      <Title style={{ fontSize: screen.height * 0.035 }}>{title}</Title>
+      <Title style={{ fontSize: screen.height * 0.045 }}>{title}</Title>
       <View style={{ flex: 1, flexDirection: 'row' }}>{children}</View>
     </View>
   );
