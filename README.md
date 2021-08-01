@@ -1,4 +1,4 @@
-# COSC 499 Capstone project
+# COSC 499 Capstone Project
 
 
 
@@ -7,7 +7,8 @@
 ### Install
 
 ```bash
-npm install -g expo-cli
+npm install -g yarn
+npm install --global expo-cli
 
 cd client
 yarn install
@@ -19,9 +20,9 @@ yarn install
 yarn start
 ```
 
-This will start the expo server and will print a QR code to the console. If you have the Expo app on your device, you can scan the QR code to test the app.
+This will start the expo server and will print a QR code to the console. If you have the Expo app on your device, you can scan the QR code with your camera and open the link that appears to test the app.
 
-Depending on how your network is setup, this might not work. In that case you can use tunnel mode. It’s a bit slower but should solve any network issues.
+Depending on how your network is setup, this may not work. In that case you can use tunnel mode. It’s a bit slower but should solve any network issues.
 
 ```
 npm install -g localtunnel
@@ -29,7 +30,7 @@ npm install -g localtunnel
 yarn start --tunnel
 ```
 
-To test the app on other platforms, like on the browser or emulator:
+To test the app on other platforms, like on the browser or an emulator:
 
 ```bash
 yarn start --web      # Open a browser with the app
