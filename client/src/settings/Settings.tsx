@@ -278,8 +278,6 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   const [priorityDomain, setPriorityDomain] = useState(
     props.domain ? props.domain : 'not set',
   );
-<<<<<<< HEAD
-=======
 
   async function getPriorityDomain(){
     const user = firebase.auth().currentUser.uid;
@@ -313,7 +311,6 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
     })();
   });
   
->>>>>>> main
   const [modalVisible, setModalVisible] = useState(false);
   let domaintemp; // in case user chooses cancel button
   return (
@@ -375,12 +372,9 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
-<<<<<<< HEAD
-=======
                   console.log(domaintemp);
                   if(!props.readOnly)
                     updatePriorityDomain(domaintemp);
->>>>>>> main
                   setModalVisible(false);
                 }}
               >
@@ -484,15 +478,10 @@ export function Settings() {
         </Header>
         <ScrollView>
           <View style={styles.settings}>
-<<<<<<< HEAD
-            <Text style={styles.subHeader}>Set your priotiry health circle now</Text>
-            <_PriorityDomain />
-=======
             <Text style={styles.subHeader}>Set your priority domain</Text>
             <_PriorityDomain 
               readOnly = {false}
             />
->>>>>>> main
 
             <Text style={styles.subHeader}>Daily reminders</Text>
 
