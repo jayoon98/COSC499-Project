@@ -11,6 +11,9 @@ import { BarChart } from 'react-native-chart-kit';
 // theme to set domain colors 
 import { ThemeContext } from '../common/ThemeContext';
 
+// function to get date from string and check if it is within the last 15 days
+import { customStringToDate } from '../services/customLocalDate';
+
 //props -- getting the data passed from Report
 export type ReportDetailsProps = {
   item: any;
@@ -71,9 +74,11 @@ export function ReportDetails(props: ReportDetailsProps) {
       //console.log(element.completed);
       // if the survey is finished 
       if (element.completed) {
-        //add all questions in this survey to the questions array
-        questions.push(element.questions)
-
+        // only if the survey is within the last two weeks : 
+        if (customStringToDate(element.date)) {
+            //add all questions in this survey to the questions array
+            questions.push(element.questions)
+        }
       }
 
     });}
