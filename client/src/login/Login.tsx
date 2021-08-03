@@ -118,8 +118,10 @@ export function Signup(props: { email: string }) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'position'}
-      style={{ flex: 1 }}>
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+      keyboardVerticalOffset={100}
+    >
     <View style={styles.container}>
       <Logo />
       <Header title="health circles" />
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    marginTop: 60,
+    marginTop: 50,
     padding: 48,
   },
 
