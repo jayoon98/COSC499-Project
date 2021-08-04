@@ -62,14 +62,12 @@ function _Notifications() {
   const [t, setTime] = useState(new Date())
   const [show, setShow] = useState(false);
 
-
   const showTimepicker = () => {
     setShow(true);
   };
 
 
   const onChange = (_, timestamp: Date) => {
-
     setShow(Platform.OS === 'ios');
     setTime(timestamp);
     setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
@@ -432,8 +430,6 @@ export function Settings() {
 
       const email = await getemail();
 
-
-
       if (email == "admin001@health.com") {
         setShowReports(true)
       }
@@ -458,10 +454,6 @@ export function Settings() {
       }
     })();
   });
-
-
-
-
 
   return (
     <Navigation selected="settings">
@@ -567,8 +559,6 @@ export function Settings() {
     </Navigation>
   );
 }
-
-
 
 
 const styles = StyleSheet.create({
