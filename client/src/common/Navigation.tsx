@@ -15,6 +15,7 @@ import {
   faNewspaper,
   faCircle,
   faUser,
+  faPaperPlane,
 } from '@fortawesome/free-regular-svg-icons';
 
 import {
@@ -22,6 +23,7 @@ import {
   faNewspaper as faNewspaperSolid,
   faCircle as faCircleSolid,
   faUser as faUserSolid,
+  faPaperPlane as faPaperPlaneSolid,
 } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext, themes } from './ThemeContext';
 
@@ -51,6 +53,7 @@ const icons = {
   questionnaires: [faNewspaper, faNewspaperSolid],
   calendar: [faCalendar, faCalendarSolid],
   settings: [faUser, faUserSolid],
+  contact: [faPaperPlane, faPaperPlaneSolid]
 };
 
 // Adds a navigation bar to a component. Very bare bones right now.
@@ -89,18 +92,15 @@ export function Navigation({ children, selected }: NavigationProps) {
       <View style={{ marginBottom: navHeight }}>{children}</View>
       <View style={styles.navigation}>
         <NavButton name="circles" style={{ flexGrow: 1, paddingLeft: 32 }} />
-        <NavButton
-          name="questionnaires"
-          style={{ flexGrow: 2, alignItems: 'center' }}
-        />
-        <NavButton
-          name="calendar"
-          style={{ flexGrow: 2, alignItems: 'center' }}
-        />
-        <NavButton
-          name="settings"
+        <NavButton name="questionnaires" style={{ flexGrow: 2, alignItems: 'center' }}/>
+        <NavButton name="calendar" style={{ flexGrow: 2, alignItems: 'center' }}/>
+        <NavButton name="settings" style={{ flexGrow: 1, alignItems: 'flex-end', paddingRight: 22 }}/>
+         
+         <NavButton
+          name="contact"
           style={{ flexGrow: 1, alignItems: 'flex-end', paddingRight: 32 }}
         />
+
       </View>
     </View>
   );

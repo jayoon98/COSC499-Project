@@ -8,6 +8,7 @@ import {
   Modal,
   Linking,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { Navigation, Button, Title, Header } from '../common/Core';
 import { Actions } from 'react-native-router-flux';
@@ -18,16 +19,14 @@ import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
 
 import { _Picker, DomainPicker } from '../common/Picker';
-
-import { deleteSurveyData, getAllSurveyResults } from '../services/survey';
+import { deleteSurveyData, getAllSurveyResults, SurveyModel } from '../services/survey';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Themes } from './Themes';
 import firebase from 'firebase';
 import { customLocalDate, customLocalTime } from '../services/customLocalDate';
-
-import DateTimePicker from '@react-native-community/datetimepicker';
-
 import { ThemeContext } from '../common/ThemeContext';
-import { decodedTextSpanIntersectsWith, getParsedCommandLineOfConfigFile } from 'typescript';
+import {ActivitiesCalendarProps} from '../calendar/Calendar';
+import {getActivities,  ActivityAgenda} from '../services/activities';
 
 // redeclaring this interface here becauses it isn't imported from expo-notifications for some reason
 interface Notification {
@@ -277,27 +276,27 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
     props.domain ? props.domain : 'not set',
   );
 
-  async function getPriorityDomain(){
+  async function getPriorityDomain() {
     const user = firebase.auth().currentUser.uid;
     const prioDomain = await await (
       await firebase.database().ref(`users/${user}/priorityDomain`).get()
     ).val();
     return prioDomain;
   }
-  async function updatePriorityDomain(domain){
+  async function updatePriorityDomain(domain) {
     console.log("Updated user domain to: ", domain);
     const user = firebase.auth().currentUser.uid;
-    await firebase.database().ref(`users/${user}`).update({'priorityDomain': domain});
+    await firebase.database().ref(`users/${user}`).update({ 'priorityDomain': domain });
   }
 
-  async function setDefaultPriorityDomain(){
+  async function setDefaultPriorityDomain() {
     const user = firebase.auth().currentUser.uid;
-    await firebase.database().ref(`users/${user}`).update({'priorityDomain': "not set"});
+    await firebase.database().ref(`users/${user}`).update({ 'priorityDomain': "not set" });
   }
-  
+
   useEffect(() => {
     (async () => {
-      if(!props.readOnly){
+      if (!props.readOnly) {
         const priorityDomain = await getPriorityDomain();
         if (priorityDomain) {
           setPriorityDomain(priorityDomain);
@@ -308,7 +307,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
       }
     })();
   });
-  
+
   const [modalVisible, setModalVisible] = useState(false);
   let domaintemp; // in case user chooses cancel button
   return (
@@ -346,7 +345,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
               elevation: 5,
             }}
           >
-            <Text>Set Priority Domain</Text>
+            <Text>Set Priority Dimension</Text>
 
             <DomainPicker onChange={(domain) => (domaintemp = domain)} />
 
@@ -370,8 +369,7 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
-                  console.log(domaintemp);
-                  if(!props.readOnly)
+                  if (!props.readOnly)
                     updatePriorityDomain(domaintemp);
                   setModalVisible(false);
                 }}
@@ -398,7 +396,156 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   );
 }
 
+
+function _ProgressView(props){
+  function _progressCard(props){
+    const theme = useContext(ThemeContext);
+    var activity = props.activity;
+    return (
+      <View style = {styles._progressCard}>
+        <View style = {{borderRadius: 50, width: 50, height: 50, backgroundColor: theme.theme[activity.domain]}} />
+        <View style = {{marginLeft: 10}}>
+          <Text style = {{fontSize : 13, color: '#9e9e9e'}}>{activity.date}</Text>
+          <Text style = {{fontSize : 18}}>{activity.title}</Text>
+        </View>
+      </View>
+    )
+  }
+  let progressViewProps = props.progressViewProps;
+  // Filters logs for selected domain
+  progressViewProps = progressViewProps.filter(function(item){
+    return item.domain === props.domain
+  });
+  var ary = [];
+  progressViewProps.map((activity, i) => ary.push(activity));
+  ary = ary.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
+  ary = ary.reverse();
+  // Sort the ary from the newest to oldest
+  return (
+    <View >
+      {ary.map((activity, i) => <_progressCard key = {i} activity = {activity}/>)} 
+    </View>
+  )
+  
+}
+export function _DomainProgressModal(props) {
+  const [selectedDomain, setSelectedDomain] = useState('social');
+  const [modalVisible, setModalVisible] = useState(false);
+  const theme = useContext(ThemeContext);
+  function getButtonStyle(propDomain) {
+    if (propDomain === selectedDomain) {
+      return {
+        height: 45,
+        marginTop: 15,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        marginRight: 5,
+        flex: 3,
+        backgroundColor: theme.theme[propDomain],
+      }
+    } else {
+      return {
+        flex: 1,
+        borderRadius: 45,
+        height: 45,
+        marginRight: 5,
+        backgroundColor: theme.theme[propDomain]
+      }
+    }
+  }
+
+  function _touchableDomainButton(props) {
+    var text = ""
+    var isTrue = props.domain === selectedDomain;
+    if (isTrue)
+      text = props.domain;
+    return (
+      <TouchableOpacity style={getButtonStyle(props.domain)}
+        onPress={() => setSelectedDomain(props.domain)}>
+        <Text style={[isTrue ? styles.buttonText : {}]}>{text}</Text>
+      </TouchableOpacity>
+    )
+  }
+  return (
+    <View>
+      <Button
+        type = "none"
+        onPress={() => setModalVisible(true)}
+        style={{ ...styles.card }}>
+        <Text>Check Progress</Text>
+      </Button>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+      >
+        <View
+          style={{
+            height: 55,
+            width: '90%',
+            backgroundColor: 'white',
+            marginTop: 20,
+            marginLeft: 15,
+            marginRight: 5,
+            marginBottom: 0,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            padding: 0,
+            flexDirection: "row",
+          }}
+        >
+          <_touchableDomainButton domain="social" />
+          <_touchableDomainButton domain="emotional" />
+          <_touchableDomainButton domain="physical" />
+          <_touchableDomainButton domain="mental" />
+          <_touchableDomainButton domain="spiritual" />
+        </View>
+        <View
+          style={{
+            height: '86%',
+            width: '90%',
+            marginLeft: 15,
+            marginRight: 15,
+            marginTop: 0,
+            padding: 12,
+            backgroundColor: theme.theme[selectedDomain],
+            borderBottomEndRadius: 15,
+            borderBottomLeftRadius: 15,
+            flexDirection: "column",
+            alignItems: 'flex-end'
+          }}>
+          <ScrollView style={{ backgroundColor: 'white', margin: 0, padding: 12, width: '100%', height: '90%', borderRadius: 10 }}>
+            <_ProgressView domain = {selectedDomain} progressViewProps = {props.progressViewProps}/>
+          </ScrollView>
+
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={{ marginTop: 15, marginRight: 2, borderRadius: 15, width: '30%', flex: 1, alignItems: 'center' }}
+          >
+            <Text style={{ fontSize: 20, color: '#000000', fontWeight: 'bold' }}>Leave</Text>
+          </TouchableOpacity>
+        </View>
+
+      </Modal>
+    </View>
+  )
+}
+
+type activityLogProp = {
+  domain: string;
+  title: string;
+  date: string;
+};
+
 export function Settings() {
+  const [progressViewProps, setProgressViewProps] = useState<activityLogProp[]>([]);
+  const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+  
+  // This variable is used to stop infinite re-rendering at useEffect()
+  const idle = "";
+  // Copied function from ../survey/CompletedSurveys.tsx 
+  // Code inside of the useEffect should run only once per restart
+  let s = [...surveys];
+
   const [username, setUsername] = useState<string>('');
   // TODO: Move this to login.ts or some other service. Trying to
   // avoid API calls in components so it's to debug the server stuff.
@@ -453,8 +600,61 @@ export function Settings() {
 
       }
     })();
-  });
+  },[idle]);
 
+  useEffect(() => {
+    (async () => {
+      // This function is located near the root to minimize the number of query call
+      // Copied and modified the fetchResults function from CompletedSurveys.tsx
+      let tempProgressViewProps = progressViewProps;
+      async function fetchResults() {
+        const res = await getAllSurveyResults();
+        if (res) {
+          // Merge with surveys from local storage
+          // Remove duplicates to fix hot reloading (surveys get added twice)
+          s = [...s, ...res].filter(
+            (a, i, self) => i === self.findIndex((b) => a._id === b._id),
+          );
+        }
+        // Dates are any to make TypeScript happy about subtracting date objects.
+        s.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
+  
+        // Dates are reversed so that newer surveys show up on top
+        return s.reverse();
+      }
+
+      // copied code from Calendar.tsx
+      const loadActivities = async (): Promise<ActivityAgenda> => {
+        let result = await getActivities();
+        if (!result) {
+          // No data yet
+          result = {};
+        }
+    
+        // Normalize dates
+        Object.values(result).forEach((items) =>
+          items.forEach((a) => (a.timestamp = new Date(a.timestamp))),
+        );
+    
+        Object.keys(result).forEach((day) => {
+          result[day] = result[day].filter((a) => !a.deleted);
+        });
+
+        return result;
+      };
+      let activityResult = await loadActivities();
+      // store activities to activityLogProps
+      Object.values(activityResult).forEach((items) => 
+      items.forEach((a) => tempProgressViewProps.push({domain : a.domain, title : a.title, date : a.date})));
+
+      let surveyResults = await fetchResults();
+      surveyResults.map((s, i) => (
+        // truncate the date to fit YYYY/MM/DD
+        s.domains.forEach((d) => tempProgressViewProps.push({domain : d, title : "Completed survey", date : s.date.substring(0, 10)}))
+      ));
+      setProgressViewProps(tempProgressViewProps);
+    })();
+  }, []);
   return (
     <Navigation selected="settings">
       <View style={styles.container}>
@@ -470,10 +670,17 @@ export function Settings() {
         </Header>
         <ScrollView>
           <View style={styles.settings}>
-            <Text style={styles.subHeader}>Set your priority domain</Text>
-            <_PriorityDomain 
-              readOnly = {false}
+
+            <Text style={styles.subHeader}>Set your priority dimension</Text>
+            <_PriorityDomain
+              readOnly={false}
             />
+
+
+
+            <Text style={styles.subHeader}>Activities and surveys</Text>
+            <_DomainProgressModal progressViewProps = {progressViewProps}/>
+
 
             <Text style={styles.subHeader}>Daily reminders</Text>
 
@@ -525,7 +732,7 @@ export function Settings() {
               type="none"
               onPress={() => {
                 Alert.alert(
-                  'Contact crisis lines',
+                  'Contact Crisis Line',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
                   [
                     {
@@ -540,7 +747,7 @@ export function Settings() {
                 );
               }}
             >
-              <Text style={{ fontWeight: 'bold' }}>Are you in crisis? </Text>
+              <Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
             </Button>
             <Button
               style={styles.card}
@@ -549,7 +756,30 @@ export function Settings() {
                 Actions.replace('tutorialsurvey');
               }}
             >
-              <Text>Tutorial</Text>
+              <Text>BC Crisis Centre </Text>
+            </Button>
+
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Would you like to send an email to Dr. Dawson ?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= '),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text>Email Dr. Dawson </Text>
             </Button>
             <Text style={styles.subHeader}>Theme</Text>
             <Themes />
@@ -603,4 +833,42 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  defaultButton: {
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    marginRight: 5,
+  },
+  selectedButton: {
+    height: 50,
+    width: 150,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+
+  buttonText: {
+    color: 'white',
+    fontSize: 24,
+    textAlign: 'center'
+  },
+
+  _progressCard: {
+    padding: 18,
+    borderRadius: 14,
+    margin: 12,
+    marginTop: 0,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5.6,
+    elevation: 5,
+    flexDirection: 'row',
+    //justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 });

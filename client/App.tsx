@@ -7,6 +7,7 @@ import { ReportDetails } from './src/survey/ReportDetails';
 import { Router, Stack, Scene } from 'react-native-router-flux';
 import { CirclesHome } from './src/circles/CirclesHome';
 import { Settings } from './src/settings/Settings';
+import { Contact } from './src/contact/Contact';
 import { Themes } from './src/settings/Themes';
 import { ActivitiesCalendar } from './src/calendar/Calendar';
 import { Login, Signup, ResetPassword } from './src/login/Login';
@@ -76,6 +77,8 @@ export default function App() {
             <Scene key="settings" component={Settings} hideNavBar />
             <Scene key="report" component={Report} hideNavBar />
             <Scene key="reportdetails" component={ReportDetails} hideNavBar />
+            <Scene key="contact" component={Contact} hideNavBar />
+
             {/* Tutorial */}
             <Scene key="tos" component={ToS} hideNavBar />
             <Scene key="tutorialsurvey" component={TutorialSurvey} hideNavBar />
