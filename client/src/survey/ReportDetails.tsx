@@ -51,11 +51,7 @@ export function ReportDetails(props: ReportDetailsProps) {
 
 
   }
-
-  // useEffect  updates the view when it finishes 
-  useEffect(() => {
-    // array to hold all questions 
-    const questions = []
+  const questions = []
 
     //arrays to hold answers values from each domain
     const social = []
@@ -63,6 +59,10 @@ export function ReportDetails(props: ReportDetailsProps) {
     const physical = []
     const mental = []
     const spiritual = []
+  // useEffect  updates the view when it finishes 
+  useEffect(() => {
+    // array to hold all questions 
+   
 
     // in firebase, surveys hold the data of te user's answers 
     const surveys: Object = item.surveys
@@ -109,43 +109,51 @@ export function ReportDetails(props: ReportDetailsProps) {
             }
             case 'physical': {
               physical.push(que.response)
-
               break;
             }
             case 'mental': {
               mental.push(que.response)
-
               break;
             }
             case 'spiritual': {
               spiritual.push(que.response)
 
-
               break;
             }
-
           }
-
         })
       })
-
-
-
-      const data2 = {
+    }
+  }, []);
+    const data2 = {
         labels: ['Social', 'Emotional', 'Physical', 'Mental', 'Spiritual'],
         datasets: [
           {
             data: [average(social), average(emotional), average(physical), average(mental), average(spiritual)],
           },
         ],
-
       }
 
       setData(data2)
 
-    }
-  }, []);
+    const displaydata = (domainarray: any[]) => {
+ 
+    const label: string[] = domainarray.map((index) => {
+      return index.toString()
+    });
+    const datas: number[] = domainarray.map((value: number) => { return value });
+    const displaydata2 = {
+      labels: label,
+      datasets: [
+        {
+          data: datas,
+        },
+      ],
 
+    }
+
+    setData(displaydata2)
+  }
 
   return (
     <Navigation>
@@ -219,20 +227,23 @@ export function ReportDetails(props: ReportDetailsProps) {
               }}
             >
               <View style={styles.chipContainer}>
-                <View style={{ ...styles.chip, backgroundColor: theme.theme['social'] }}>
-                  <Text>{'Social'}</Text>
+                    <View style={{ ...styles.chip, backgroundColor: theme.theme['social'] }} >
+                  <Text onPress={() =>  setData(data2) }>{'Averages'}</Text>
+                </View>
+                <View style={{ ...styles.chip, backgroundColor: theme.theme['social'] }} >
+                  <Text onPress={ () => displaydata(social)}>{'Social'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['emotional'] }}>
-                  <Text>{'Emotional'}</Text>
+                  <Text onPress={() =>  displaydata(emotional)}>{'Emotional'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['physical'] }}>
-                  <Text>{'Physical'}</Text>
+                  <Text onPress={() =>  displaydata(physical)}>{'Physical'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['mental'] }}>
-                  <Text>{'Mental'}</Text>
+                  <Text onPress = {() => displaydata(mental)}>{'Mental'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['spiritual'] }}>
-                  <Text>{'Spiritual'}</Text>
+                  <Text onPress={() => displaydata(spiritual)}>{'Spiritual'}</Text>
                 </View>
               </View>
 
