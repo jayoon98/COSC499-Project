@@ -228,22 +228,22 @@ export function ReportDetails(props: ReportDetailsProps) {
             >
               <View style={styles.chipContainer}>
                     <View style={{ ...styles.chip, backgroundColor: theme.theme['social'] }} >
-                  <Text onPress={() =>  setData(data2) }>{'Averages'}</Text>
+                  <Text >{'Averages'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['social'] }} >
-                  <Text onPress={ () => displaydata(social)}>{'Social'}</Text>
+                  <Text  >{'Social'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['emotional'] }}>
-                  <Text onPress={() =>  displaydata(emotional)}>{'Emotional'}</Text>
+                  <Text >{'Emotional'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['physical'] }}>
-                  <Text onPress={() =>  displaydata(physical)}>{'Physical'}</Text>
+                  <Text  >{'Physical'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['mental'] }}>
-                  <Text onPress = {() => displaydata(mental)}>{'Mental'}</Text>
+                  <Text  >{'Mental'}</Text>
                 </View>
                 <View style={{ ...styles.chip, backgroundColor: theme.theme['spiritual'] }}>
-                  <Text onPress={() => displaydata(spiritual)}>{'Spiritual'}</Text>
+                  <Text  >{'Spiritual'}</Text>
                 </View>
               </View>
 
