@@ -17,11 +17,13 @@ import { clearCredentialsCache } from '../services/login';
 import * as Notifications from 'expo-notifications';
 import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
+
 import { _Picker, DomainPicker } from '../common/Picker';
 import { deleteSurveyData, getAllSurveyResults, SurveyModel } from '../services/survey';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Themes } from './Themes';
 import firebase from 'firebase';
+import { customLocalDate, customLocalTime } from '../services/customLocalDate';
 import { ThemeContext } from '../common/ThemeContext';
 import {ActivitiesCalendarProps} from '../calendar/Calendar';
 import {getActivities,  ActivityAgenda} from '../services/activities';
@@ -49,6 +51,7 @@ Notifications.setNotificationHandler({
 });
 
 function _Notifications() {
+
   const [expoPushToken, setExpoPushToken] = useState('');
   // was 'useState(false)' before, I think that was messing with my types
   const [notification, setNotification] = useState<Notification>();
@@ -57,9 +60,18 @@ function _Notifications() {
   const [modalVisible, setModalVisible] = useState(false);
   const [t, setTime] = useState(new Date())
   const [show, setShow] = useState(false);
+
   const showTimepicker = () => {
     setShow(true);
   };
+
+
+  const onChange = (_, timestamp: Date) => {
+    setShow(Platform.OS === 'ios');
+    setTime(timestamp);
+    setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
+  };
+
   const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
     hour: 0,
     minute: 0,
@@ -70,7 +82,7 @@ function _Notifications() {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token),
     );
-  
+
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         setNotification(notification);
@@ -89,14 +101,11 @@ function _Notifications() {
       Notifications.removeNotificationSubscription(responseListener as any);
     };
   }, []);
-  const onChange = (_, timestamp: Date) => {
 
-      setShow(Platform.OS === 'ios');
-      setTime(timestamp);
-      setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
-    };
   return (
     <View>
+
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -131,6 +140,7 @@ function _Notifications() {
             }}
           >
             <Text>Schedule Daily Reminders</Text>
+
             <View style={{
               display: 'flex',
 
@@ -158,6 +168,7 @@ function _Notifications() {
                 onChange={onChange}
               />
             )}
+
             <View
               style={{
                 display: 'flex',
@@ -538,6 +549,9 @@ export function Settings() {
   const [username, setUsername] = useState<string>('');
   // TODO: Move this to login.ts or some other service. Trying to
   // avoid API calls in components so it's to debug the server stuff.
+  const [showReports, setShowReports] = useState(false);
+
+
   async function getUsername() {
     const user = firebase.auth().currentUser.uid;
     const username = await await (
@@ -545,11 +559,45 @@ export function Settings() {
     ).val();
     return username;
   }
+
+  async function getemail() {
+    const user = firebase.auth().currentUser.uid;
+    const email = await await (
+      await firebase.database().ref(`users/${user}/email`).get()
+    ).val();
+    return email;
+  }
+
   useEffect(() => {
     (async () => {
       const username = await getUsername();
       if (username) {
         setUsername(username);
+      }
+
+      const email = await getemail();
+
+      if (email == "admin001@health.com") {
+        setShowReports(true)
+      }
+    })();
+  });
+
+
+  async function isUserAdmin() {
+    const user = firebase.auth().currentUser.uid;
+    const isadmin = await await (
+      await firebase.database().ref(`users/${user}/admin`).get()
+    ).val();
+    return isadmin;
+  }
+
+  useEffect(() => {
+    (async () => {
+      const isadmin = await isUserAdmin();
+      if (isadmin) {
+        //setUsername(username);
+
       }
     })();
   },[idle]);
@@ -620,7 +668,6 @@ export function Settings() {
             />
           </View>
         </Header>
-
         <ScrollView>
           <View style={styles.settings}>
 
@@ -640,6 +687,21 @@ export function Settings() {
             <_Notifications />
 
             <Text style={styles.subHeader}>Account</Text>
+
+
+            {showReports && <Button style={styles.card}
+              type="none"
+              onPress={() => {
+
+                Actions.replace('report');
+              }}
+            >
+              <Text>Reports</Text>
+            </Button>}
+
+
+
+
             <Button
               style={styles.card}
               type="none"
@@ -669,16 +731,6 @@ export function Settings() {
               style={styles.card}
               type="none"
               onPress={() => {
-                Actions.replace('tutorialsurvey');
-              }}
-            >
-              <Text>Tutorial</Text>
-            </Button>
-            <Text style={styles.subHeader}>Contact </Text>
-            <Button
-              style={styles.card}
-              type="none"
-              onPress={() => {
                 Alert.alert(
                   'Contact Crisis Line',
                   'If you are experiencing a mental health crisis, you can call a crisis line for support',
@@ -689,7 +741,7 @@ export function Settings() {
                     },
                     {
                       text: 'Yes',
-                      onPress: () => Linking.openURL('tel: 1-800-784-2433'),
+                      onPress: () => Linking.openURL('tel: 555-5555'),
                     },
                   ],
                 );
@@ -697,25 +749,11 @@ export function Settings() {
             >
               <Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
             </Button>
-
             <Button
               style={styles.card}
               type="none"
               onPress={() => {
-                Alert.alert(
-                  'Would you like to visit the BC Crisis Centre website?',
-                  '',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Yes',
-                      onPress: () => Linking.openURL('https://crisiscentre.bc.ca'),
-                    },
-                  ],
-                );
+                Actions.replace('tutorialsurvey');
               }}
             >
               <Text>BC Crisis Centre </Text>
@@ -743,7 +781,6 @@ export function Settings() {
             >
               <Text>Email Dr. Dawson </Text>
             </Button>
-
             <Text style={styles.subHeader}>Theme</Text>
             <Themes />
           </View>
@@ -752,6 +789,7 @@ export function Settings() {
     </Navigation>
   );
 }
+
 
 const styles = StyleSheet.create({
   settings: {

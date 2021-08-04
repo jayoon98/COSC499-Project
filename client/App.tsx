@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Survey } from './src/survey/Survey';
 import { SurveyList } from './src/survey/SurveyList';
+import { Report } from './src/survey/Report';
+import { ReportDetails } from './src/survey/ReportDetails';
 import { Router, Stack, Scene } from 'react-native-router-flux';
 import { CirclesHome } from './src/circles/CirclesHome';
 import { Settings } from './src/settings/Settings';
@@ -14,6 +16,7 @@ import { TutorialSurvey } from './src/tutorial/TutorialSurvey';
 import { TutorialCircles } from './src/tutorial/TutorialCircles';
 import { AuthHandler } from './src/login/Auth';
 import { AddEditActivity } from './src/calendar/AddEditActivity';
+
 
 import firebase from 'firebase';
 
@@ -72,6 +75,8 @@ export default function App() {
             <Scene key="circles" component={CirclesHome} hideNavBar />
             <Scene key="calendar" component={ActivitiesCalendar} hideNavBar />
             <Scene key="settings" component={Settings} hideNavBar />
+            <Scene key="report" component={Report} hideNavBar />
+            <Scene key="reportdetails" component={ReportDetails} hideNavBar />
             <Scene key="contact" component={Contact} hideNavBar />
 
             {/* Tutorial */}
