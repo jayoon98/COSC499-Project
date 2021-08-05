@@ -29,7 +29,7 @@ function DomainCard({ domain, onPress, selected }: DomainCardProps) {
               backgroundColor: theme.theme[domain],
             }}
           >
-            <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 24, color: 'black', fontWeight: 'bold' }}>
               {domain}
             </Text>
           </View>
