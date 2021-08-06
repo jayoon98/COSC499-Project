@@ -44,7 +44,7 @@ export function ReportDetails(props: ReportDetailsProps) {
 	// data for chart - useState will listen to any changes in this data and update it in the view
 	const [data, setData] = useState({
 		// labels for chart horizontal line
-		labels: ['Social', 'Emotional', 'Physical', 'Mentl', 'Spiritual'],
+		labels: ['Social', 'Emotional', 'Physical', 'Mental', 'Spiritual'],
 		// values for data ,
 		datasets: [
 			// initial fake values
@@ -80,7 +80,7 @@ export function ReportDetails(props: ReportDetailsProps) {
 		setQuestions([]);
 		setData({
 			// labels for chart horizontal line
-			labels: ['Social', 'Emotional', 'Physical', 'Mentl', 'Spiritual'],
+			labels: ['Social', 'Emotional', 'Physical', 'Mental', 'Spiritual'],
 			// values for data ,
 			datasets: [
 				// initial fake values
