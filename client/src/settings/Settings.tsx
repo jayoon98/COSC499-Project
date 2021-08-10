@@ -579,285 +579,268 @@ type activityLogProp = {
 };
 
 export function Settings() {
-	const [progressViewProps, setProgressViewProps] = useState<activityLogProp[]>(
-		[],
-	);
-	const [surveys, setSurveys] = useState<SurveyModel[]>([]);
-	const [email, setEmail] = useState('');
-	const [loading, setLoading] = useState(false);
+  const [progressViewProps, setProgressViewProps] = useState<activityLogProp[]>(
+    [],
+  );
+  const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
-	// This variable is used to stop infinite re-rendering at useEffect()
-	const idle = '';
-	// Copied function from ../survey/CompletedSurveys.tsx
-	// Code inside of the useEffect should run only once per restart
-	let s = [...surveys];
+  // This variable is used to stop infinite re-rendering at useEffect()
+  const idle = '';
+  // Copied function from ../survey/CompletedSurveys.tsx
+  // Code inside of the useEffect should run only once per restart
+  let s = [...surveys];
 
-	const [username, setUsername] = useState<string>('');
-	// TODO: Move this to login.ts or some other service. Trying to
-	// avoid API calls in components so it's to debug the server stuff.
-	const [showReports, setShowReports] = useState(false);
+  const [username, setUsername] = useState<string>('');
+  // TODO: Move this to login.ts or some other service. Trying to
+  // avoid API calls in components so it's to debug the server stuff.
+  const [showReports, setShowReports] = useState(false);
 
-	async function getUsername() {
-		const user = firebase.auth().currentUser.uid;
-		const username = await await (
-			await firebase.database().ref(`users/${user}/name`).get()
-		).val();
-		return username;
-	}
+  async function getUsername() {
+    const user = firebase.auth().currentUser.uid;
+    const username = await await (
+      await firebase.database().ref(`users/${user}/name`).get()
+    ).val();
+    return username;
+  }
 
-	async function getemail() {
-		const user = firebase.auth().currentUser.uid;
-		const email = await await (
-			await firebase.database().ref(`users/${user}/email`).get()
-		).val();
-		return email;
-	}
+  async function getemail() {
+    const user = firebase.auth().currentUser.uid;
+    const email = await await (
+      await firebase.database().ref(`users/${user}/email`).get()
+    ).val();
+    return email;
+  }
 
-	useEffect(() => {
-		(async () => {
-			const username = await getUsername();
-			if (username) {
-				setUsername(username);
-			}
+  useEffect(() => {
+    (async () => {
+      const username = await getUsername();
+      if (username) setUsername(username);
+      setEmail(await getemail());
+    })();
+  });
 
-			setEmail(await getemail());
+  // async function isUserAdmin() {
+  //   const user = firebase.auth().currentUser.uid;
+  //   const isadmin = await await (
+  //     await firebase.database().ref(`users/${user}/admin`).get()
+  //   ).val();
+  //   return isadmin;
+  // }
 
-			// if (email == 'admin001@health.com') {
-			//   setShowReports(true);
-			// } else {
-			// }
-		})();
-	});
+  useEffect(() => {
+    (async () => {
+      // This function is located near the root to minimize the number of query call
+      // Copied and modified the fetchResults function from CompletedSurveys.tsx
+      let tempProgressViewProps = progressViewProps;
+      async function fetchResults() {
+        const res = await getAllSurveyResults();
+        if (res) {
+          // Merge with surveys from local storage
+          // Remove duplicates to fix hot reloading (surveys get added twice)
+          s = [...s, ...res].filter(
+            (a, i, self) => i === self.findIndex((b) => a._id === b._id),
+          );
+        }
+        // Dates are any to make TypeScript happy about subtracting date objects.
+        s.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
 
-	/*  async function isUserAdmin() {
-	   const user = firebase.auth().currentUser.uid;
-	   const isadmin = await await (
-		 await firebase.database().ref(`users/${user}/admin`).get()
-	   ).val();
-	   return isadmin;
-	 }
-   
-	 useEffect(() => {
-	   (async () => {
-		 const isadmin = await isUserAdmin();
-		 if (isadmin) {
-		   //setUsername(username);
-		 }
-	   })();
-	 }, [idle]); */
+        // Dates are reversed so that newer surveys show up on top
+        return s.reverse();
+      }
 
-	useEffect(() => {
-		(async () => {
-			// This function is located near the root to minimize the number of query call
-			// Copied and modified the fetchResults function from CompletedSurveys.tsx
-			let tempProgressViewProps = progressViewProps;
-			async function fetchResults() {
-				const res = await getAllSurveyResults();
-				if (res) {
-					// Merge with surveys from local storage
-					// Remove duplicates to fix hot reloading (surveys get added twice)
-					s = [...s, ...res].filter(
-						(a, i, self) => i === self.findIndex((b) => a._id === b._id),
-					);
-				}
-				// Dates are any to make TypeScript happy about subtracting date objects.
-				s.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
+      // copied code from Calendar.tsx
+      const loadActivities = async (): Promise<ActivityAgenda> => {
+        let result = await getActivities();
+        if (!result) {
+          // No data yet
+          result = {};
+        }
 
-				// Dates are reversed so that newer surveys show up on top
-				return s.reverse();
-			}
+        // Normalize dates
+        Object.values(result).forEach((items) =>
+          items.forEach((a) => (a.timestamp = new Date(a.timestamp))),
+        );
 
-			// copied code from Calendar.tsx
-			const loadActivities = async (): Promise<ActivityAgenda> => {
-				let result = await getActivities();
-				if (!result) {
-					// No data yet
-					result = {};
-				}
+        Object.keys(result).forEach((day) => {
+          result[day] = result[day].filter((a) => !a.deleted);
+        });
 
-				// Normalize dates
-				Object.values(result).forEach((items) =>
-					items.forEach((a) => (a.timestamp = new Date(a.timestamp))),
-				);
+        return result;
+      };
+      let activityResult = await loadActivities();
+      // store activities to activityLogProps
+      Object.values(activityResult).forEach((items) =>
+        items.forEach((a) =>
+          tempProgressViewProps.push({
+            domain: a.domain,
+            title: a.title,
+            date: a.date,
+          }),
+        ),
+      );
 
-				Object.keys(result).forEach((day) => {
-					result[day] = result[day].filter((a) => !a.deleted);
-				});
+      let surveyResults = await fetchResults();
+      surveyResults.map((s, i) =>
+        // truncate the date to fit YYYY/MM/DD
+        s.domains.forEach((d) =>
+          tempProgressViewProps.push({
+            domain: d,
+            title: 'Completed survey',
+            date: s.date.substring(0, 10),
+          }),
+        ),
+      );
+      setProgressViewProps(tempProgressViewProps);
+    })();
+  }, []);
+  return (
+    <Navigation selected="settings">
+      <View style={styles.container}>
+        <Header title={`Hello, ${username}`}>
+          <View style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+            <NativeButton
+              title="Logout"
+              onPress={() => {
+                clearCredentialsCache((_) => Actions.replace('login'));
+              }}
+            />
+          </View>
+        </Header>
+        <ScrollView>
+          <View style={styles.settings}>
+            <Text style={styles.subHeader}>Set your priority dimension</Text>
+            <_PriorityDomain readOnly={false} />
 
-				return result;
-			};
-			let activityResult = await loadActivities();
-			// store activities to activityLogProps
-			Object.values(activityResult).forEach((items) =>
-				items.forEach((a) =>
-					tempProgressViewProps.push({
-						domain: a.domain,
-						title: a.title,
-						date: a.date,
-					}),
-				),
-			);
+            <Text style={styles.subHeader}>Activities and surveys</Text>
+            <_DomainProgressModal progressViewProps={progressViewProps} />
 
-			let surveyResults = await fetchResults();
-			surveyResults.map((s, i) =>
-				// truncate the date to fit YYYY/MM/DD
-				s.domains.forEach((d) =>
-					tempProgressViewProps.push({
-						domain: d,
-						title: 'Completed survey',
-						date: s.date.substring(0, 10),
-					}),
-				),
-			);
-			setProgressViewProps(tempProgressViewProps);
-		})();
-	}, []);
-	return (
-		<Navigation selected="settings">
-			<View style={styles.container}>
-				<Header title={`Hello, ${username}`}>
-					<View style={{ marginLeft: 'auto', flexDirection: 'row' }}>
-						<NativeButton
-							title="Logout"
-							onPress={() => {
-								clearCredentialsCache((_) => Actions.replace('login'));
-							}}
-						/>
-					</View>
-				</Header>
-				<ScrollView>
-					<View style={styles.settings}>
-						<Text style={styles.subHeader}>Set your priority dimension</Text>
-						<_PriorityDomain readOnly={false} />
+            <Text style={styles.subHeader}>Daily reminders</Text>
 
-						<Text style={styles.subHeader}>Activities and surveys</Text>
-						<_DomainProgressModal progressViewProps={progressViewProps} />
+            <_Notifications />
 
-						<Text style={styles.subHeader}>Daily reminders</Text>
+            <Text style={styles.subHeader}>Account</Text>
 
-						<_Notifications />
+            <Button
+              style={[
+                styles.card,
+                { justifyContent: loading ? 'center' : null },
+              ]}
+              type="none"
+              onPress={() => {
+                if (email == 'admin001@health.com') Actions.replace('report');
+                else {
+                  setLoading(true);
+                  const userr = firebase.auth().currentUser.uid;
 
-						<Text style={styles.subHeader}>Account</Text>
+                  firebase
+                    .database()
+                    .ref(`users/${userr}`)
+                    .get()
+                    .then((snapshot) => {
+                      setLoading(false);
+                      Actions.push('reportdetails', { item: snapshot.val() });
+                    });
+                }
+              }}
+            >
+              {loading ? (
+                <ActivityIndicator size="small" color="dodgerblue" />
+              ) : (
+                <Text>Reports</Text>
+              )}
+            </Button>
 
-						<Button
-							style={[
-								styles.card,
-								{ justifyContent: loading ? 'center' : null },
-							]}
-							type="none"
-							onPress={() => {
-								if (email == 'admin001@health.com') Actions.replace('report');
-								else {
-									setLoading(true);
-									const userr = firebase.auth().currentUser.uid;
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Delete Account Data',
+                  'Are you sure you want to delete all completed questionnaire data? \nThis choice can not be undone.',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Delete data',
+                      onPress: async () => {
+                        await deleteSurveyData();
+                        Alert.alert('Success', 'Account data deleted');
+                      },
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text>Delete User Data</Text>
+            </Button>
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Contact Crisis Line',
+                  'If you are experiencing a mental health crisis, you can call a crisis line for support',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () => Linking.openURL('tel: 555-5555'),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
+            </Button>
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Actions.replace('tutorialsurvey');
+              }}
+            >
+              <Text>BC Crisis Centre </Text>
+            </Button>
 
-									firebase
-										.database()
-										.ref(`users/${userr}`)
-										.get()
-										.then((snapshot) => {
-											setLoading(false);
-											Actions.push('reportdetails', { item: snapshot.val() });
-										});
-								}
-							}}
-						>
-							{loading ? (
-								<ActivityIndicator size="small" color="dodgerblue" />
-							) : (
-								<Text>Reports</Text>
-							)}
-						</Button>
-
-						<Button
-							style={styles.card}
-							type="none"
-							onPress={() => {
-								Alert.alert(
-									'Delete Account Data',
-									'Are you sure you want to delete all completed questionnaire data? \nThis choice can not be undone.',
-									[
-										{
-											text: 'Cancel',
-											style: 'cancel',
-										},
-										{
-											text: 'Delete data',
-											onPress: async () => {
-												await deleteSurveyData();
-												Alert.alert('Success', 'Account data deleted');
-											},
-										},
-									],
-								);
-							}}
-						>
-							<Text>Delete User Data</Text>
-						</Button>
-						<Button
-							style={styles.card}
-							type="none"
-							onPress={() => {
-								Alert.alert(
-									'Contact Crisis Line',
-									'If you are experiencing a mental health crisis, you can call a crisis line for support',
-									[
-										{
-											text: 'Cancel',
-											style: 'cancel',
-										},
-										{
-											text: 'Yes',
-											onPress: () => Linking.openURL('tel: 555-5555'),
-										},
-									],
-								);
-							}}
-						>
-							<Text style={{ fontWeight: 'bold' }}>Call Crisis Line </Text>
-						</Button>
-						<Button
-							style={styles.card}
-							type="none"
-							onPress={() => {
-								Actions.replace('tutorialsurvey');
-							}}
-						>
-							<Text>BC Crisis Centre </Text>
-						</Button>
-
-						<Button
-							style={styles.card}
-							type="none"
-							onPress={() => {
-								Alert.alert(
-									'Would you like to send an email to Dr. Dawson ?',
-									'',
-									[
-										{
-											text: 'Cancel',
-											style: 'cancel',
-										},
-										{
-											text: 'Yes',
-											onPress: () =>
-												Linking.openURL(
-													'mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= ',
-												),
-										},
-									],
-								);
-							}}
-						>
-							<Text>Email Dr. Dawson </Text>
-						</Button>
-						<Text style={styles.subHeader}>Theme</Text>
-						<Themes />
-					</View>
-				</ScrollView>
-			</View>
-		</Navigation>
-	);
+            <Button
+              style={styles.card}
+              type="none"
+              onPress={() => {
+                Alert.alert(
+                  'Would you like to send an email to Dr. Dawson ?',
+                  '',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Yes',
+                      onPress: () =>
+                        Linking.openURL(
+                          'mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= ',
+                        ),
+                    },
+                  ],
+                );
+              }}
+            >
+              <Text>Email Dr. Dawson </Text>
+            </Button>
+            <Text style={styles.subHeader}>Theme</Text>
+            <Themes />
+          </View>
+        </ScrollView>
+      </View>
+    </Navigation>
+  );
 }
 
 const styles = StyleSheet.create({
