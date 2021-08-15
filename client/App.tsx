@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, LogBox } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Survey } from './src/survey/Survey';
 import { SurveyList } from './src/survey/SurveyList';
 import { Report } from './src/survey/Report';
@@ -17,8 +17,10 @@ import { TutorialCircles } from './src/tutorial/TutorialCircles';
 import { AuthHandler } from './src/login/Auth';
 import { AddEditActivity } from './src/calendar/AddEditActivity';
 
+
 import firebase from 'firebase';
 
+import { LogBox } from 'react-native';
 import { ThemeContext, themes } from './src/common/ThemeContext';
 import { getUserTheme } from './src/services/theme';
 import {
@@ -45,16 +47,12 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
+//import { LogBox } from 'react-native';
+//LogBox.ignoreAllLogs();
+
 export default function App() {
   // Theme is stored all the way at the top so everyone updates
   const [theme, setTheme] = useState(themes.theme1);
-  LogBox.ignoreLogs([
-    'Setting a timer for a long period of time',
-    "'transitionConfig' is removed in favor of the new animation APIs",
-    'VirtualizedLists should never be nested inside plain ScrollViews',
-    "'header: null' will be removed",
-    'Encountered two children with the same key',
-  ]);
 
   useEffect(() => {
     (async () => {
@@ -106,6 +104,7 @@ export default function App() {
               hideNavBar
             />
             <Scene key="resetpassword" component={ResetPassword} hideNavBar />
+
           </Stack>
         </Router>
       </ThemeContext.Provider>

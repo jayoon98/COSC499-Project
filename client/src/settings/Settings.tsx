@@ -9,7 +9,6 @@ import {
   Linking,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import { Navigation, Button, Title, Header } from '../common/Core';
 import { Actions } from 'react-native-router-flux';
@@ -20,18 +19,14 @@ import { Button as NativeButton, Alert } from 'react-native';
 import Constants from 'expo-constants'; //used for recognizing device I believe
 
 import { _Picker, DomainPicker } from '../common/Picker';
-import {
-  deleteSurveyData,
-  getAllSurveyResults,
-  SurveyModel,
-} from '../services/survey';
+import { deleteSurveyData, getAllSurveyResults, SurveyModel } from '../services/survey';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Themes } from './Themes';
 import firebase from 'firebase';
 import { customLocalDate, customLocalTime } from '../services/customLocalDate';
 import { ThemeContext } from '../common/ThemeContext';
-import { ActivitiesCalendarProps } from '../calendar/Calendar';
-import { getActivities, ActivityAgenda } from '../services/activities';
+import {ActivitiesCalendarProps} from '../calendar/Calendar';
+import {getActivities,  ActivityAgenda} from '../services/activities';
 
 // redeclaring this interface here becauses it isn't imported from expo-notifications for some reason
 interface Notification {
@@ -56,27 +51,25 @@ Notifications.setNotificationHandler({
 });
 
 function _Notifications() {
+
   const [expoPushToken, setExpoPushToken] = useState('');
   // was 'useState(false)' before, I think that was messing with my types
   const [notification, setNotification] = useState<Notification>();
   const notificationListener = useRef<Object>();
   const responseListener = useRef<Object>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [t, setTime] = useState(new Date());
+  const [t, setTime] = useState(new Date())
   const [show, setShow] = useState(false);
 
   const showTimepicker = () => {
     setShow(true);
   };
 
+
   const onChange = (_, timestamp: Date) => {
     setShow(Platform.OS === 'ios');
     setTime(timestamp);
-    setDailyTrigger({
-      ...dailyTrigger,
-      hour: timestamp.getHours(),
-      minute: timestamp.getMinutes(),
-    });
+    setDailyTrigger({ ...dailyTrigger, hour: timestamp.getHours(), minute: timestamp.getMinutes() })
   };
 
   const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
@@ -90,15 +83,17 @@ function _Notifications() {
       setExpoPushToken(token),
     );
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
         setNotification(notification);
-      });
+      },
+    );
 
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
         console.log(response);
-      });
+      },
+    );
 
     return () => {
       // also dealing with TS errors with "as any" here
@@ -109,6 +104,8 @@ function _Notifications() {
 
   return (
     <View>
+
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -144,24 +141,21 @@ function _Notifications() {
           >
             <Text>Schedule Daily Reminders</Text>
 
-            <View
-              style={{
+            <View style={{
+              display: 'flex',
+
+
+            }}>
+              <Button style={{
                 display: 'flex',
-              }}
-            >
-              <Button
-                style={{
-                  display: 'flex',
-                }}
-                onPress={showTimepicker}
-              >
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                  }}
-                >
-                  {t.getHours()} : {t.getMinutes()}
-                </Text>
+
+              }} onPress={showTimepicker}  >
+                <Text style={{
+
+                  justifyContent: 'center'
+                }}>
+                  {t.getHours()} : {t.getMinutes()}</Text>
+
               </Button>
             </View>
             {show && (
@@ -238,8 +232,9 @@ async function schedulePushNotification(dailyTrigger: DailyTriggerInput) {
 async function registerForPushNotificationsAsync() {
   let token;
   if (Constants.isDevice) {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
+    const {
+      status: existingStatus,
+    } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
@@ -289,20 +284,14 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
     return prioDomain;
   }
   async function updatePriorityDomain(domain) {
-    console.log('Updated user domain to: ', domain);
+    console.log("Updated user domain to: ", domain);
     const user = firebase.auth().currentUser.uid;
-    await firebase
-      .database()
-      .ref(`users/${user}`)
-      .update({ priorityDomain: domain });
+    await firebase.database().ref(`users/${user}`).update({ 'priorityDomain': domain });
   }
 
   async function setDefaultPriorityDomain() {
     const user = firebase.auth().currentUser.uid;
-    await firebase
-      .database()
-      .ref(`users/${user}`)
-      .update({ priorityDomain: 'not set' });
+    await firebase.database().ref(`users/${user}`).update({ 'priorityDomain': "not set" });
   }
 
   useEffect(() => {
@@ -311,7 +300,8 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
         const priorityDomain = await getPriorityDomain();
         if (priorityDomain) {
           setPriorityDomain(priorityDomain);
-        } else {
+        }
+        else {
           setDefaultPriorityDomain();
         }
       }
@@ -379,7 +369,8 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
                 onPress={() => {
                   setPriorityDomain(domaintemp);
                   props.domain && props.onChange(domaintemp);
-                  if (!props.readOnly) updatePriorityDomain(domaintemp);
+                  if (!props.readOnly)
+                    updatePriorityDomain(domaintemp);
                   setModalVisible(false);
                 }}
               >
@@ -405,48 +396,37 @@ export function _PriorityDomain(props?: PriorityDomainProps) {
   );
 }
 
-function _ProgressView(props) {
-  function _progressCard(props) {
+
+function _ProgressView(props){
+  function _progressCard(props){
     const theme = useContext(ThemeContext);
     var activity = props.activity;
     return (
-      <View style={styles._progressCard}>
-        <View
-          style={{
-            borderRadius: 50,
-            width: 50,
-            height: 50,
-            backgroundColor: theme.theme[activity.domain],
-          }}
-        />
-        <View style={{ marginLeft: 10 }}>
-          <Text style={{ fontSize: 13, color: '#9e9e9e' }}>
-            {activity.date}
-          </Text>
-          <Text style={{ fontSize: 18 }}>{activity.title}</Text>
+      <View style = {styles._progressCard}>
+        <View style = {{borderRadius: 50, width: 50, height: 50, backgroundColor: theme.theme[activity.domain]}} />
+        <View style = {{marginLeft: 10}}>
+          <Text style = {{fontSize : 13, color: '#9e9e9e'}}>{activity.date}</Text>
+          <Text style = {{fontSize : 18}}>{activity.title}</Text>
         </View>
       </View>
-    );
+    )
   }
   let progressViewProps = props.progressViewProps;
   // Filters logs for selected domain
-  progressViewProps = progressViewProps.filter(function (item) {
-    return item.domain === props.domain;
+  progressViewProps = progressViewProps.filter(function(item){
+    return item.domain === props.domain
   });
   var ary = [];
   progressViewProps.map((activity, i) => ary.push(activity));
-  ary = ary.sort(
-    (a, b) => (new Date(a.date) as any) - (new Date(b.date) as any),
-  );
+  ary = ary.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
   ary = ary.reverse();
   // Sort the ary from the newest to oldest
   return (
-    <View>
-      {ary.map((activity, i) => (
-        <_progressCard key={i} activity={activity} />
-      ))}
+    <View >
+      {ary.map((activity, i) => <_progressCard key = {i} activity = {activity}/>)} 
     </View>
-  );
+  )
+  
 }
 export function _DomainProgressModal(props) {
   const [selectedDomain, setSelectedDomain] = useState('social');
@@ -462,41 +442,42 @@ export function _DomainProgressModal(props) {
         marginRight: 5,
         flex: 3,
         backgroundColor: theme.theme[propDomain],
-      };
+      }
     } else {
       return {
         flex: 1,
         borderRadius: 45,
         height: 45,
         marginRight: 5,
-        backgroundColor: theme.theme[propDomain],
-      };
+        backgroundColor: theme.theme[propDomain]
+      }
     }
   }
 
   function _touchableDomainButton(props) {
-    var text = '';
+    var text = ""
     var isTrue = props.domain === selectedDomain;
-    if (isTrue) text = props.domain;
+    if (isTrue)
+      text = props.domain;
     return (
-      <TouchableOpacity
-        style={getButtonStyle(props.domain)}
-        onPress={() => setSelectedDomain(props.domain)}
-      >
+      <TouchableOpacity style={getButtonStyle(props.domain)}
+        onPress={() => setSelectedDomain(props.domain)}>
         <Text style={[isTrue ? styles.buttonText : {}]}>{text}</Text>
       </TouchableOpacity>
-    );
+    )
   }
   return (
     <View>
       <Button
-        type="none"
+        type = "none"
         onPress={() => setModalVisible(true)}
-        style={{ ...styles.card }}
-      >
+        style={{ ...styles.card }}>
         <Text>Check Progress</Text>
       </Button>
-      <Modal transparent={true} visible={modalVisible}>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+      >
         <View
           style={{
             height: 55,
@@ -509,7 +490,7 @@ export function _DomainProgressModal(props) {
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
             padding: 0,
-            flexDirection: 'row',
+            flexDirection: "row",
           }}
         >
           <_touchableDomainButton domain="social" />
@@ -529,47 +510,24 @@ export function _DomainProgressModal(props) {
             backgroundColor: theme.theme[selectedDomain],
             borderBottomEndRadius: 15,
             borderBottomLeftRadius: 15,
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-          }}
-        >
-          <ScrollView
-            style={{
-              backgroundColor: 'white',
-              margin: 0,
-              padding: 12,
-              width: '100%',
-              height: '90%',
-              borderRadius: 10,
-            }}
-          >
-            <_ProgressView
-              domain={selectedDomain}
-              progressViewProps={props.progressViewProps}
-            />
+            flexDirection: "column",
+            alignItems: 'flex-end'
+          }}>
+          <ScrollView style={{ backgroundColor: 'white', margin: 0, padding: 12, width: '100%', height: '90%', borderRadius: 10 }}>
+            <_ProgressView domain = {selectedDomain} progressViewProps = {props.progressViewProps}/>
           </ScrollView>
 
           <TouchableOpacity
             onPress={() => setModalVisible(false)}
-            style={{
-              marginTop: 15,
-              marginRight: 2,
-              borderRadius: 15,
-              width: '30%',
-              flex: 1,
-              alignItems: 'center',
-            }}
+            style={{ marginTop: 15, marginRight: 2, borderRadius: 15, width: '30%', flex: 1, alignItems: 'center' }}
           >
-            <Text
-              style={{ fontSize: 20, color: '#000000', fontWeight: 'bold' }}
-            >
-              Leave
-            </Text>
+            <Text style={{ fontSize: 20, color: '#000000', fontWeight: 'bold' }}>Leave</Text>
           </TouchableOpacity>
         </View>
+
       </Modal>
     </View>
-  );
+  )
 }
 
 type activityLogProp = {
@@ -579,16 +537,12 @@ type activityLogProp = {
 };
 
 export function Settings() {
-  const [progressViewProps, setProgressViewProps] = useState<activityLogProp[]>(
-    [],
-  );
+  const [progressViewProps, setProgressViewProps] = useState<activityLogProp[]>([]);
   const [surveys, setSurveys] = useState<SurveyModel[]>([]);
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  
   // This variable is used to stop infinite re-rendering at useEffect()
-  const idle = '';
-  // Copied function from ../survey/CompletedSurveys.tsx
+  const idle = "";
+  // Copied function from ../survey/CompletedSurveys.tsx 
   // Code inside of the useEffect should run only once per restart
   let s = [...surveys];
 
@@ -596,6 +550,7 @@ export function Settings() {
   // TODO: Move this to login.ts or some other service. Trying to
   // avoid API calls in components so it's to debug the server stuff.
   const [showReports, setShowReports] = useState(false);
+
 
   async function getUsername() {
     const user = firebase.auth().currentUser.uid;
@@ -616,18 +571,36 @@ export function Settings() {
   useEffect(() => {
     (async () => {
       const username = await getUsername();
-      if (username) setUsername(username);
-      setEmail(await getemail());
+      if (username) {
+        setUsername(username);
+      }
+
+      const email = await getemail();
+
+      if (email == "admin001@health.com") {
+        setShowReports(true)
+      }
     })();
   });
 
-  // async function isUserAdmin() {
-  //   const user = firebase.auth().currentUser.uid;
-  //   const isadmin = await await (
-  //     await firebase.database().ref(`users/${user}/admin`).get()
-  //   ).val();
-  //   return isadmin;
-  // }
+
+  async function isUserAdmin() {
+    const user = firebase.auth().currentUser.uid;
+    const isadmin = await await (
+      await firebase.database().ref(`users/${user}/admin`).get()
+    ).val();
+    return isadmin;
+  }
+
+  useEffect(() => {
+    (async () => {
+      const isadmin = await isUserAdmin();
+      if (isadmin) {
+        //setUsername(username);
+
+      }
+    })();
+  },[idle]);
 
   useEffect(() => {
     (async () => {
@@ -645,6 +618,7 @@ export function Settings() {
         }
         // Dates are any to make TypeScript happy about subtracting date objects.
         s.sort((a, b) => (new Date(a.date) as any) - (new Date(b.date) as any));
+  
         // Dates are reversed so that newer surveys show up on top
         return s.reverse();
       }
@@ -656,10 +630,12 @@ export function Settings() {
           // No data yet
           result = {};
         }
+    
         // Normalize dates
         Object.values(result).forEach((items) =>
           items.forEach((a) => (a.timestamp = new Date(a.timestamp))),
         );
+    
         Object.keys(result).forEach((day) => {
           result[day] = result[day].filter((a) => !a.deleted);
         });
@@ -668,27 +644,14 @@ export function Settings() {
       };
       let activityResult = await loadActivities();
       // store activities to activityLogProps
-      Object.values(activityResult).forEach((items) =>
-        items.forEach((a) =>
-          tempProgressViewProps.push({
-            domain: a.domain,
-            title: a.title,
-            date: a.date,
-          }),
-        ),
-      );
+      Object.values(activityResult).forEach((items) => 
+      items.forEach((a) => tempProgressViewProps.push({domain : a.domain, title : a.title, date : a.date})));
 
       let surveyResults = await fetchResults();
-      surveyResults.map((s, i) =>
+      surveyResults.map((s, i) => (
         // truncate the date to fit YYYY/MM/DD
-        s.domains.forEach((d) =>
-          tempProgressViewProps.push({
-            domain: d,
-            title: 'Completed survey',
-            date: s.date.substring(0, 10),
-          }),
-        ),
-      );
+        s.domains.forEach((d) => tempProgressViewProps.push({domain : d, title : "Completed survey", date : s.date.substring(0, 10)}))
+      ));
       setProgressViewProps(tempProgressViewProps);
     })();
   }, []);
@@ -707,11 +670,17 @@ export function Settings() {
         </Header>
         <ScrollView>
           <View style={styles.settings}>
+
             <Text style={styles.subHeader}>Set your priority dimension</Text>
-            <_PriorityDomain readOnly={false} />
+            <_PriorityDomain
+              readOnly={false}
+            />
+
+
 
             <Text style={styles.subHeader}>Activities and surveys</Text>
-            <_DomainProgressModal progressViewProps={progressViewProps} />
+            <_DomainProgressModal progressViewProps = {progressViewProps}/>
+
 
             <Text style={styles.subHeader}>Daily reminders</Text>
 
@@ -719,35 +688,19 @@ export function Settings() {
 
             <Text style={styles.subHeader}>Account</Text>
 
-            <Button
-              style={[
-                styles.card,
-                { justifyContent: loading ? 'center' : null },
-              ]}
+
+            {showReports && <Button style={styles.card}
               type="none"
               onPress={() => {
-                if (email == 'admin001@health.com') Actions.replace('report');
-                else {
-                  setLoading(true);
-                  const userr = firebase.auth().currentUser.uid;
 
-                  firebase
-                    .database()
-                    .ref(`users/${userr}`)
-                    .get()
-                    .then((snapshot) => {
-                      setLoading(false);
-                      Actions.push('reportdetails', { item: snapshot.val() });
-                    });
-                }
+                Actions.replace('report');
               }}
             >
-              {loading ? (
-                <ActivityIndicator size="small" color="dodgerblue" />
-              ) : (
-                <Text>Reports</Text>
-              )}
-            </Button>
+              <Text>Reports</Text>
+            </Button>}
+
+
+
 
             <Button
               style={styles.card}
@@ -820,10 +773,7 @@ export function Settings() {
                     },
                     {
                       text: 'Yes',
-                      onPress: () =>
-                        Linking.openURL(
-                          'mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= ',
-                        ),
+                      onPress: () => Linking.openURL('mailto:info@dawsonpsychologicalservices.com?subject=Contact: Health Circles App&body= '),
                     },
                   ],
                 );
@@ -839,6 +789,7 @@ export function Settings() {
     </Navigation>
   );
 }
+
 
 const styles = StyleSheet.create({
   settings: {
@@ -896,12 +847,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 
   buttonText: {
     color: 'white',
     fontSize: 24,
-    textAlign: 'center',
+    textAlign: 'center'
   },
 
   _progressCard: {
@@ -918,5 +870,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     //justifyContent: 'space-between',
     alignItems: 'center',
-  },
+  }
 });
