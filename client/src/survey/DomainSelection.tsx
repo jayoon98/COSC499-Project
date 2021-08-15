@@ -29,7 +29,7 @@ function DomainCard({ domain, onPress, selected }: DomainCardProps) {
               backgroundColor: theme.theme[domain],
             }}
           >
-            <Text style={{ fontSize: 24, color: 'black', fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>
               {domain}
             </Text>
           </View>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     padding: 24,
     margin: 6,
     borderRadius: 400,
-    opacity: 0.6,
+    opacity: 0.33,
     minHeight: 160,
     width: 160,
     display: 'flex',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     padding: 24,
     margin: 6,
     borderRadius: 400,
-    opacity: 0.5,
+    opacity: 0.33,
     minHeight: 150,
     width: 150,
     display: 'flex',

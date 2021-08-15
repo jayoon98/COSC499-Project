@@ -3,8 +3,10 @@
     "name": "Health Circles",
     "slug": "healthcircles",
     "android": {
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "package": "com.healthcare.app"
     },
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "description": ""
   }
 }

@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Modal,
 } from 'react-native';
 //chart view
 import { BarChart } from 'react-native-chart-kit';
 // theme to set domain colors
 import { ThemeContext } from '../common/ThemeContext';
 import firebase from 'firebase';
+import XLSX from 'xlsx';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 
 // function to get date from string and check if it is within the last 15 days
 import { customStringToDate } from '../services/customLocalDate';
@@ -23,29 +27,103 @@ export type ReportDetailsProps = {
   item: any;
 };
 
-const opacityVal = 0.4;
+const TableView = ({ item, theme }) => {
+  const { weekly: arr, avg, qs, domain } = item;
+  const tableCellStyle = {
+    flex: 1,
+    alignItems: 'center',
+    borderWidth: 1,
+    padding: 10,
+    // borderColor: theme[domain],
+    borderColor: 'darkgrey',
+  };
 
+  return (
+    <View style={{ paddingHorizontal: 10, marginVertical: 10 }}>
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: 'bold',
+          color: theme[domain],
+          marginBottom: 5,
+        }}
+      >{`Question: ${qs}`}</Text>
+
+      <View style={{ flexDirection: 'row' }}>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>S</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>M</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>T</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>W</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>T</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>F</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>S</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>Avg</Text>
+        </View>
+      </View>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[0] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[1] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[2] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[3] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[4] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[5] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{arr[6] || '-'}</Text>
+        </View>
+        <View style={tableCellStyle}>
+          <Text style={{ fontWeight: 'bold' }}>{avg || '-'}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const opacityVal = 0.4;
 export function ReportDetails(props: ReportDetailsProps) {
   const [item, setItem] = useState(props.item);
   // array to hold all questions
   const [questions, setQuestions] = useState([]);
   //arrays to hold answers values from each domain
-  const [social, setSocial] = useState([]);
-  const [emotional, setEmotinal] = useState([]);
-  const [physical, setPhysical] = useState([]);
-  const [mental, setMental] = useState([]);
-  const [spiritual, setSpiritual] = useState([]);
   const [highlighted, setHighlighted] = useState('averages');
   const [timeHighlighted, setTimeHighlighted] = useState('week');
-  const [timeLimit, setTimeLimit] = useState(15);
   const [fetchedQs, setFetchedQs] = useState();
   const [qsAns, setQsAns] = useState([]);
   const [once, setOnce] = useState(1);
+  const [categories, setCategories] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedQsIndex, setSelectedQsIndex] = useState(0);
 
   // data for chart - useState will listen to any changes in this data and update it in the view
   const [data, setData] = useState({
     // labels for chart horizontal line
-    labels: ['Social', 'Emotional', 'Physical', 'Mentl', 'Spiritual'],
+    labels: ['Social', 'Emotional', 'Physical', 'Mental', 'Spiritual'],
     // values for data ,
     datasets: [
       // initial fake values
@@ -65,12 +143,22 @@ export function ReportDetails(props: ReportDetailsProps) {
     getQsAns('all');
   }, [fetchedQs]);
 
+  const solveDate = (date, type) => {
+    var d = new Date(date.split('T')[0]);
+
+    // if (type == 'day') return d.toString().split(' ')[0];
+    if (type == 'day') return d.getDay();
+    else if (type == 'date') return d.getDate();
+    else if (type == 'month') return d.getMonth();
+  };
+
   // function to calculate verage value of each domain's answers
   const average = (array: Array<number>) => {
     if (array.length > 0) {
-      let sum: number = array.reduce(
-        (previous, current) => (current += previous),
-      );
+      let sum = 0;
+
+      for (let i = 0; i < array.length; i++) sum += array[i].response;
+
       let avg = sum / array.length;
       return avg;
     } else {
@@ -81,6 +169,7 @@ export function ReportDetails(props: ReportDetailsProps) {
   const getData = (timeLimit, type) => {
     const surveys: Object = item.surveys;
     let ques = [];
+    let temp = [];
     let soc = [];
     let emo = [];
     let phy = [];
@@ -95,7 +184,8 @@ export function ReportDetails(props: ReportDetailsProps) {
           // only if the survey is within the last two weeks :
           if (customStringToDate(element.date, timeLimit)) {
             //add all questions in this survey to the questions array
-            ques.push(element.questions);
+            ques.push({ questions: element.questions, date: element.date });
+            // temp.push({ ...element.questions, date: element.date });
           }
         }
       });
@@ -106,29 +196,29 @@ export function ReportDetails(props: ReportDetailsProps) {
     if (ques.length) {
       ques.forEach((q) => {
         // use Object.values to get the data of question
-        let question = Object.values(q);
+        let question = Object.values(q.questions);
 
         // find the domain and add the answer in the relevant array
         question.forEach((que) => {
           switch (que.domain) {
             case 'social': {
-              soc.push(que.response);
+              soc.push({ response: que.response, date: q.date });
               break;
             }
             case 'emotional': {
-              emo.push(que.response);
+              emo.push({ response: que.response, date: q.date });
               break;
             }
             case 'physical': {
-              phy.push(que.response);
+              phy.push({ response: que.response, date: q.date });
               break;
             }
             case 'mental': {
-              men.push(que.response);
+              men.push({ response: que.response, date: q.date });
               break;
             }
             case 'spiritual': {
-              spi.push(que.response);
+              spi.push({ response: que.response, date: q.date });
               break;
             }
           }
@@ -152,24 +242,116 @@ export function ReportDetails(props: ReportDetailsProps) {
         ],
       };
       setData(data2);
-    } else if (type == 'social') displaydata(soc);
-    else if (type == 'emotional') displaydata(emo);
-    else if (type == 'physical') displaydata(phy);
-    else if (type == 'mental') displaydata(men);
-    else if (type == 'spiritual') displaydata(spi);
+    } else if (type == 'social') displaydata(soc, timeLimit);
+    else if (type == 'emotional') displaydata(emo, timeLimit);
+    else if (type == 'physical') displaydata(phy, timeLimit);
+    else if (type == 'mental') displaydata(men, timeLimit);
+    else if (type == 'spiritual') displaydata(spi, timeLimit);
   };
 
   //dataset for barchart to be used after processing chart data from firebase
-  const displaydata = (domainarray: any[]) => {
+  const displaydata = (domainarray: any[], timeLimit) => {
+    let data = [];
+    let labels = [];
+    let count = [];
+    let date;
+
+    switch (timeLimit) {
+      case 8: {
+        labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        data = [0, 0, 0, 0, 0, 0, 0];
+        count = [0, 0, 0, 0, 0, 0, 0];
+
+        for (let i = 0; i < domainarray.length; i++) {
+          date = solveDate(domainarray[i].date, 'day');
+          data[date] += domainarray[i].response;
+          count[date]++;
+        }
+
+        break;
+      }
+      case 32: {
+        for (let i = 1; i < 32; i++) {
+          data[i] = 0;
+          count[i] = 0;
+        }
+
+        labels = [
+          1,
+          '',
+          '--',
+          '',
+          5,
+          '',
+          '--',
+          '',
+          10,
+          '',
+          '--',
+          '',
+          15,
+          '',
+          '--',
+          '',
+          20,
+          '',
+          '--',
+          '',
+          25,
+          '',
+          '--',
+          '',
+          30,
+        ];
+
+        for (let i = 0; i < domainarray.length; i++) {
+          date = solveDate(domainarray[i].date, 'date');
+          data[date] += domainarray[i].response;
+          count[date]++;
+        }
+
+        break;
+      }
+      case 366: {
+        labels = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ];
+
+        for (let i = 1; i < 12; i++) {
+          data[i] = 0;
+          count[i] = 0;
+        }
+
+        for (let i = 0; i < domainarray.length; i++) {
+          date = solveDate(domainarray[i].date, 'month');
+          data[date] += domainarray[i].response;
+          count[date]++;
+        }
+
+        break;
+      }
+    }
+
+    for (let i = 0; i < data.length; i++)
+      if (data[i]) data[i] = data[i] / count[i];
+    for (let i = 0; i < data.length; i++) if (data[i] == undefined) data[i] = 0;
+
     setData({
-      labels: domainarray.map((value, index) => {
-        return index.toString();
-      }),
+      labels: labels,
       datasets: [
         {
-          data: domainarray.map((value: number) => {
-            return value;
-          }),
+          data: data,
         },
       ],
     });
@@ -192,22 +374,129 @@ export function ReportDetails(props: ReportDetailsProps) {
   const getQsAns = (type) => {
     let temp = [];
 
-    for (var i in questions[0]) {
-      Object.values(fetchedQs).forEach((cat) => {
-        if (
-          (type == 'all' && cat[i] !== undefined) ||
-          (questions[0][i].domain == type && cat[i] !== undefined)
-        ) {
-          temp.push({
-            domain: questions[0][i].domain,
-            key: i,
-            qs: cat[i].description,
-            ans: questions[0][i].response,
-          });
-        }
-      });
+    for (let i = 0; i < questions.length; i++) {
+      for (let j in questions[i].questions) {
+        Object.values(fetchedQs).forEach((cat) => {
+          if (
+            (type == 'all' && cat[j] !== undefined) ||
+            (questions[i].questions[j].domain == type && cat[j] !== undefined)
+          ) {
+            temp.push({
+              qs: cat[j].description,
+              ans: questions[i].questions[j].response,
+              domain: questions[i].questions[j].domain,
+              date: questions[i].date,
+              key: j,
+            });
+          }
+        });
+      }
     }
     setQsAns(temp);
+
+    let cat = {};
+    for (let i = 0; i < temp.length; i++) {
+      if (cat[temp[i].qs] == undefined) {
+        cat[temp[i].qs] = {
+          domain: temp[i].domain,
+          qs: temp[i].qs,
+          questions: [temp[i]],
+        };
+      } else {
+        cat[temp[i].qs].questions.push(temp[i]);
+      }
+    }
+
+    let temp2 = [];
+    let sum;
+    let index = 0;
+    Object.values(cat).forEach((value) => {
+      temp2 = [0, 0, 0, 0, 0, 0, 0];
+      sum = 0;
+      for (let i = 0; i < value.questions.length; i++) {
+        let qs = value.questions[i];
+        temp2[solveDate(qs.date, 'day')] += qs.ans;
+        sum += qs.ans;
+      }
+      value.weekly = temp2;
+      value.avg = (sum / value.questions.length).toFixed(1);
+      value.index = index++;
+    });
+
+    let temp3 = [];
+    Object.values(cat).forEach((value) => temp3.push(value));
+    setCategories(temp3);
+  };
+
+  const createExcel = async () => {
+    const item = props.item;
+
+    const social = Object.values(qsAns).filter(
+      (value) => value.domain == 'social',
+    );
+    const emotional = Object.values(qsAns).filter(
+      (value) => value.domain == 'emotional',
+    );
+    const physical = Object.values(qsAns).filter(
+      (value) => value.domain == 'physical',
+    );
+    const mental = Object.values(qsAns).filter(
+      (value) => value.domain == 'mental',
+    );
+    const spiritual = Object.values(qsAns).filter(
+      (value) => value.domain == 'spiritual',
+    );
+
+    let data = [];
+    for (let i = 0; i < qsAns.length; i++) {
+      data.push({
+        UserInfo:
+          i == 0
+            ? item.name
+            : i == 1
+            ? item.email
+            : i == 2 && item.gender != undefined
+            ? item.gender
+            : i == 3 && item.age != undefined
+            ? item.age
+            : '',
+
+        SocialQuestion: social.length > i ? social[i].qs : '',
+        SocialResponse: social.length > i ? social[i].ans : '',
+
+        EmotionalQuestion: emotional.length > i ? emotional[i].qs : '',
+        EmotionalResponse: emotional.length > i ? emotional[i].ans : '',
+
+        PhysicalQuestion: physical.length > i ? physical[i].qs : '',
+        PhysicalResponse: physical.length > i ? physical[i].ans : '',
+
+        MentalQuestion: mental.length > i ? mental[i].qs : '',
+        MentalResponse: mental.length > i ? mental[i].ans : '',
+
+        SpiritualQuestion: spiritual.length > i ? spiritual[i].qs : '',
+        SpiritualResponse: spiritual.length > i ? spiritual[i].ans : '',
+      });
+    }
+
+    var ws = XLSX.utils.json_to_sheet(data);
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Cities');
+    const wbout = XLSX.write(wb, {
+      type: 'base64',
+      bookType: 'xlsx',
+    });
+
+    const uri = FileSystem.cacheDirectory + `${item.name}_report.xlsx`;
+    await FileSystem.writeAsStringAsync(uri, wbout, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    await Sharing.shareAsync(uri, {
+      mimeType:
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      dialogTitle: 'MyWater data',
+      UTI: 'com.microsoft.excel.xlsx',
+    });
   };
 
   return (
@@ -290,9 +579,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('averages');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'averages');
+                          getData(8, 'averages');
                           getQsAns('all');
                         }}
                       >
@@ -311,9 +599,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('social');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'social');
+                          getData(8, 'social');
                           getQsAns('social');
                         }}
                       >
@@ -339,9 +626,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('emotional');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'emotional');
+                          getData(8, 'emotional');
                           getQsAns('emotional');
                         }}
                       >
@@ -367,9 +653,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('physical');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'physical');
+                          getData(8, 'physical');
                           getQsAns('physical');
                         }}
                       >
@@ -395,9 +680,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('mental');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'mental');
+                          getData(8, 'mental');
                           getQsAns('mental');
                         }}
                       >
@@ -423,9 +707,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setHighlighted('spiritual');
-                          setTimeLimit(14);
                           setTimeHighlighted('week');
-                          getData(14, 'spiritual');
+                          getData(8, 'spiritual');
                           getQsAns('spiritual');
                         }}
                       >
@@ -446,34 +729,6 @@ export function ReportDetails(props: ReportDetailsProps) {
                     <View
                       style={{
                         ...styles.chip,
-                        borderColor: timeHighlighted == 'day' ? 'white' : null,
-                        opacity: timeHighlighted == 'day' ? 1 : opacityVal,
-                        backgroundColor:
-                          highlighted === 'averages'
-                            ? '#918C8C'
-                            : theme.theme[highlighted],
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          setTimeHighlighted('day');
-                          setTimeLimit(1);
-                          getData(1, highlighted);
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: timeHighlighted == 'day' ? 'white' : 'black',
-                          }}
-                        >
-                          {'Daily'}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-
-                    <View
-                      style={{
-                        ...styles.chip,
                         borderColor: timeHighlighted == 'week' ? 'white' : null,
                         opacity: timeHighlighted == 'week' ? 1 : opacityVal,
                         backgroundColor:
@@ -485,8 +740,7 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setTimeHighlighted('week');
-                          setTimeLimit(15);
-                          getData(15, highlighted);
+                          getData(8, highlighted);
                         }}
                       >
                         <Text
@@ -503,7 +757,8 @@ export function ReportDetails(props: ReportDetailsProps) {
                     <View
                       style={{
                         ...styles.chip,
-                        borderColor: timeHighlighted == '' ? 'white' : null,
+                        borderColor:
+                          timeHighlighted == 'month' ? 'white' : null,
                         opacity: timeHighlighted == 'month' ? 1 : opacityVal,
                         backgroundColor:
                           highlighted === 'averages'
@@ -514,7 +769,6 @@ export function ReportDetails(props: ReportDetailsProps) {
                       <TouchableOpacity
                         onPress={() => {
                           setTimeHighlighted('month');
-                          setTimeLimit(32);
                           getData(32, highlighted);
                         }}
                       >
@@ -528,11 +782,39 @@ export function ReportDetails(props: ReportDetailsProps) {
                         </Text>
                       </TouchableOpacity>
                     </View>
+
+                    <View
+                      style={{
+                        ...styles.chip,
+                        borderColor: timeHighlighted == 'year' ? 'white' : null,
+                        opacity: timeHighlighted == 'year' ? 1 : opacityVal,
+                        backgroundColor:
+                          highlighted === 'averages'
+                            ? '#918C8C'
+                            : theme.theme[highlighted],
+                      }}
+                    >
+                      <TouchableOpacity
+                        onPress={() => {
+                          setTimeHighlighted('year');
+                          getData(366, highlighted);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color:
+                              timeHighlighted == 'year' ? 'white' : 'black',
+                          }}
+                        >
+                          {'Annually'}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
 
                   <BarChart
                     style={{
-                      marginTop: 0,
+                      // marginTop: 0,
                       marginHorizontal: 10,
                       borderRadius: 30,
                       borderWidth: 1,
@@ -549,47 +831,80 @@ export function ReportDetails(props: ReportDetailsProps) {
                       backgroundGradientFrom: '#fff',
                       backgroundGradientTo: '#fff',
                       decimalPlaces: 0, // optional, defaults to 2dp
-
-                      color: (opacity = 1) => `#000`,
+                      barPercentage: highlighted == 'averages' ? 1 : 0.4,
+                      labelColor: () => '#000',
+                      color: () =>
+                        highlighted == 'averages'
+                          ? '#000'
+                          : theme.theme[highlighted],
                       style: {
-                        // borderRadius: 16,
+                        borderRadius: 16,
                       },
                     }}
                   />
                 </View>
 
-                <FlatList
-                  data={qsAns}
-                  keyExtractor={(item) => item.key}
+                <View
                   style={{
-                    marginTop: 20,
+                    borderRadius: 5,
+                    backgroundColor: 'dodgerblue',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 200,
+                    height: 35,
+                    alignSelf: 'center',
+                    marginVertical: 15,
+                    elevation: 7,
                   }}
+                >
+                  <TouchableOpacity onPress={createExcel}>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                      Export Excel
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                <FlatList
+                  data={categories}
+                  keyExtractor={(item) => item.qs}
                   renderItem={({ item }) => (
-                    <View
-                      style={{
-                        backgroundColor: theme.theme[item.domain],
-                        paddingHorizontal: 15,
-                        paddingVertical: 5,
-                      }}
-                    >
-                      {item.ans !== undefined && (
-                        <>
-                          <Text
+                    <>
+                      {timeHighlighted == 'week' && !isNaN(item.avg) ? (
+                        <TableView item={item} theme={theme.theme} />
+                      ) : !isNaN(item.avg) ? (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setSelectedQsIndex(item.index);
+                            setModalVisible(true);
+                          }}
+                        >
+                          <View
                             style={{
-                              fontSize: 16,
-                              fontWeight: 'bold',
-                              textAlign: 'justify',
+                              // backgroundColor: theme.theme[item.domain],
+                              paddingHorizontal: 15,
+                              paddingVertical: 5,
                             }}
-                          >{`Qs: ${item.qs}`}</Text>
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              textAlign: 'justify',
-                            }}
-                          >{`Response: : ${item.ans}`}</Text>
-                        </>
-                      )}
-                    </View>
+                          >
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontWeight: 'bold',
+                                textAlign: 'justify',
+                                color: theme.theme[item.domain],
+                              }}
+                            >
+                              {`Question: ${item.qs}`}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                textAlign: 'justify',
+                              }}
+                            >{`Response: : ${item.avg}`}</Text>
+                          </View>
+                        </TouchableOpacity>
+                      ) : null}
+                    </>
                   )}
                 />
               </>
@@ -597,6 +912,150 @@ export function ReportDetails(props: ReportDetailsProps) {
           </ThemeContext.Consumer>
         </View>
       </ScrollView>
+
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        {categories.length && (
+          <View style={{ padding: 10 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 10,
+              }}
+            >
+              <View>
+                {selectedQsIndex > 0 && (
+                  <TouchableOpacity
+                    onPress={() => setSelectedQsIndex(selectedQsIndex - 1)}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: 'dodgerblue',
+                        fontSize: 16,
+                      }}
+                    >
+                      {'<- Previous Question'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+
+              <View>
+                {selectedQsIndex < categories.length - 1 && (
+                  <TouchableOpacity
+                    onPress={() => setSelectedQsIndex(selectedQsIndex + 1)}
+                  >
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: 'dodgerblue',
+                        fontSize: 16,
+                      }}
+                    >
+                      {'Next Question ->'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+
+            <View
+              style={{
+                marginTop: 20,
+                padding: 10,
+                borderWidth: 1,
+                borderColor: '#000',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  textAlign: 'justify',
+                }}
+              >
+                {`Question: ${categories[selectedQsIndex].qs}`}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  marginTop: 20,
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: 'darkgrey',
+                    padding: 10,
+                  }}
+                >
+                  <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>
+                    Date
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: 'darkgrey',
+                    padding: 10,
+                  }}
+                >
+                  <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>
+                    Response
+                  </Text>
+                </View>
+              </View>
+
+              <FlatList
+                data={categories[selectedQsIndex].questions}
+                keyExtractor={(item) => item.date}
+                renderItem={({ item }) => (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: 'darkgrey',
+                        padding: 10,
+                      }}
+                    >
+                      <Text style={{ alignSelf: 'center' }}>
+                        {item.date.split('T')[0]}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flex: 1,
+                        borderWidth: 1,
+                        borderColor: 'darkgrey',
+                        padding: 10,
+                      }}
+                    >
+                      <Text style={{ alignSelf: 'center' }}>{item.ans}</Text>
+                    </View>
+                  </View>
+                )}
+              />
+            </View>
+          </View>
+        )}
+      </Modal>
     </Navigation>
   );
 }
