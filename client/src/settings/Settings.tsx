@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import {
-	View,
-	Text,
-	StyleSheet,
-	Platform,
-	Dimensions,
-	Modal,
-	Linking,
-	ScrollView,
-	TouchableOpacity,
-	ActivityIndicator,
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Dimensions,
+  Modal,
+  Linking,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Navigation, Button, Title, Header } from '../common/Core';
 import { Actions } from 'react-native-router-flux';
@@ -21,9 +21,9 @@ import Constants from 'expo-constants'; //used for recognizing device I believe
 
 import { _Picker, DomainPicker } from '../common/Picker';
 import {
-	deleteSurveyData,
-	getAllSurveyResults,
-	SurveyModel,
+  deleteSurveyData,
+  getAllSurveyResults,
+  SurveyModel,
 } from '../services/survey';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Themes } from './Themes';
@@ -35,547 +35,547 @@ import { getActivities, ActivityAgenda } from '../services/activities';
 
 // redeclaring this interface here becauses it isn't imported from expo-notifications for some reason
 interface Notification {
-	date: number;
-	request: Notifications.NotificationRequest;
+  date: number;
+  request: Notifications.NotificationRequest;
 }
 
 // a trigger that will cause the notif to be delivered once per day
 interface DailyTriggerInput {
-	channelId?: string;
-	hour: number;
-	minute: number;
-	repeats: true;
+  channelId?: string;
+  hour: number;
+  minute: number;
+  repeats: true;
 }
 
 Notifications.setNotificationHandler({
-	handleNotification: async () => ({
-		shouldShowAlert: true,
-		shouldPlaySound: false,
-		shouldSetBadge: false,
-	}),
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
 });
 
 function _Notifications() {
-	const [expoPushToken, setExpoPushToken] = useState('');
-	// was 'useState(false)' before, I think that was messing with my types
-	const [notification, setNotification] = useState<Notification>();
-	const notificationListener = useRef<Object>();
-	const responseListener = useRef<Object>();
-	const [modalVisible, setModalVisible] = useState(false);
-	const [t, setTime] = useState(new Date());
-	const [show, setShow] = useState(false);
+  const [expoPushToken, setExpoPushToken] = useState('');
+  // was 'useState(false)' before, I think that was messing with my types
+  const [notification, setNotification] = useState<Notification>();
+  const notificationListener = useRef<Object>();
+  const responseListener = useRef<Object>();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [t, setTime] = useState(new Date());
+  const [show, setShow] = useState(false);
 
-	const showTimepicker = () => {
-		setShow(true);
-	};
+  const showTimepicker = () => {
+    setShow(true);
+  };
 
-	const onChange = (_, timestamp: Date) => {
-		setShow(Platform.OS === 'ios');
-		setTime(timestamp);
-		setDailyTrigger({
-			...dailyTrigger,
-			hour: timestamp.getHours(),
-			minute: timestamp.getMinutes(),
-		});
-	};
+  const onChange = (_, timestamp: Date) => {
+    setShow(Platform.OS === 'ios');
+    setTime(timestamp);
+    setDailyTrigger({
+      ...dailyTrigger,
+      hour: timestamp.getHours(),
+      minute: timestamp.getMinutes(),
+    });
+  };
 
-	const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
-		hour: 0,
-		minute: 0,
-		repeats: true,
-	});
+  const [dailyTrigger, setDailyTrigger] = useState<DailyTriggerInput>({
+    hour: 0,
+    minute: 0,
+    repeats: true,
+  });
 
-	useEffect(() => {
-		registerForPushNotificationsAsync().then((token) =>
-			setExpoPushToken(token),
-		);
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token),
+    );
 
-		notificationListener.current =
-			Notifications.addNotificationReceivedListener((notification) => {
-				setNotification(notification);
-			});
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
-		responseListener.current =
-			Notifications.addNotificationResponseReceivedListener((response) => {
-				console.log(response);
-			});
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
-		return () => {
-			// also dealing with TS errors with "as any" here
-			Notifications.removeNotificationSubscription(notificationListener as any);
-			Notifications.removeNotificationSubscription(responseListener as any);
-		};
-	}, []);
+    return () => {
+      // also dealing with TS errors with "as any" here
+      Notifications.removeNotificationSubscription(notificationListener as any);
+      Notifications.removeNotificationSubscription(responseListener as any);
+    };
+  }, []);
 
-	return (
-		<View>
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={modalVisible}
-				onDismiss={() => setModalVisible(false)}
-			>
-				<View
-					style={{
-						display: 'flex',
-						marginTop: '55%',
-						justifyContent: 'center',
-					}}
-				>
-					<View
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							margin: 20,
-							backgroundColor: 'white',
-							borderRadius: 20,
-							padding: 22,
-							minHeight: 180,
-							alignItems: 'center',
-							shadowColor: '#000',
-							shadowOffset: {
-								width: 0,
-								height: 2,
-							},
-							shadowOpacity: 0.25,
-							shadowRadius: 3.84,
-							elevation: 5,
-						}}
-					>
-						<Text>Schedule Daily Reminders</Text>
+  return (
+    <View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+      >
+        <View
+          style={{
+            display: 'flex',
+            marginTop: '55%',
+            justifyContent: 'center',
+          }}
+        >
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              margin: 20,
+              backgroundColor: 'white',
+              borderRadius: 20,
+              padding: 22,
+              minHeight: 180,
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text>Schedule Daily Reminders</Text>
 
-						<View
-							style={{
-								display: 'flex',
-							}}
-						>
-							<Button
-								style={{
-									display: 'flex',
-								}}
-								onPress={showTimepicker}
-							>
-								<Text
-									style={{
-										justifyContent: 'center',
-									}}
-								>
-									{t.getHours()} : {t.getMinutes()}
-								</Text>
-							</Button>
-						</View>
-						{show && (
-							<DateTimePicker
-								testID="dateTimePicker"
-								value={t}
-								mode="time"
-								is24Hour={true}
-								display="default"
-								onChange={onChange}
-							/>
-						)}
+            <View
+              style={{
+                display: 'flex',
+              }}
+            >
+              <Button
+                style={{
+                  display: 'flex',
+                }}
+                onPress={showTimepicker}
+              >
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                  }}
+                >
+                  {t.getHours()} : {t.getMinutes()}
+                </Text>
+              </Button>
+            </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={t}
+                mode="time"
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
 
-						<View
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								width: '100%',
-							}}
-						>
-							<Button
-								onPress={() => setModalVisible(false)}
-								style={{ flexGrow: 1, marginRight: 2 }}
-							>
-								<Text>Cancel</Text>
-							</Button>
-							<Button
-								style={{ flexGrow: 1, marginLeft: 2 }}
-								onPress={async () => {
-									await schedulePushNotification(dailyTrigger);
-									setModalVisible(false);
-								}}
-							>
-								<Text>Confirm</Text>
-							</Button>
-						</View>
-					</View>
-				</View>
-			</Modal>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
+              <Button
+                onPress={() => setModalVisible(false)}
+                style={{ flexGrow: 1, marginRight: 2 }}
+              >
+                <Text>Cancel</Text>
+              </Button>
+              <Button
+                style={{ flexGrow: 1, marginLeft: 2 }}
+                onPress={async () => {
+                  await schedulePushNotification(dailyTrigger);
+                  setModalVisible(false);
+                }}
+              >
+                <Text>Confirm</Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
-			<Button
-				type="none"
-				style={{ ...styles.card }}
-				onPress={() => setModalVisible(true)}
-			>
-				<Text>Schedule a daily reminder to check the app</Text>
-			</Button>
-			<Button
-				type="none"
-				style={{ ...styles.card, marginTop: 6 }}
-				onPress={async () => {
-					await Notifications.cancelAllScheduledNotificationsAsync();
-				}}
-			>
-				<Text>Delete all upcoming notifications</Text>
-			</Button>
-		</View>
-	);
+      <Button
+        type="none"
+        style={{ ...styles.card }}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text>Schedule a daily reminder to check the app</Text>
+      </Button>
+      <Button
+        type="none"
+        style={{ ...styles.card, marginTop: 6 }}
+        onPress={async () => {
+          await Notifications.cancelAllScheduledNotificationsAsync();
+        }}
+      >
+        <Text>Delete all upcoming notifications</Text>
+      </Button>
+    </View>
+  );
 }
 
 async function schedulePushNotification(dailyTrigger: DailyTriggerInput) {
-	try {
-		await Notifications.scheduleNotificationAsync({
-			content: {
-				title: 'Health Circles ⭕',
-				body: 'Time to check in with your health!',
-			},
-			trigger: dailyTrigger,
-		});
-	} catch (error) {
-		console.warn(`Could not schedule notification: ${error}`);
-	}
+  try {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Health Circles ⭕',
+        body: 'Time to check in with your health!',
+      },
+      trigger: dailyTrigger,
+    });
+  } catch (error) {
+    console.warn(`Could not schedule notification: ${error}`);
+  }
 }
 async function registerForPushNotificationsAsync() {
-	let token;
-	if (Constants.isDevice) {
-		const { status: existingStatus } =
-			await Notifications.getPermissionsAsync();
-		let finalStatus = existingStatus;
-		if (existingStatus !== 'granted') {
-			const { status } = await Notifications.requestPermissionsAsync();
-			finalStatus = status;
-		}
-		if (finalStatus !== 'granted') {
-			alert('Failed to get push token for push notification!');
-			return;
-		}
-		token = (await Notifications.getExpoPushTokenAsync()).data;
-		console.log(token);
-	} else {
-		alert('Must use physical device for Push Notifications');
-	}
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
 
-	if (Platform.OS === 'android') {
-		Notifications.setNotificationChannelAsync('default', {
-			name: 'default',
-			importance: Notifications.AndroidImportance.MAX,
-			vibrationPattern: [0, 250, 250, 250],
-			lightColor: '#FF231F7C',
-		});
-	}
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
 
-	return token;
+  return token;
 }
 
 const screen = Dimensions.get('screen');
 
 export type PriorityDomainProps = {
-	onChange?: (domain: string) => void;
-	domain?: string;
-	readOnly?: boolean;
+  onChange?: (domain: string) => void;
+  domain?: string;
+  readOnly?: boolean;
 };
 
 export function _PriorityDomain(props?: PriorityDomainProps) {
-	const theme = useContext(ThemeContext);
-	const [priorityDomain, setPriorityDomain] = useState(
-		props.domain ? props.domain : 'not set',
-	);
+  const theme = useContext(ThemeContext);
+  const [priorityDomain, setPriorityDomain] = useState(
+    props.domain ? props.domain : 'not set',
+  );
 
-	async function getPriorityDomain() {
-		const user = firebase.auth().currentUser.uid;
-		const prioDomain = await await (
-			await firebase.database().ref(`users/${user}/priorityDomain`).get()
-		).val();
-		return prioDomain;
-	}
-	async function updatePriorityDomain(domain) {
-		console.log('Updated user domain to: ', domain);
-		const user = firebase.auth().currentUser.uid;
-		await firebase
-			.database()
-			.ref(`users/${user}`)
-			.update({ priorityDomain: domain });
-	}
+  async function getPriorityDomain() {
+    const user = firebase.auth().currentUser.uid;
+    const prioDomain = await await (
+      await firebase.database().ref(`users/${user}/priorityDomain`).get()
+    ).val();
+    return prioDomain;
+  }
+  async function updatePriorityDomain(domain) {
+    console.log('Updated user domain to: ', domain);
+    const user = firebase.auth().currentUser.uid;
+    await firebase
+      .database()
+      .ref(`users/${user}`)
+      .update({ priorityDomain: domain });
+  }
 
-	async function setDefaultPriorityDomain() {
-		const user = firebase.auth().currentUser.uid;
-		await firebase
-			.database()
-			.ref(`users/${user}`)
-			.update({ priorityDomain: 'not set' });
-	}
+  async function setDefaultPriorityDomain() {
+    const user = firebase.auth().currentUser.uid;
+    await firebase
+      .database()
+      .ref(`users/${user}`)
+      .update({ priorityDomain: 'not set' });
+  }
 
-	useEffect(() => {
-		(async () => {
-			if (!props.readOnly) {
-				const priorityDomain = await getPriorityDomain();
-				if (priorityDomain) {
-					setPriorityDomain(priorityDomain);
-				} else {
-					setDefaultPriorityDomain();
-				}
-			}
-		})();
-	});
+  useEffect(() => {
+    (async () => {
+      if (!props.readOnly) {
+        const priorityDomain = await getPriorityDomain();
+        if (priorityDomain) {
+          setPriorityDomain(priorityDomain);
+        } else {
+          setDefaultPriorityDomain();
+        }
+      }
+    })();
+  });
 
-	const [modalVisible, setModalVisible] = useState(false);
-	let domaintemp; // in case user chooses cancel button
-	return (
-		<View>
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={modalVisible}
-				onDismiss={() => setModalVisible(false)}
-			>
-				<View
-					style={{
-						display: 'flex',
-						marginTop: '55%',
-						justifyContent: 'center',
-					}}
-				>
-					<View
-						style={{
-							display: 'flex',
+  const [modalVisible, setModalVisible] = useState(false);
+  let domaintemp; // in case user chooses cancel button
+  return (
+    <View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+      >
+        <View
+          style={{
+            display: 'flex',
+            marginTop: '55%',
+            justifyContent: 'center',
+          }}
+        >
+          <View
+            style={{
+              display: 'flex',
 
-							margin: 'auto',
-							backgroundColor: 'white',
-							borderRadius: 20,
-							padding: 22,
-							minHeight: 180,
-							alignItems: 'center',
-							shadowColor: '#000',
-							shadowOffset: {
-								width: 0,
-								height: 2,
-							},
-							shadowOpacity: 0.25,
-							shadowRadius: 3.84,
-							elevation: 5,
-						}}
-					>
-						<Text>Set Priority Dimension</Text>
+              margin: 'auto',
+              backgroundColor: 'white',
+              borderRadius: 20,
+              padding: 22,
+              minHeight: 180,
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text>Set Priority Dimension</Text>
 
-						<DomainPicker onChange={(domain) => (domaintemp = domain)} />
+            <DomainPicker onChange={(domain) => (domaintemp = domain)} />
 
-						<View
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								width: '100%',
-							}}
-						>
-							<Button
-								onPress={() => {
-									setModalVisible(false);
-								}}
-								style={{ flexGrow: 1, marginRight: 2 }}
-							>
-								<Text>Cancel</Text>
-							</Button>
-							<Button
-								style={{ flexGrow: 1, marginLeft: 2 }}
-								onPress={() => {
-									setPriorityDomain(domaintemp);
-									props.domain && props.onChange(domaintemp);
-									if (!props.readOnly) updatePriorityDomain(domaintemp);
-									setModalVisible(false);
-								}}
-							>
-								<Text>Confirm</Text>
-							</Button>
-						</View>
-					</View>
-				</View>
-			</Modal>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
+              <Button
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+                style={{ flexGrow: 1, marginRight: 2 }}
+              >
+                <Text>Cancel</Text>
+              </Button>
+              <Button
+                style={{ flexGrow: 1, marginLeft: 2 }}
+                onPress={() => {
+                  setPriorityDomain(domaintemp);
+                  props.domain && props.onChange(domaintemp);
+                  if (!props.readOnly) updatePriorityDomain(domaintemp);
+                  setModalVisible(false);
+                }}
+              >
+                <Text>Confirm</Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
-			<Button
-				type="none"
-				style={{ ...styles.card, backgroundColor: theme.theme[priorityDomain] }}
-				onPress={() => {
-					setModalVisible(true);
-				}}
-			>
-				<Text style={{ fontSize: 16, color: 'white', fontWeight: 'bold' }}>
-					{priorityDomain}
-				</Text>
-			</Button>
-		</View>
-	);
+      <Button
+        type="none"
+        style={{ ...styles.card, backgroundColor: theme.theme[priorityDomain] }}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={{ fontSize: 16, color: 'white', fontWeight: 'bold' }}>
+          {priorityDomain}
+        </Text>
+      </Button>
+    </View>
+  );
 }
 
 function _ProgressView(props) {
-	function _progressCard(props) {
-		const theme = useContext(ThemeContext);
-		var activity = props.activity;
-		return (
-			<View style={styles._progressCard}>
-				<View
-					style={{
-						borderRadius: 50,
-						width: 50,
-						height: 50,
-						backgroundColor: theme.theme[activity.domain],
-					}}
-				/>
-				<View style={{ marginLeft: 10 }}>
-					<Text style={{ fontSize: 13, color: '#9e9e9e' }}>
-						{activity.date}
-					</Text>
-					<Text style={{ fontSize: 18 }}>{activity.title}</Text>
-				</View>
-			</View>
-		);
-	}
-	let progressViewProps = props.progressViewProps;
-	// Filters logs for selected domain
-	progressViewProps = progressViewProps.filter(function (item) {
-		return item.domain === props.domain;
-	});
-	var ary = [];
-	progressViewProps.map((activity, i) => ary.push(activity));
-	ary = ary.sort(
-		(a, b) => (new Date(a.date) as any) - (new Date(b.date) as any),
-	);
-	ary = ary.reverse();
-	// Sort the ary from the newest to oldest
-	return (
-		<View>
-			{ary.map((activity, i) => (
-				<_progressCard key={i} activity={activity} />
-			))}
-		</View>
-	);
+  function _progressCard(props) {
+    const theme = useContext(ThemeContext);
+    var activity = props.activity;
+    return (
+      <View style={styles._progressCard}>
+        <View
+          style={{
+            borderRadius: 50,
+            width: 50,
+            height: 50,
+            backgroundColor: theme.theme[activity.domain],
+          }}
+        />
+        <View style={{ marginLeft: 10 }}>
+          <Text style={{ fontSize: 13, color: '#9e9e9e' }}>
+            {activity.date}
+          </Text>
+          <Text style={{ fontSize: 18 }}>{activity.title}</Text>
+        </View>
+      </View>
+    );
+  }
+  let progressViewProps = props.progressViewProps;
+  // Filters logs for selected domain
+  progressViewProps = progressViewProps.filter(function (item) {
+    return item.domain === props.domain;
+  });
+  var ary = [];
+  progressViewProps.map((activity, i) => ary.push(activity));
+  ary = ary.sort(
+    (a, b) => (new Date(a.date) as any) - (new Date(b.date) as any),
+  );
+  ary = ary.reverse();
+  // Sort the ary from the newest to oldest
+  return (
+    <View>
+      {ary.map((activity, i) => (
+        <_progressCard key={i} activity={activity} />
+      ))}
+    </View>
+  );
 }
 export function _DomainProgressModal(props) {
-	const [selectedDomain, setSelectedDomain] = useState('social');
-	const [modalVisible, setModalVisible] = useState(false);
-	const theme = useContext(ThemeContext);
-	function getButtonStyle(propDomain) {
-		if (propDomain === selectedDomain) {
-			return {
-				height: 45,
-				marginTop: 15,
-				borderTopLeftRadius: 40,
-				borderTopRightRadius: 40,
-				marginRight: 5,
-				flex: 3,
-				backgroundColor: theme.theme[propDomain],
-			};
-		} else {
-			return {
-				flex: 1,
-				borderRadius: 45,
-				height: 45,
-				marginRight: 5,
-				backgroundColor: theme.theme[propDomain],
-			};
-		}
-	}
+  const [selectedDomain, setSelectedDomain] = useState('social');
+  const [modalVisible, setModalVisible] = useState(false);
+  const theme = useContext(ThemeContext);
+  function getButtonStyle(propDomain) {
+    if (propDomain === selectedDomain) {
+      return {
+        height: 45,
+        marginTop: 15,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        marginRight: 5,
+        flex: 3,
+        backgroundColor: theme.theme[propDomain],
+      };
+    } else {
+      return {
+        flex: 1,
+        borderRadius: 45,
+        height: 45,
+        marginRight: 5,
+        backgroundColor: theme.theme[propDomain],
+      };
+    }
+  }
 
-	function _touchableDomainButton(props) {
-		var text = '';
-		var isTrue = props.domain === selectedDomain;
-		if (isTrue) text = props.domain;
-		return (
-			<TouchableOpacity
-				style={getButtonStyle(props.domain)}
-				onPress={() => setSelectedDomain(props.domain)}
-			>
-				<Text style={[isTrue ? styles.buttonText : {}]}>{text}</Text>
-			</TouchableOpacity>
-		);
-	}
-	return (
-		<View>
-			<Button
-				type="none"
-				onPress={() => setModalVisible(true)}
-				style={{ ...styles.card }}
-			>
-				<Text>Check Progress</Text>
-			</Button>
-			<Modal transparent={true} visible={modalVisible}>
-				<View
-					style={{
-						height: 55,
-						width: '90%',
-						backgroundColor: 'white',
-						marginTop: 20,
-						marginLeft: 15,
-						marginRight: 5,
-						marginBottom: 0,
-						borderTopLeftRadius: 15,
-						borderTopRightRadius: 15,
-						padding: 0,
-						flexDirection: 'row',
-					}}
-				>
-					<_touchableDomainButton domain="social" />
-					<_touchableDomainButton domain="emotional" />
-					<_touchableDomainButton domain="physical" />
-					<_touchableDomainButton domain="mental" />
-					<_touchableDomainButton domain="spiritual" />
-				</View>
-				<View
-					style={{
-						height: '86%',
-						width: '90%',
-						marginLeft: 15,
-						marginRight: 15,
-						marginTop: 0,
-						padding: 12,
-						backgroundColor: theme.theme[selectedDomain],
-						borderBottomEndRadius: 15,
-						borderBottomLeftRadius: 15,
-						flexDirection: 'column',
-						alignItems: 'flex-end',
-					}}
-				>
-					<ScrollView
-						style={{
-							backgroundColor: 'white',
-							margin: 0,
-							padding: 12,
-							width: '100%',
-							height: '90%',
-							borderRadius: 10,
-						}}
-					>
-						<_ProgressView
-							domain={selectedDomain}
-							progressViewProps={props.progressViewProps}
-						/>
-					</ScrollView>
+  function _touchableDomainButton(props) {
+    var text = '';
+    var isTrue = props.domain === selectedDomain;
+    if (isTrue) text = props.domain;
+    return (
+      <TouchableOpacity
+        style={getButtonStyle(props.domain)}
+        onPress={() => setSelectedDomain(props.domain)}
+      >
+        <Text style={[isTrue ? styles.buttonText : {}]}>{text}</Text>
+      </TouchableOpacity>
+    );
+  }
+  return (
+    <View>
+      <Button
+        type="none"
+        onPress={() => setModalVisible(true)}
+        style={{ ...styles.card }}
+      >
+        <Text>Check Progress</Text>
+      </Button>
+      <Modal transparent={true} visible={modalVisible}>
+        <View
+          style={{
+            height: 55,
+            width: '90%',
+            backgroundColor: 'white',
+            marginTop: 20,
+            marginLeft: 15,
+            marginRight: 5,
+            marginBottom: 0,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            padding: 0,
+            flexDirection: 'row',
+          }}
+        >
+          <_touchableDomainButton domain="social" />
+          <_touchableDomainButton domain="emotional" />
+          <_touchableDomainButton domain="physical" />
+          <_touchableDomainButton domain="mental" />
+          <_touchableDomainButton domain="spiritual" />
+        </View>
+        <View
+          style={{
+            height: '86%',
+            width: '90%',
+            marginLeft: 15,
+            marginRight: 15,
+            marginTop: 0,
+            padding: 12,
+            backgroundColor: theme.theme[selectedDomain],
+            borderBottomEndRadius: 15,
+            borderBottomLeftRadius: 15,
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
+          <ScrollView
+            style={{
+              backgroundColor: 'white',
+              margin: 0,
+              padding: 12,
+              width: '100%',
+              height: '90%',
+              borderRadius: 10,
+            }}
+          >
+            <_ProgressView
+              domain={selectedDomain}
+              progressViewProps={props.progressViewProps}
+            />
+          </ScrollView>
 
-					<TouchableOpacity
-						onPress={() => setModalVisible(false)}
-						style={{
-							marginTop: 15,
-							marginRight: 2,
-							borderRadius: 15,
-							width: '30%',
-							flex: 1,
-							alignItems: 'center',
-						}}
-					>
-						<Text
-							style={{ fontSize: 20, color: '#000000', fontWeight: 'bold' }}
-						>
-							Leave
-						</Text>
-					</TouchableOpacity>
-				</View>
-			</Modal>
-		</View>
-	);
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={{
+              marginTop: 15,
+              marginRight: 2,
+              borderRadius: 15,
+              width: '30%',
+              flex: 1,
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{ fontSize: 20, color: '#000000', fontWeight: 'bold' }}
+            >
+              Leave
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    </View>
+  );
 }
 
 type activityLogProp = {
-	domain: string;
-	title: string;
-	date: string;
+  domain: string;
+  title: string;
+  date: string;
 };
 
 export function Settings() {
@@ -844,82 +844,82 @@ export function Settings() {
 }
 
 const styles = StyleSheet.create({
-	settings: {
-		margin: 12,
-	},
-	subHeader: {
-		marginBottom: 12,
-		marginTop: 18,
-		fontSize: screen.height * 0.02,
-	},
-	container: {
-		width: '100%',
-		height: '100%',
-		display: 'flex',
-		backgroundColor: 'white',
-		color: Colors.foreground,
-	},
-	header: {
-		height: screen.height * 0.12,
-		justifyContent: 'flex-end',
-		display: 'flex',
+  settings: {
+    margin: 12,
+  },
+  subHeader: {
+    marginBottom: 12,
+    marginTop: 18,
+    fontSize: screen.height * 0.02,
+  },
+  container: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    backgroundColor: 'white',
+    color: Colors.foreground,
+  },
+  header: {
+    height: screen.height * 0.12,
+    justifyContent: 'flex-end',
+    display: 'flex',
 
-		paddingLeft: 12,
-		paddingRight: 12,
-		borderBottomWidth: 1,
-		borderBottomColor: '#f2f6fa',
-		flexDirection: 'row',
-		alignItems: 'flex-end',
-	},
-	card: {
-		padding: 18,
-		borderRadius: 14,
-		margin: 12,
-		marginTop: 0,
-		backgroundColor: Colors.background,
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.1,
-		shadowRadius: 5.6,
-		elevation: 5,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	defaultButton: {
-		borderRadius: 50,
-		height: 50,
-		width: 50,
-		marginRight: 5,
-	},
-	selectedButton: {
-		height: 50,
-		width: 150,
-		borderTopLeftRadius: 50,
-		borderTopRightRadius: 50,
-		marginRight: 5,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
+    paddingLeft: 12,
+    paddingRight: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f6fa',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  card: {
+    padding: 18,
+    borderRadius: 14,
+    margin: 12,
+    marginTop: 0,
+    backgroundColor: Colors.background,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5.6,
+    elevation: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  defaultButton: {
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    marginRight: 5,
+  },
+  selectedButton: {
+    height: 50,
+    width: 150,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    marginRight: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-	buttonText: {
-		color: 'white',
-		fontSize: 24,
-		textAlign: 'center',
-	},
+  buttonText: {
+    color: 'white',
+    fontSize: 24,
+    textAlign: 'center',
+  },
 
-	_progressCard: {
-		padding: 18,
-		borderRadius: 14,
-		margin: 12,
-		marginTop: 0,
-		marginBottom: 10,
-		backgroundColor: 'white',
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.1,
-		shadowRadius: 5.6,
-		elevation: 5,
-		flexDirection: 'row',
-		//justifyContent: 'space-between',
-		alignItems: 'center',
-	},
+  _progressCard: {
+    padding: 18,
+    borderRadius: 14,
+    margin: 12,
+    marginTop: 0,
+    marginBottom: 10,
+    backgroundColor: 'white',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5.6,
+    elevation: 5,
+    flexDirection: 'row',
+    //justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 });

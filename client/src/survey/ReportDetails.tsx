@@ -24,7 +24,7 @@ import { customStringToDate } from '../services/customLocalDate';
 
 //props -- getting the data passed from Report
 export type ReportDetailsProps = {
-	item: any;
+  item: any;
 };
 
 const TableView = ({ item, theme }) => {
@@ -1061,110 +1061,110 @@ export function ReportDetails(props: ReportDetailsProps) {
 }
 
 const styles = StyleSheet.create({
-	avatarContainer: {
-		width: '40%',
-	},
-	chipContainer: {
-		// borderWidth: 1,
-		width: '100%',
-		justifyContent: 'center',
-		flexDirection: 'row',
-	},
-	chip: {
-		paddingHorizontal: 5,
-		paddingVertical: 5,
-		marginRight: 5,
-		borderRadius: 10,
-		borderWidth: 1,
-	},
-	textView: {
-		flexDirection: 'row',
-	},
-	avatar: {
-		width: 100,
-		height: 100,
-		borderWidth: 1,
-		borderRadius: 50,
-	},
-	mainContainer: {
-		// borderWidth: 1,
-		paddingHorizontal: 20,
-		paddingVertical: 20,
-		flexDirection: 'row',
-	},
-	entityContainer: {
-		marginTop: 16,
-		borderBottomColor: '#cccccc',
-		borderBottomWidth: 1,
-		paddingBottom: 16,
-	},
-	entityText: {
-		fontSize: 20,
-		color: '#333333',
-	},
-	listContainer: {
-		marginTop: 20,
-		padding: 20,
-	},
-	container: {
-		height: '100%',
-		backgroundColor: 'white',
-	},
-	item: {
-		backgroundColor: 'white',
-		flex: 1,
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		borderRadius: 5,
-		padding: 10,
-		marginRight: 10,
-		marginTop: 17,
-		height: 70,
-		borderLeftWidth: 7,
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.05,
-		shadowRadius: 6.6,
-		elevation: 5,
-	},
-	emptyDate: {
-		height: 15,
-		flex: 1,
-		paddingTop: 30,
-	},
-	modalView: {
-		height: '80%',
-		width: '100%',
-		display: 'flex',
-		//justifyContent: 'space-between',
-		//margin: 20,
-		backgroundColor: 'white',
-		borderRadius: 20,
-		padding: 8,
-		//minHeight: 180,
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.25,
-		shadowRadius: 3.84,
-		elevation: 5,
-	},
+  avatarContainer: {
+    width: '40%',
+  },
+  chipContainer: {
+    // borderWidth: 1,
+    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  chip: {
+    paddingHorizontal: 5,
+    paddingVertical: 5,
+    marginRight: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  textView: {
+    flexDirection: 'row',
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderWidth: 1,
+    borderRadius: 50,
+  },
+  mainContainer: {
+    // borderWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    flexDirection: 'row',
+  },
+  entityContainer: {
+    marginTop: 16,
+    borderBottomColor: '#cccccc',
+    borderBottomWidth: 1,
+    paddingBottom: 16,
+  },
+  entityText: {
+    fontSize: 20,
+    color: '#333333',
+  },
+  listContainer: {
+    marginTop: 20,
+    padding: 20,
+  },
+  container: {
+    height: '100%',
+    backgroundColor: 'white',
+  },
+  item: {
+    backgroundColor: 'white',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
+    height: 70,
+    borderLeftWidth: 7,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6.6,
+    elevation: 5,
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
+  },
+  modalView: {
+    height: '80%',
+    width: '100%',
+    display: 'flex',
+    //justifyContent: 'space-between',
+    //margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 8,
+    //minHeight: 180,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 
-	reportItem: {
-		flexDirection: 'row',
-		marginVertical: 10,
-		alignItems: 'center',
-	},
-	reportText: {
-		borderColor: '#afafaf',
-		paddingHorizontal: 5,
-		paddingVertical: 7,
-		borderWidth: 1,
-		borderRadius: 5,
-		marginRight: 10,
-		minWidth: '50%',
-		textAlign: 'center',
-	},
+  reportItem: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  reportText: {
+    borderColor: '#afafaf',
+    paddingHorizontal: 5,
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginRight: 10,
+    minWidth: '50%',
+    textAlign: 'center',
+  },
 });
