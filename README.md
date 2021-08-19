@@ -41,9 +41,24 @@ yarn start --android  # Open in Android emulator
 ### Testing
 
 ```
-npm install -g mocha
+
 npm install -g ts-node
 
 yarn test
 ```
+### Apk
 
+```
+open this link on a browser:
+
+https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40nlttian/healthcircles-124c400274fa48098f75a72bbf1bac04-signed.apk
+
+download and install apk file in an android emulator or device
+
+This apk file is the version updated to August 19, 2021
+
+to create a new apk :
+expo build:android
+
+
+```
