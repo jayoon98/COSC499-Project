@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigation, Header } from '../common/Core';
 import {
+
   View,
   StyleSheet,
   Text,
@@ -9,23 +10,28 @@ import {
   FlatList,
   ScrollView,
   Modal,
+
+
 } from 'react-native';
 //chart view
 import { BarChart } from 'react-native-chart-kit';
-// theme to set domain colors
+// theme to set domain colors 
 import { ThemeContext } from '../common/ThemeContext';
+
 import firebase from 'firebase';
 import XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
+
 
 // function to get date from string and check if it is within the last 15 days
 import { customStringToDate } from '../services/customLocalDate';
 
 //props -- getting the data passed from Report
 export type ReportDetailsProps = {
-  item: any;
+	item: any;
 };
+
 
 const TableView = ({ item, theme }) => {
   const { weekly: arr, avg, qs, domain } = item;
@@ -105,8 +111,10 @@ const TableView = ({ item, theme }) => {
   );
 };
 
+
 const opacityVal = 0.4;
 export function ReportDetails(props: ReportDetailsProps) {
+
   const [item, setItem] = useState(props.item);
   // array to hold all questions
   const [questions, setQuestions] = useState([]);

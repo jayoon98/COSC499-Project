@@ -9,13 +9,11 @@ export function customLocalTime(date: Date) {
 }
 
 // Function to check if date is within the last two weeks - used in reportDetails - returns boolean
-export function customStringToDate(date: String, timeLimit) {
-  let dateofsurvey = date.split('T')[0];
-  let firstDate = Date.parse(dateofsurvey);
-  const oneDay = 24 * 60 * 60 * 1000;
+export function customStringToDate(date: String) {
+ let dateofsurvey= date.split('T')[0]
+ let firstDate = Date.parse(dateofsurvey)
+ const oneDay = 24 * 60 * 60 * 1000; 
 
-  const diffDays = Math.round(
-    Math.abs((firstDate - new Date().getTime()) / oneDay),
-  );
-  return diffDays < timeLimit;
+ const diffDays = Math.round(Math.abs((firstDate - new Date().getTime()) / oneDay));
+ return diffDays<15;
 }
